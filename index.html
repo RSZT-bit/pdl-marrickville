@@ -1704,9 +1704,11 @@ function timeBands(yr){
   const barA=Math.round(courts*6*occA*4*0.50*7*days);
   const barE=Math.round(courts*6*occE*4*0.50*10*days);
   // Staff cost per band (annualised)
-  const staffM=S.dayStaff*S.dayRate*6*days*1.115;
-  const staffA=S.dayStaff*S.dayRate*2*days*1.115 + S.aftStaff*S.aftRate*4*days*1.115;
-  const staffE=S.aftStaff*S.aftRate*6*days*1.115;
+  const aftSplit=Math.min(2,S.aftHrs);
+  const dayCont=Math.max(0,S.aftHrs-aftSplit);
+  const staffM=S.dayStaff*S.dayRate*S.mornHrs*days*1.115;
+  const staffA=S.dayStaff*S.dayRate*dayCont*days*1.115 + S.aftStaff*S.aftRate*aftSplit*days*1.115;
+  const staffE=S.eveStaff*S.aftRate*S.eveHrs*days*1.115;
   const staffMgr=S.mgrStaff*S.mgrSalary*1.115;
   return{
     morning:{occ:occM,rate:rateM,courtRev:revM,bar:barM,staff:staffM,hrs:6},
@@ -1741,9 +1743,11 @@ function calcRevenue(yr){
 
 function calcStaff(){
   const days=365;
-  const day=S.dayStaff*S.dayRate*6*days + S.dayStaff*S.dayRate*4*days;
-  const aft=S.aftStaff*S.aftRate*2*days;
-  const eve=S.eveStaff*S.aftRate*6*days;
+  const aftSplit=Math.min(2,S.aftHrs);
+  const dayCont=Math.max(0,S.aftHrs-aftSplit);
+  const day=S.dayStaff*S.dayRate*S.mornHrs*days + S.dayStaff*S.dayRate*dayCont*days;
+  const aft=S.aftStaff*S.aftRate*aftSplit*days;
+  const eve=S.eveStaff*S.aftRate*S.eveHrs*days;
   const mgr=S.mgrStaff*S.mgrSalary;
   const base=day+aft+eve+mgr;
   return{day, aft, eve, mgr, base, total:base*1.115};
@@ -2034,6 +2038,13 @@ function updateSliderLabels(){
   if(document.getElementById('mgrSalV')) document.getElementById('mgrSalV').textContent='$'+S.mgrSalary.toLocaleString();
   if(document.getElementById('dayStaffVal')) document.getElementById('dayStaffVal').textContent=S.dayStaff+(S.dayStaff>1?' people':' person');
   if(document.getElementById('aftStaffVal')) document.getElementById('aftStaffVal').textContent=S.aftStaff+(S.aftStaff>1?' people':' person');
+  if(document.getElementById('eveStaffVal')) document.getElementById('eveStaffVal').textContent=S.eveStaff+(S.eveStaff>1?' people':' person');
+  if(document.getElementById('mornHrsVal')) document.getElementById('mornHrsVal').textContent=S.mornHrs+' hrs';
+  if(document.getElementById('aftHrsVal')) document.getElementById('aftHrsVal').textContent=S.aftHrs+' hrs';
+  if(document.getElementById('eveHrsVal')) document.getElementById('eveHrsVal').textContent=S.eveHrs+' hrs';
+  if(document.getElementById('mgrCountVal')) document.getElementById('mgrCountVal').textContent=S.mgrStaff+(S.mgrStaff==1?' person':' people');
+  if(document.getElementById('mgrSalVal2')) document.getElementById('mgrSalVal2').textContent='$'+S.mgrSalary.toLocaleString();
+  if(document.getElementById('ratesSummary')) document.getElementById('ratesSummary').textContent='Day $'+S.dayRate+' ¬∑ Aft/Eve $'+S.aftRate;
   // Occ by year
   S.occ.forEach((o,i)=>{ const el=document.getElementById('occ'+(i+1)+'v'); if(el) el.textContent=Math.round(o*100)+'%'; });
 }
@@ -2043,26 +2054,28 @@ function renderStaff(){
   const st=calcStaff();
   const sup=Math.round(st.total-st.base);
   // Time-band staff cost breakdown
-  // Morning (6am-12pm): day staff only, 6hrs/day √ó 365
-  const mornHrs=S.dayStaff*6*365;
+  const aftSplit=Math.min(2,S.aftHrs);
+  const dayCont=Math.max(0,S.aftHrs-aftSplit);
+  // Morning (6am-12pm): day staff only
+  const mornHrs=S.dayStaff*S.mornHrs*365;
   const mornCost=mornHrs*S.dayRate*1.115;
-  // Afternoon (12pm-6pm): day staff 4hrs + aft staff 2hrs (starts 4pm)
-  const aftHrsDay=S.dayStaff*4*365;
-  const aftHrsAft=S.aftStaff*2*365;
+  // Afternoon (12pm-6pm): day staff continues + aft staff starts
+  const aftHrsDay=S.dayStaff*dayCont*365;
+  const aftHrsAft=S.aftStaff*aftSplit*365;
   const aftCost=(aftHrsDay*S.dayRate + aftHrsAft*S.aftRate)*1.115;
-  // Evening (6pm-12am): aft staff 6hrs
-  const eveHrs=S.eveStaff*6*365;
+  // Evening (6pm-12am): eve staff
+  const eveHrs=S.eveStaff*S.eveHrs*365;
   const eveCost=eveHrs*S.aftRate*1.115;
   const mgrCost=S.mgrStaff*S.mgrSalary*1.115;
 
   el.innerHTML=`
     <tr class="amber-row"><td colspan="6">MORNING ‚Äî 6am to 12pm</td></tr>
-    <tr><td>Day Shift (reception, bar, pro shop)</td><td style="color:var(--amber);font-weight:500;">6am‚Äì12pm</td><td>${S.dayStaff}</td><td>$${S.dayRate}/hr</td><td>${(S.dayStaff*6*365).toLocaleString()} hrs</td><td class="tr">${fmt(mornCost)}</td></tr>
+    <tr><td>Day Shift (reception, bar, pro shop)</td><td style="color:var(--amber);font-weight:500;">6am‚Äì12pm</td><td>${S.dayStaff}</td><td>$${S.dayRate}/hr</td><td>${mornHrs.toLocaleString()} hrs</td><td class="tr">${fmt(mornCost)}</td></tr>
     <tr class="amber-row"><td colspan="6">AFTERNOON ‚Äî 12pm to 6pm</td></tr>
-    <tr><td>Day Shift (continues)</td><td style="color:var(--blue);font-weight:500;">12pm‚Äì4pm</td><td>${S.dayStaff}</td><td>$${S.dayRate}/hr</td><td>${(S.dayStaff*4*365).toLocaleString()} hrs</td><td class="tr">${fmt(aftHrsDay*S.dayRate*1.115)}</td></tr>
-    <tr><td>Afternoon Shift (starts)</td><td style="color:var(--blue);font-weight:500;">4pm‚Äì6pm</td><td>${S.aftStaff}</td><td>$${S.aftRate}/hr</td><td>${(S.aftStaff*2*365).toLocaleString()} hrs</td><td class="tr">${fmt(aftHrsAft*S.aftRate*1.115)}</td></tr>
+    <tr><td>Day Shift (continues)</td><td style="color:var(--blue);font-weight:500;">12pm‚Äì4pm</td><td>${S.dayStaff}</td><td>$${S.dayRate}/hr</td><td>${aftHrsDay.toLocaleString()} hrs</td><td class="tr">${fmt(aftHrsDay*S.dayRate*1.115)}</td></tr>
+    <tr><td>Afternoon Shift (starts)</td><td style="color:var(--blue);font-weight:500;">4pm‚Äì6pm</td><td>${S.aftStaff}</td><td>$${S.aftRate}/hr</td><td>${aftHrsAft.toLocaleString()} hrs</td><td class="tr">${fmt(aftHrsAft*S.aftRate*1.115)}</td></tr>
     <tr class="amber-row"><td colspan="6">EVENING ‚Äî 6pm to 12am</td></tr>
-    <tr><td>Evening Shift (peak hours)</td><td style="color:var(--green);font-weight:500;">6pm‚Äì12am</td><td>${S.eveStaff}</td><td>$${S.aftRate}/hr</td><td>${(S.eveStaff*6*365).toLocaleString()} hrs</td><td class="tr">${fmt(eveCost)}</td></tr>
+    <tr><td>Evening Shift (peak hours)</td><td style="color:var(--green);font-weight:500;">6pm‚Äì12am</td><td>${S.eveStaff}</td><td>$${S.aftRate}/hr</td><td>${eveHrs.toLocaleString()} hrs</td><td class="tr">${fmt(eveCost)}</td></tr>
     <tr class="amber-row"><td colspan="6">MANAGEMENT</td></tr>
     <tr><td>Manager / Head Coach</td><td style="color:var(--dim);">All hours</td><td>${S.mgrStaff}</td><td>$${S.mgrSalary.toLocaleString()}/yr</td><td>Full-time</td><td class="tr">${fmt(mgrCost)}</td></tr>
     <tr class="subtotal"><td colspan="5">Superannuation (11.5%) ‚Äî included in all figures above</td><td class="tr">${fmt(sup)}</td></tr>
@@ -2078,9 +2091,9 @@ function renderStaff(){
   if(cm) cm.textContent=fmt(mornCost);
   if(ca) ca.textContent=fmt(aftCost);
   if(ce) ce.textContent=fmt(eveCost);
-  if(dm) dm.textContent=S.dayStaff+' staff ¬∑ $'+S.dayRate+'/hr ¬∑ '+S.dayStaff*6*365+' hrs';
-  if(da) da.textContent=S.dayStaff+' day + '+S.aftStaff+' aft from 4pm ¬∑ '+(S.dayStaff*4+S.aftStaff*2)*365+' hrs total';
-  if(de) de.textContent=S.eveStaff+' staff ¬∑ $'+S.aftRate+'/hr ¬∑ '+S.aftStaff*6*365+' hrs (peak)';
+  if(dm) dm.textContent=S.dayStaff+' staff ¬∑ $'+S.dayRate+'/hr ¬∑ '+mornHrs+' hrs';
+  if(da) da.textContent=S.dayStaff+' day + '+S.aftStaff+' aft from 4pm ¬∑ '+(aftHrsDay+aftHrsAft)+' hrs total';
+  if(de) de.textContent=S.eveStaff+' staff ¬∑ $'+S.aftRate+'/hr ¬∑ '+eveHrs+' hrs (peak)';
 }
 
 function renderTimeBands(){
