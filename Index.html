@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDL Marrickville — Market Intelligence & Business Plan</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#faf9f7;--surface:#fff;--s2:#f4f3ef;--s3:#eceae4;
+  --border:#e4e1d8;--bl:#ccc9be;
+  --text:#111;--dim:#444;--faint:#777;
+  --pdl:#002FA7;--pdl-s:rgba(0,47,167,.06);--pdl-b:rgba(0,47,167,.18);
+  --green:#1a6b3c;--gs:rgba(26,107,60,.07);
+  --accent:#c4622d;--as:rgba(196,98,45,.07);
+  --amber:#8a5e00;--ams:rgba(138,94,0,.08);
+  --red:#b03030;--rs:rgba(176,48,48,.07);
+  --blue:#1a4f9a;--bs:rgba(26,79,154,.08);
+  --r:10px;--rs2:6px;
+}
+html,body{height:100%;overflow:hidden;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:300;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;font-size:13px;}
+
+/* ── NAV ── */
+/* ── 2-LEVEL NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:600;background:#fff;border-bottom:1px solid var(--border);}
+.nav-row1{height:36px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0;gap:0;}
+.nav-row2{height:36px;display:flex;align-items:center;padding:0;gap:0;}
+.nav-inner{display:flex;align-items:stretch;width:100%;}
+.nav-brand{display:flex;align-items:center;gap:7px;flex-shrink:0;padding:0 16px;border-right:1px solid var(--border);width:148px;}
+.pdl-logo{font-size:14px;font-weight:700;color:var(--pdl);letter-spacing:.06em;}
+.nav-brand-sub{font-size:11px;font-weight:300;color:var(--dim);}
+.nav-tag{font-size:10px;color:var(--faint);background:var(--s2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;margin-left:0;margin-right:14px;flex-shrink:0;}
+/* Row 1 section tabs */
+.nav-tab{font-size:11px;font-weight:400;color:var(--dim);font-family:inherit;background:none;border:none;border-right:1px solid var(--border);padding:0 20px;height:36px;cursor:pointer;letter-spacing:.01em;transition:all .15s;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px;flex:1;}
+.nav-tab:hover{background:var(--s2);color:var(--text);}
+.nav-tab.tab-active{color:var(--pdl);font-weight:500;background:var(--pdl-s);border-bottom:2px solid var(--pdl);}
+.nav-tab .tab-count{font-size:9px;background:var(--border);color:var(--dim);padding:1px 5px;border-radius:10px;}
+.nav-tab.tab-active .tab-count{background:var(--pdl-b);color:var(--pdl);}
+/* Row 2 sub-buttons */
+.nav-sub{display:none;align-items:center;flex:1;}
+.nav-sub.sub-active{display:flex;flex:1;}
+.nav-sub button{font-size:11px;font-weight:300;color:var(--dim);font-family:inherit;background:none;border:none;border-right:1px solid var(--border);padding:0;height:36px;cursor:pointer;transition:color .15s,background .15s;white-space:nowrap;flex:1;text-align:center;}
+.nav-sub button:hover{color:var(--text);background:var(--s2);}
+.nav-sub button.active{color:var(--pdl);font-weight:500;background:var(--pdl-s);border-bottom:2px solid var(--pdl);}
+.nav-section-indicator{font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding:0;width:148px;border-right:1px solid var(--border);height:36px;display:flex;align-items:center;justify-content:center;white-space:nowrap;flex-shrink:0;}
+
+/* ── PAGES ── */
+.pages{position:fixed;top:72px;left:0;right:0;bottom:0;overflow:hidden;}
+.page{position:absolute;inset:0;overflow-y:auto;display:none;}
+.page.page-locked{overflow:hidden;}
+.page.active{display:block;}
+.inner{max-width:1120px;margin:0 auto;padding:26px 20px 60px;}
+
+/* ── TYPOGRAPHY ── */
+.sec-label{font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:5px;}
+.sec-title{font-size:22px;font-weight:400;color:var(--text);letter-spacing:-.02em;line-height:1.2;margin-bottom:6px;}
+.sec-sub{font-size:12px;font-weight:300;color:var(--dim);line-height:1.65;max-width:740px;margin-bottom:22px;}
+
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.gap{margin-bottom:14px;}
+.gap-lg{margin-bottom:26px;}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.card.pdl-c{border-color:var(--pdl-b);background:var(--pdl-s);}
+.card.green-c{border-color:rgba(26,107,60,.25);background:var(--gs);}
+.card.red-c{border-color:rgba(176,48,48,.22);background:var(--rs);}
+.card.amber-c{border-color:rgba(138,94,0,.22);background:var(--ams);}
+.ct{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.cs{font-size:11px;font-weight:300;color:var(--dim);line-height:1.6;}
+
+/* ── STAT CARDS ── */
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.s-val{font-size:22px;font-weight:400;letter-spacing:-.02em;display:block;margin-bottom:3px;}
+.s-lbl{font-size:11px;font-weight:300;color:var(--dim);}
+
+/* ── SECTION HERO ── */
+.page-hero{background:#fff;border:1px solid var(--border);border-left:4px solid var(--pdl);border-radius:var(--r);padding:20px 24px;margin-bottom:14px;}
+.ph-label{font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--pdl);margin-bottom:5px;}
+.ph-title{font-size:19px;font-weight:400;color:var(--text);letter-spacing:-.02em;margin-bottom:5px;}
+.ph-sub{font-size:12px;font-weight:300;color:var(--dim);line-height:1.65;}
+
+/* ── OVERVIEW HERO ── */
+.overview-hero{background:var(--pdl);border-radius:var(--r);padding:26px 30px;margin-bottom:14px;}
+.oh-title{font-size:22px;font-weight:400;color:#fff;letter-spacing:-.02em;margin-bottom:5px;}
+.oh-sub{font-size:12px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:18px;}
+.oh-stat{background:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:14px;}
+.oh-val{font-size:22px;font-weight:700;color:var(--pdl);letter-spacing:-.02em;margin-bottom:3px;}
+.oh-lbl{font-size:10px;color:var(--text);}
+
+/* ── TABLES ── */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:10px;}
+.tbl-hdr{background:var(--s2);padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.tbl-hdr p{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+table{width:100%;border-collapse:collapse;}
+th{font-size:10px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:9px 14px;text-align:left;border-bottom:1px solid var(--border);background:var(--s2);}
+td{padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:300;color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr.subtotal td{background:var(--s2);font-weight:500;font-size:12px;}
+tr.total-row td{background:var(--pdl);color:#fff;font-weight:500;font-size:12px;}
+tr.green-row td{background:var(--gs);color:var(--green);font-weight:400;}
+tr.red-row td{color:var(--red);}
+tr.amber-row td{background:var(--pdl-s);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pdl);font-weight:500;padding:7px 14px;border-bottom:1px solid var(--pdl-b);}
+tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:500;padding:7px 14px;}
+.tr{text-align:right;}
+
+/* ── ASSUMPTION SLIDERS ── */
+.assume-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px;}
+.assume-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;}
+.assume-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;}
+.assume-label{font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:5px;}
+.assume-val{font-size:20px;font-weight:400;color:var(--text);letter-spacing:-.01em;margin-bottom:6px;}
+.assume-range{width:100%;accent-color:var(--pdl);cursor:pointer;margin-bottom:3px;height:4px;}
+.range-row{display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-bottom:5px;}
+.assume-sub{font-size:10px;color:var(--dim);line-height:1.5;}
+
+/* ── SECTION DIVIDER ── */
+.sec-div{display:flex;align-items:center;gap:10px;margin:18px 0 12px;}
+.sec-div span{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);white-space:nowrap;}
+.sec-div::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── BADGES ── */
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:400;}
+.bo{background:var(--as);color:var(--accent);border:1px solid rgba(196,98,45,.2);}
+.bg{background:var(--gs);color:var(--green);border:1px solid rgba(26,107,60,.2);}
+.bb{background:var(--bs);color:var(--blue);border:1px solid rgba(26,79,154,.2);}
+.ba{background:var(--ams);color:var(--amber);border:1px solid rgba(138,94,0,.2);}
+.bp{background:var(--pdl-s);color:var(--pdl);border:1px solid var(--pdl-b);}
+
+/* ── NOTES ── */
+.note{background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:10px;}
+.note p{font-size:11px;font-weight:300;color:var(--dim);line-height:1.65;}
+.note strong{font-weight:500;color:var(--text);}
+.note.pdl-note{background:var(--pdl-s);border-color:var(--pdl-b);}
+.note.green-note{background:var(--pdl-s);border-color:var(--pdl-b);}
+.note.amber-note{background:var(--ams);border-color:rgba(138,94,0,.2);}
+
+/* ── INV ITEMS ── */
+.inv-item{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--border);gap:12px;}
+.inv-item:last-child{border-bottom:none;}
+.inv-name{font-size:12px;font-weight:400;color:var(--text);}
+.inv-desc{font-size:10px;color:var(--dim);}
+.inv-amt{font-size:13px;font-weight:500;white-space:nowrap;}
+
+/* ── YEAR CARDS ── */
+.yr-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;position:relative;overflow:hidden;}
+.yr-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;}
+.yr1::before{background:var(--amber);}
+.yr2::before{background:#5a8a5a;}
+.yr3::before{background:var(--green);}
+.yr4::before{background:#1a5a30;}
+.yr5::before{background:#1a6b3c;}
+.yr-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:5px;}
+.yr-rev{font-size:20px;font-weight:400;letter-spacing:-.02em;margin-bottom:3px;}
+.yr-ebitda{font-size:12px;font-weight:500;margin-bottom:2px;}
+.yr-occ{font-size:10px;color:var(--dim);}
+.yr-bar{margin-top:8px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.yr-bar-fill{height:100%;border-radius:2px;}
+
+/* ── CHART CONTAINER ── */
+.chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:10px;}
+.chart-title{font-size:11px;font-weight:500;color:var(--text);margin-bottom:14px;}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:140px;}
+.bar-col{display:flex;flex-direction:column;align-items:center;flex:1;gap:4px;}
+.bar-fill{border-radius:4px 4px 0 0;width:100%;transition:height .5s;}
+.bar-lbl{font-size:10px;color:var(--dim);text-align:center;}
+.bar-val{font-size:10px;font-weight:500;color:var(--text);}
+
+/* ── MAP ── */
+.map-layout{display:grid;grid-template-columns:1fr 300px;gap:10px;height:100%;}
+.map-wrap{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);position:relative;}
+#catchment-map{width:100%;height:100%;}
+.map-controls{position:absolute;top:10px;left:10px;z-index:400;display:flex;flex-direction:column;gap:5px;}
+.zone-btn{padding:6px 14px;border-radius:7px;border:2px solid;font-size:11px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;background:white;}
+.zone-btn.z25{border-color:var(--pdl);color:var(--pdl);}
+.zone-btn.z5{border-color:var(--accent);color:var(--accent);}
+.zone-btn.z75{border-color:var(--green);color:var(--green);}
+.zone-btn.z10k{border-color:#6b3a9a;color:#6b3a9a;}
+.zone-btn.active.z25{background:var(--pdl);color:#fff;}
+.zone-btn.active.z5{background:var(--accent);color:#fff;}
+.zone-btn.active.z75{background:var(--green);color:#fff;}
+.zone-btn.active.z10k{background:#6b3a9a;color:#fff;}
+.map-legend{position:absolute;bottom:10px;left:10px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 12px;z-index:400;}
+.map-legend p{font-size:10px;font-weight:500;color:var(--text);margin-bottom:5px;}
+.leg-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;font-size:10px;color:var(--dim);}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.sub-panel{display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);}
+.sub-hdr{padding:12px 14px;border-bottom:1px solid var(--border);background:var(--s2);flex-shrink:0;}
+.sub-hdr h3{font-size:12px;font-weight:500;color:var(--text);margin-bottom:8px;}
+.sub-stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
+.sub-mini{background:#fff;border:1px solid var(--border);border-radius:5px;padding:7px;text-align:center;}
+.sub-mini-val{font-size:14px;font-weight:500;display:block;margin-bottom:1px;}
+.sub-mini-lbl{font-size:9px;color:var(--dim);}
+#suburb-list{overflow-y:auto;flex:1;}
+.sub-card{padding:10px 13px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;}
+.sub-card:hover{background:var(--s2);}
+.sub-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:5px;}
+.sub-zone-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.sub-row{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);padding:1px 0;}
+.sub-val{font-weight:400;color:var(--text);}
+
+/* ── VENUE CARDS ── */
+.vc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:8px;}
+.vc-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);}
+.vc-num{width:24px;height:24px;border-radius:5px;background:var(--s2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--dim);flex-shrink:0;}
+.vc-name{font-size:12px;font-weight:500;color:var(--text);}
+.vc-loc{font-size:10px;color:var(--dim);}
+.vc-body{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;}
+.vcc{padding:10px 12px;border-right:1px solid var(--border);}
+.vcc:last-child{border-right:none;}
+.vcc-lbl{font-size:9px;font-weight:400;color:var(--faint);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;}
+.vcc-val{font-size:12px;font-weight:400;color:var(--text);}
+.vcc-price{font-size:15px;font-weight:500;color:var(--accent);}
+.vcc-sub{font-size:10px;color:var(--dim);line-height:1.4;margin-top:2px;}
+.occ-row{display:flex;align-items:center;gap:5px;margin-top:3px;}
+.occ-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.occ-fill{height:100%;background:var(--green);border-radius:2px;}
+.occ-pct{font-size:10px;color:var(--green);font-weight:500;}
+
+/* ── COMPETITOR CARDS ── */
+.weak-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+.weak-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.weak-header{padding:12px 14px;border-bottom:1px solid var(--border);}
+.weak-venue-tag{font-size:9px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:3px;}
+.weak-title{font-size:12px;font-weight:500;color:var(--text);}
+.weak-item{display:flex;align-items:flex-start;gap:8px;padding:8px 14px;border-bottom:1px solid var(--border);}
+.weak-item:last-child{border-bottom:none;}
+.weak-bullet{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;}
+.weak-item p{font-size:11px;font-weight:300;color:var(--dim);line-height:1.5;}
+.weak-item p strong{font-weight:500;color:var(--text);}
+
+/* ── WIN CARD ── */
+.win-card{background:#eef2fc;border:1px solid rgba(0,47,167,.2);border-radius:var(--r);overflow:hidden;margin-bottom:10px;}
+.win-header{padding:14px 18px;border-bottom:1px solid rgba(0,47,167,.12);}
+.win-body{display:grid;grid-template-columns:repeat(5,1fr);}
+.win-cell{padding:14px;border-right:1px solid rgba(0,47,167,.1);}
+.win-cell:last-child{border-right:none;}
+.win-cell-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pdl);margin-bottom:5px;}
+.win-cell-val{font-size:12px;font-weight:500;color:var(--text);line-height:1.4;}
+
+/* ── GROWTH HERO ── */
+.growth-hero{background:#eef2fc;border:1px solid rgba(0,47,167,.18);border-radius:var(--r);padding:24px 28px;margin-bottom:10px;display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.growth-stat{background:rgba(0,47,167,.06);border:1px solid rgba(0,47,167,.14);border-radius:8px;padding:14px;}
+.growth-stat-val{font-size:22px;font-weight:400;color:var(--pdl);letter-spacing:-.02em;margin-bottom:3px;}
+.growth-stat-lbl{font-size:10px;color:var(--dim);}
+
+/* ── DATA CARDS ── */
+.data-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;}
+.data-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.data-val{font-size:20px;font-weight:400;color:var(--text);letter-spacing:-.02em;margin-bottom:3px;}
+.data-label{font-size:10px;font-weight:500;color:var(--dim);margin-bottom:5px;}
+.data-sub{font-size:11px;font-weight:300;color:var(--dim);line-height:1.55;}
+.trend-bar{margin-top:10px;}
+.trend-row{display:grid;grid-template-columns:70px 1fr 45px;gap:6px;align-items:center;margin-bottom:4px;}
+.trend-lbl{font-size:10px;color:var(--dim);}
+.trend-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.trend-fill{height:100%;border-radius:3px;}
+.trend-val{font-size:10px;font-weight:500;text-align:right;}
+
+/* ── MEMBERSHIP ── */
+.price-hero{background:#eef4ff;border:1px solid rgba(26,79,154,.2);border-radius:var(--r);padding:24px 28px;margin-bottom:10px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;}
+.mkt-table th,.mkt-table td{padding:8px 12px;}
+.mkt-table tr.you td{background:var(--gs);font-weight:400;}
+
+/* ── PLAYTOMIC ── */
+.pt-hero{background:#002FA7;border-radius:var(--r);padding:28px 32px;margin-bottom:10px;}
+.pt-stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:12px;}
+.pt-stat-val{font-size:20px;font-weight:400;color:#fff;letter-spacing:-.02em;margin-bottom:2px;}
+.pt-stat-lbl{font-size:10px;color:rgba(255,255,255,.65);}
+.pt-plan{padding:12px 14px;border-bottom:1px solid var(--border);}
+.pt-plan:last-child{border-bottom:none;}
+.pt-plan.rec{background:rgba(255,255,255,.06);border-left:3px solid rgba(255,255,255,.5);}
+
+/* ── SENSITIVITY TABLE ── */
+.sens-cell{text-align:right;font-size:12px;}
+.sens-good{color:var(--green);font-weight:500;}
+.sens-ok{color:var(--amber);}
+.sens-bad{color:var(--red);}
+
+/* ── MONTHLY CASHFLOW BARS ── */
+.month-bar-wrap{display:flex;align-items:flex-end;gap:3px;height:120px;padding:0 4px;}
+.month-bar{flex:1;border-radius:3px 3px 0 0;min-height:2px;transition:height .4s;}
+.month-labels{display:flex;gap:3px;margin-top:4px;padding:0 4px;}
+.month-lbl{flex:1;font-size:9px;color:var(--dim);text-align:center;}
+
+/* ── BREAKEVEN ── */
+.be-track{height:24px;background:var(--border);border-radius:4px;overflow:visible;position:relative;margin:12px 0;}
+.be-fill{height:100%;border-radius:4px;background:var(--green);transition:width .5s;}
+.be-marker{position:absolute;top:-4px;width:2px;height:32px;background:var(--red);}
+.be-label{position:absolute;top:-18px;font-size:10px;color:var(--red);font-weight:500;white-space:nowrap;transform:translateX(-50%);}
+
+/* ── LEAFLET ── */
+.leaflet-popup-content-wrapper{border-radius:8px!important;padding:0!important;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12)!important;}
+.leaflet-popup-content{margin:0!important;}
+.lpop{padding:11px 13px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;min-width:180px;}
+.lpop-title{font-size:12px;font-weight:500;color:#111;margin-bottom:2px;}
+.lpop-row{display:flex;justify-content:space-between;font-size:10px;padding:2px 0;border-bottom:1px solid #f0ede6;}
+.lpop-row:last-child{border-bottom:none;}
+.lpop-k{color:#666;}.lpop-v{font-weight:500;color:#111;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <!-- ROW 1: Brand + Section Tabs -->
+  <div class="nav-row1">
+    <div class="nav-brand">
+      <span class="pdl-logo">PDL</span>
+      <span class="nav-brand-sub">Marrickville</span>
+    </div>
+    <button class="nav-tab tab-active" id="tab-market" onclick="switchTab('market')">
+      MARKET INTELLIGENCE
+    </button>
+    <button class="nav-tab" id="tab-business" onclick="switchTab('business')">
+      BUSINESS PLAN
+    </button>
+  </div>
+  <!-- ROW 2: Sub-navigation (changes per tab) -->
+  <div class="nav-row2">
+    <div class="nav-sub sub-active" id="sub-market">
+      
+      <button onclick="show('r1')" id="btn-r1" class="active">10 Venues</button>
+      <button onclick="show('r2')" id="btn-r2">Catchment Map</button>
+      <button onclick="show('r3')" id="btn-r3">Competitors</button>
+      <button onclick="show('r4')" id="btn-r4">Market Growth</button>
+      <button onclick="show('r5')" id="btn-r5">Membership</button>
+      <button onclick="show('r6')" id="btn-r6">Playtomic</button>
+    </div>
+    <div class="nav-sub" id="sub-business">
+      
+      <button onclick="show('b8')" id="btn-b8" style="font-weight:600;">Assumptions</button>
+      <button onclick="show('b1')" id="btn-b1">Overview</button>
+      <button onclick="show('b2')" id="btn-b2">Court Costs</button>
+      <button onclick="show('b3')" id="btn-b3">Fit-Out</button>
+      <button onclick="show('b4')" id="btn-b4">Operating Costs</button>
+      <button onclick="show('b5')" id="btn-b5">Revenue</button>
+      <button onclick="show('b6')" id="btn-b6">P&L</button>
+      <button onclick="show('b7')" id="btn-b7">Cash Flow</button>
+      <button onclick="show('b9')" id="btn-b9">Marketing</button>
+      <button onclick="show('b10')" id="btn-b10">Break-Even</button>
+    </div>
+  </div>
+</nav>
+
+<div class="pages">
+
+<!-- ════════════════════════════════════════════
+     MARKET INTELLIGENCE — R1: 10 VENUES
+════════════════════════════════════════════ -->
+<div class="page page-locked active" id="r1"><div style="padding:8px 16px 6px;height:100%;display:flex;flex-direction:column;gap:0;max-width:1280px;margin:0 auto;width:100%;">
+
+  <!-- KPI STRIP -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1.8fr;gap:8px;flex-shrink:0;">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:22px 18px;display:flex;flex-direction:column;justify-content:center;">
+      <p style="font-size:36px;font-weight:400;letter-spacing:-.03em;color:var(--text);line-height:1;">10</p>
+      <p style="font-size:11px;font-weight:400;color:var(--dim);margin-top:6px;">Sydney venues analysed</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:22px 18px;display:flex;flex-direction:column;justify-content:center;">
+      <p style="font-size:36px;font-weight:400;letter-spacing:-.03em;color:var(--text);line-height:1;">57+</p>
+      <p style="font-size:11px;font-weight:400;color:var(--dim);margin-top:6px;">Competitor courts</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:22px 18px;display:flex;flex-direction:column;justify-content:center;">
+      <p style="font-size:30px;font-weight:400;letter-spacing:-.03em;color:var(--text);line-height:1;">$80–120</p>
+      <p style="font-size:11px;font-weight:400;color:var(--dim);margin-top:6px;">Market rate / court / hr</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:22px 20px;display:flex;gap:28px;align-items:center;">
+      <div>
+        <p style="font-size:36px;font-weight:400;letter-spacing:-.03em;color:var(--red);line-height:1;">4,104</p>
+        <p style="font-size:11px;font-weight:400;color:var(--dim);margin-top:6px;">Daily capacity (57×4×18hrs)</p>
+      </div>
+      <div style="width:1px;height:44px;background:var(--border);flex-shrink:0;"></div>
+      <div>
+        <p style="font-size:36px;font-weight:400;letter-spacing:-.03em;color:var(--green);line-height:1;">5,714</p>
+        <p style="font-size:11px;font-weight:400;color:var(--dim);margin-top:6px;">Est. demand — <span style="color:var(--red);font-weight:500;">1,610 unmet/day</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:12px;flex-shrink:0;"></div>
+  <!-- VENUE GRID 5×2 -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr 1fr;gap:6px;flex:1;overflow:hidden;margin-top:10px;">
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--pdl);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:10px 12px 8px;border-bottom:1px solid var(--border);background:var(--pdl-s);">
+        <p style="font-size:9px;font-weight:500;color:var(--pdl);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Market Leader</p>
+        <p style="font-size:15px;font-weight:600;color:var(--text);line-height:1.2;">IPA Alexandria</p>
+        <p style="font-size:9px;color:var(--dim);">Alexandria</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Courts</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">10 indoor</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Hours</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">5am – 11pm</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$80–100</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Rating</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">★ 4.4</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">80%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:80%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--accent);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:10px 12px 8px;border-bottom:1px solid var(--border);background:var(--as);">
+        <p style="font-size:9px;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Nearest Rival</p>
+        <p style="font-size:15px;font-weight:600;color:var(--text);line-height:1.2;">The Padel Lounge</p>
+        <p style="font-size:9px;color:var(--dim);">Greenacre · ~10 min</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Courts</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">4 indoor</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Hours</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">5am – 1am</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$80–100</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Rating</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">★ 4.8</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">65%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:65%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--faint);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:10px 12px 8px;border-bottom:1px solid var(--border);background:var(--s2);">
+        <p style="font-size:9px;font-weight:500;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Outdoor Only</p>
+        <p style="font-size:15px;font-weight:600;color:var(--text);line-height:1.2;">Sydney Racquet Club</p>
+        <p style="font-size:9px;color:var(--dim);">Moore Park</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Courts</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">3 outdoor</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Hours</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">5am – midnight</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$90–110</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Rating</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">★ 4.3</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">68%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:68%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--amber);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:10px 12px 8px;border-bottom:1px solid var(--border);background:var(--ams);">
+        <p style="font-size:9px;font-weight:500;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">AI Cameras · Sauna</p>
+        <p style="font-size:15px;font-weight:600;color:var(--text);line-height:1.2;">Padel Point</p>
+        <p style="font-size:9px;color:var(--dim);">Bankstown Aerodrome</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Courts</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">4 indoor</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Hours</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">7am – 2am</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$90–120</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Rating</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">★ 4.5</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">62%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:62%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--faint);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:10px 12px 8px;border-bottom:1px solid var(--border);background:var(--s2);">
+        <p style="font-size:9px;font-weight:500;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Outdoor Only</p>
+        <p style="font-size:15px;font-weight:600;color:var(--text);line-height:1.2;">Tribe Padel & Wellness</p>
+        <p style="font-size:9px;color:var(--dim);">North Ryde</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Courts</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">5 outdoor</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Hours</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">7am – 10:30pm</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$80–100</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">Rating</p>
+          <p style="font-size:13px;font-weight:500;color:var(--text);">★ 4.2</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">57%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:57%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--faint);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:5px 9px 5px;border-bottom:1px solid var(--border);background:var(--s2);">
+        <p style="font-size:9px;font-weight:500;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:0;display:none;"> </p>
+        <p style="font-size:12px;font-weight:500;color:var(--text);line-height:1.2;">IPA Northern Beaches</p>
+        <p style="font-size:9px;color:var(--dim);">Cromer</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Courts</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">4 indoor</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Hours</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">6am – 10pm</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$80–100</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Rating</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">★ 4.3</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">60%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:60%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--faint);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:5px 9px 5px;border-bottom:1px solid var(--border);background:var(--s2);">
+        <p style="font-size:9px;font-weight:500;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:0;display:none;"> </p>
+        <p style="font-size:12px;font-weight:500;color:var(--text);line-height:1.2;">Padel Club Australia</p>
+        <p style="font-size:9px;color:var(--dim);">North Rocks</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Courts</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">6 padel + pickle</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Hours</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">5am – 2am</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$80–100</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Rating</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">★ 4.3</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">60%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:60%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--amber);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:5px 9px 5px;border-bottom:1px solid var(--border);background:var(--ams);">
+        <p style="font-size:9px;font-weight:500;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Opened Feb 2026</p>
+        <p style="font-size:12px;font-weight:500;color:var(--text);line-height:1.2;">Play Nation</p>
+        <p style="font-size:9px;color:var(--dim);">Smeaton Grange</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Courts</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">6 padel + pickle</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Hours</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">TBC (new)</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$80–100</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Rating</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">New</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--amber);">37%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:37%;height:100%;background:var(--amber);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--faint);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:5px 9px 5px;border-bottom:1px solid var(--border);background:var(--s2);">
+        <p style="font-size:9px;font-weight:500;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Pioneer 2015</p>
+        <p style="font-size:12px;font-weight:500;color:var(--text);line-height:1.2;">Padel Sydney North</p>
+        <p style="font-size:9px;color:var(--dim);">North Ryde</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- data pills -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;margin-bottom:6px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Courts</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">4–5 outdoor</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Hours</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">7am – 9pm</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Price / hr</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">$70–90</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:8px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">Rating</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">★ 4.1</p>
+        </div>
+      </div>
+      <!-- occupancy bar -->
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+          <span style="color:var(--dim);">Peak occupancy</span>
+          <span style="font-weight:600;color:var(--green);">50%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:50%;height:100%;background:var(--green);border-radius:3px;"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--red);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+      <!-- header -->
+      <div style="padding:5px 9px 5px;border-bottom:1px solid var(--border);background:var(--rs);">
+        <p style="font-size:9px;font-weight:500;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Risk: Pipeline</p>
+        <p style="font-size:12px;font-weight:500;color:var(--text);line-height:1.2;">IPA Inner West Expansion</p>
+        <p style="font-size:9px;color:var(--dim);">Sites rumoured</p>
+      </div>
+      <!-- body -->
+      <div style="padding:7px 9px;flex:1;display:flex;flex-direction:column;gap:0;">
+      <!-- pipeline special -->
+      <div style="display:flex;flex-direction:column;gap:5px;flex:1;">
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Risk Level</p>
+          <p style="font-size:12px;font-weight:500;color:var(--accent);">Medium</p>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:9px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Mitigation</p>
+          <p style="font-size:11px;font-weight:500;color:var(--text);">Open first</p>
+        </div>
+        <div style="background:var(--pdl-s);border:1px solid var(--pdl-b);border-radius:5px;padding:7px 9px;flex:1;">
+          <p style="font-size:10px;color:var(--pdl);line-height:1.5;">Pre-sell memberships before launch — community loyalty is the permanent moat</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTNOTE -->
+  <div style="flex-shrink:0;padding:3px 0;">
+    <p style="font-size:10px;color:var(--faint);">Pricing visible only via Playtomic at time of booking. Occupancy estimates based on observed booking patterns and industry benchmarks. April 2026.</p>
+  </div>
+
+</div></div>
+
+<!-- ════ R2: CATCHMENT MAP ════ -->
+<div class="page page-locked" id="r2"><div style="max-width:1100px;margin:0 auto;padding:14px 20px;height:100%;display:flex;flex-direction:column;">
+  <div class="map-layout" style="flex:1;">
+    <div class="map-wrap">
+      <div id="catchment-map" style="width:100%;height:100%;"></div>
+      <div class="map-controls">
+        <button class="zone-btn z25 active" onclick="setZone(2.5,this)">2.5 km</button>
+        <button class="zone-btn z5" onclick="setZone(5,this)">5 km</button>
+        <button class="zone-btn z75" onclick="setZone(7.5,this)">7.5 km</button>
+        <button class="zone-btn z10k" onclick="setZone(10,this)">10 km</button>
+      </div>
+      <div class="map-legend">
+        <p>Legend</p>
+        <div class="leg-row"><div class="leg-dot" style="background:#c4622d;"></div>Your Venue</div>
+        <div class="leg-row"><div class="leg-dot" style="background:#1a6b3c;"></div>Competitor</div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--pdl);"></div>2.5 km suburbs</div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--accent);"></div>5 km suburbs</div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--green);"></div>7.5 km suburbs</div>
+        <div class="leg-row"><div class="leg-dot" style="background:#6b3a9a;"></div>10 km suburbs</div>
+      </div>
+    </div>
+    <div class="sub-panel">
+      <div class="sub-hdr">
+        <h3>Catchment Data</h3>
+        <div class="sub-stats-row">
+          <div class="sub-mini"><span class="sub-mini-val" id="stat-suburbs">7</span><span class="sub-mini-lbl">Suburbs</span></div>
+          <div class="sub-mini"><span class="sub-mini-val" id="stat-pop">~71K</span><span class="sub-mini-lbl">Population</span></div>
+          <div class="sub-mini"><span class="sub-mini-val" style="color:var(--green)">Zero</span><span class="sub-mini-lbl">Competitors</span></div>
+        </div>
+      </div>
+      <div id="suburb-list"></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ════ R3: COMPETITORS ════ -->
+<div class="page" id="r3"><div class="inner">
+  <div class="sec-label">Market Intelligence — 03</div>
+  <div class="sec-title">Where every competitor falls short</div>
+  <div class="sec-sub">No venue in Sydney can simultaneously run tournaments, leagues, and corporate events. Your 14 courts change that structurally — it's not a marginal advantage, it's a different category.</div>
+  <div class="win-card gap">
+    <div class="win-header"><p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--pdl);margin-bottom:4px;">PDL Marrickville — Structural Advantages</p><p style="font-size:17px;font-weight:400;color:var(--text);">How PDL wins against every competitor in Sydney</p></div>
+    <div class="win-body">
+      <div class="win-cell"><p class="win-cell-label">14 Courts</p><p class="win-cell-val">The scale no competitor in inner Sydney has — simultaneous leagues, tournaments, corporate events</p></div>
+      <div class="win-cell"><p class="win-cell-label">Location</p><p class="win-cell-val">Zero padel within 10 km — a monopoly catchment at launch, 186K+ residents unserved</p></div>
+      <div class="win-cell"><p class="win-cell-label">All-weather</p><p class="win-cell-val">Fully indoor — guaranteed play every day, every season. No cancellations ever.</p></div>
+      <div class="win-cell"><p class="win-cell-label">Programming</p><p class="win-cell-val">Leagues + tournaments + corporate simultaneously — only possible at 14 courts</p></div>
+      <div class="win-cell"><p class="win-cell-label">Revenue</p><p class="win-cell-val">F&B + retail + merch + coaching on top of court hire — diversified from day one</p></div>
+    </div>
+  </div>
+  <div class="weak-grid gap">
+    <div class="weak-card"><div class="weak-header"><p class="weak-venue-tag">Indoor Padel Australia</p><p class="weak-title">Market leader — but showing cracks</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Narrow courts</strong> — multiple safety complaints, players hitting walls</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Pricing backlash</strong> — recent increases cited as excessive with no improvement in experience</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Customer service</strong> — gate-code-only access, communication issues</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>No inner-west venue</strong> — Alexandria still 15 min drive for inner-west players</p></div></div>
+    <div class="weak-card"><div class="weak-header"><p class="weak-venue-tag">The Padel Lounge — Greenacre</p><p class="weak-title">Best-rated venue, worst capacity</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Only 4 courts</strong> — sold out weekends, turning away demand they can't serve</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Location mismatch</strong> — serves south-west Sydney, not inner-west professionals</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>No room to scale</strong> — physically cannot expand without relocating</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>No league infrastructure</strong> — 4 courts makes simultaneous leagues impossible</p></div></div>
+    <div class="weak-card"><div class="weak-header"><p class="weak-venue-tag">Sydney Racquet Club — Moore Park</p><p class="weak-title">Prime location, minimal padel</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Only 3 courts</strong> — demand exceeds supply, can't host serious events</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>All outdoor</strong> — wind complaints consistent, weather cancellations</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Bar-first identity</strong> — padel is an add-on, not the core product</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>$90–110/hr outdoor</strong> — price premium without indoor quality</p></div></div>
+    <div class="weak-card"><div class="weak-header"><p class="weak-venue-tag">Tribe Padel — North Ryde</p><p class="weak-title">Outdoor dependency, wrong location</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>100% outdoor</strong> — no play during rain, cold mornings reduce demand</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Closes 10:30PM</strong> — misses post-work evening peak Mon–Thurs</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Tennis co-tenancy</strong> — padel is secondary, scheduling conflicts</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>40+ min</strong> from inner-west, no public transport connection</p></div></div>
+    <div class="weak-card"><div class="weak-header"><p class="weak-venue-tag">Padel Point — Bankstown</p><p class="weak-title">Premium product, inaccessible location</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Aerodrome access</strong> — car-only, eliminates inner-west players entirely</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Highest prices ($90–120)</strong> — creates expectation risk if anything underdelivers</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Only 4 courts</strong> — can't run the scale their premium positioning suggests</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Community still forming</strong> — loyalty not yet established</p></div></div>
+    <div class="weak-card"><div class="weak-header"><p class="weak-venue-tag">Play Nation — Smeaton Grange</p><p class="weak-title">Too far, too new, wrong demographic</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>South-west Sydney only</strong> — 45+ min from inner-west, different catchment</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Opened Feb 2026</strong> — ~37% occupancy, community not yet established</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Pickleball dilution</strong> — 5 pickle courts alongside 6 padel divides focus</p></div><div class="weak-item"><div class="weak-bullet"></div><p><strong>Lower income catchment</strong> — demographics less aligned to padel's price point</p></div></div>
+  </div>
+</div></div>
+
+<!-- ════ R4: MARKET GROWTH ════ -->
+<div class="page page-locked" id="r4"><div class="inner">
+  <div class="sec-label">Market Intelligence — 04</div>
+  <div class="sec-title">Global momentum. Sydney is ground floor.</div>
+  <div class="sec-sub">Padel is growing faster than any racket sport in recorded history. Australia is explicitly named by FIP as the next major market — and the inner west has zero infrastructure to meet it.</div>
+  <div class="growth-hero gap">
+    <div>
+      <p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--pdl);margin-bottom:12px;">Sydney & NSW — April 2026</p>
+      <p style="font-size:18px;font-weight:400;color:var(--text);line-height:1.4;margin-bottom:12px;">57 courts. 10 venues. Zero in the inner west. The fastest-growing sport in Australia has a critical infrastructure gap — and inner-west Sydney is ground zero.</p>
+      <p style="font-size:11px;color:var(--dim);line-height:1.7;">NSW is Australia's most mature padel market (~50% of all Australian Playtomic users). The inner west has 186K+ residents, Sydney's highest professional density, and not a single padel court. PDL Marrickville is the only venue positioned to capture this catchment before any competitor can.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="growth-stat"><p class="growth-stat-val">57</p><p class="growth-stat-lbl">Total courts in Sydney — April 2026</p></div>
+      <div class="growth-stat"><p class="growth-stat-val">~20K</p><p class="growth-stat-lbl">NSW Playtomic players — your immediate market</p></div>
+      <div class="growth-stat"><p class="growth-stat-val">92%</p><p class="growth-stat-lbl">First-time players return for a second session</p></div>
+      <div class="growth-stat"><p class="growth-stat-val">2032</p><p class="growth-stat-lbl">Brisbane Olympics — padel campaigning for inclusion</p></div>
+    </div>
+  </div>
+  <div class="data-grid gap">
+    <div class="data-card"><p class="data-val">1,226</p><p class="data-label">Competitive tour players in Australia, 2025</p><p class="data-sub">Padel Australia's national tour had 1,226 unique registered competitors in 2025 across 14 national tournaments — up significantly from prior years. This is just the competitive base; recreational players are a multiple of this.</p><div class="trend-bar"><div class="trend-row"><span class="trend-lbl">2021</span><div class="trend-bg"><div class="trend-fill" style="width:20%;background:var(--accent)"></div></div><span class="trend-val" style="color:var(--accent)">~200</span></div><div class="trend-row"><span class="trend-lbl">2023</span><div class="trend-bg"><div class="trend-fill" style="width:55%;background:var(--amber)"></div></div><span class="trend-val" style="color:var(--amber)">~650</span></div><div class="trend-row"><span class="trend-lbl">2024</span><div class="trend-bg"><div class="trend-fill" style="width:80%;background:#5a8a3a"></div></div><span class="trend-val" style="color:#5a8a3a">~950</span></div><div class="trend-row"><span class="trend-lbl">2025</span><div class="trend-bg"><div class="trend-fill" style="width:100%;background:var(--green)"></div></div><span class="trend-val" style="color:var(--green)">1,226</span></div></div></div>
+    <div class="data-card"><p class="data-val">57</p><p class="data-label">Sydney courts across 10 venues, April 2026</p><p class="data-sub">Equivalent to London 2021 — just before the UK's explosive growth phase. Based on UK trajectory, Sydney should have 200–400 courts by 2028. PDL's 14 courts = 25% of current Sydney supply.</p><div class="trend-bar"><div class="trend-row"><span class="trend-lbl">2021</span><div class="trend-bg"><div class="trend-fill" style="width:14%;background:var(--accent)"></div></div><span class="trend-val" style="color:var(--accent)">~8</span></div><div class="trend-row"><span class="trend-lbl">2023</span><div class="trend-bg"><div class="trend-fill" style="width:38%;background:var(--amber)"></div></div><span class="trend-val" style="color:var(--amber)">~22</span></div><div class="trend-row"><span class="trend-lbl">2025</span><div class="trend-bg"><div class="trend-fill" style="width:70%;background:#5a8a3a"></div></div><span class="trend-val" style="color:#5a8a3a">~40</span></div><div class="trend-row"><span class="trend-lbl">2026</span><div class="trend-bg"><div class="trend-fill" style="width:100%;background:var(--green)"></div></div><span class="trend-val" style="color:var(--green)">57+</span></div></div></div>
+    <div class="data-card"><p class="data-val">186K+</p><p class="data-label">Inner West residents with zero padel</p><p class="data-sub">37.8% high-income households vs 30.1% Sydney average. Median age 36. 43.2% professionals. Zero courts. This demographic profile matches the highest-converting padel markets globally.</p><div class="trend-bar" style="margin-top:14px;"><div class="trend-row"><span class="trend-lbl">High income</span><div class="trend-bg"><div class="trend-fill" style="width:100%;background:var(--pdl)"></div></div><span class="trend-val" style="color:var(--pdl)">37.8%</span></div><div class="trend-row"><span class="trend-lbl">Sydney avg</span><div class="trend-bg"><div class="trend-fill" style="width:80%;background:var(--faint)"></div></div><span class="trend-val" style="color:var(--faint)">30.1%</span></div><div class="trend-row"><span class="trend-lbl">Professionals</span><div class="trend-bg"><div class="trend-fill" style="width:88%;background:var(--green)"></div></div><span class="trend-val" style="color:var(--green)">43.2%</span></div></div></div>
+  </div>
+  <div class="note green-note"><p><strong>The IPA comparison:</strong> Indoor Padel Australia opened in Alexandria in 2020 and is now running at ~80% peak occupancy with the highest prices in Sydney. They established community loyalty before any competitor could respond. PDL's inner-west opening achieves the same first-mover position in a larger, wealthier, and completely unserved catchment. Open first — community loyalty is the permanent moat.</p></div>
+</div></div>
+
+
+<!-- ════ R5: MEMBERSHIP ════ -->
+<div class="page" id="r5"><div class="inner">
+  <div class="sec-label">Market Intelligence — 05</div>
+  <div class="sec-title">$15 / month flat membership</div>
+  <div class="sec-sub">Low-friction, universally accessible. The fee is a registration mechanism — it gives you a CRM, full usage data, and a direct relationship with every player at the moment they commit to the sport.</div>
+  <div class="price-hero gap">
+    <div>
+      <p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">Court Pricing Recommendation</p>
+      <div style="display:flex;align-items:flex-end;gap:24px;margin-bottom:14px;">
+        <div><p style="font-size:10px;color:var(--dim);margin-bottom:3px;">Off-peak (Mon–Fri before 4pm)</p><p style="font-size:38px;font-weight:400;color:var(--text);letter-spacing:-.03em;">$80</p><p style="font-size:11px;color:var(--dim);">per court per hour</p></div>
+        <div style="width:1px;height:55px;background:rgba(26,79,154,.2);"></div>
+        <div><p style="font-size:10px;color:var(--dim);margin-bottom:3px;">Peak (evenings + weekends)</p><p style="font-size:38px;font-weight:400;color:var(--text);letter-spacing:-.03em;">$100</p><p style="font-size:11px;color:var(--dim);">per court per hour</p></div>
+      </div>
+      <p style="font-size:11px;color:var(--dim);line-height:1.7;">At market mid-point. IPA charges $80–100 at 80% occupancy. At $80–100 with 14 indoor courts and zero competitors in catchment, you don't need to undercut — you just need to open.</p>
+    </div>
+    <div>
+      <p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">Per Player Cost Breakdown</p>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:rgba(26,79,154,.07);border:1px solid rgba(26,79,154,.12);border-radius:8px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center;"><div><p style="font-size:11px;font-weight:400;color:var(--text);">Off-peak split (4 players)</p><p style="font-size:10px;color:var(--dim);">$80/hr ÷ 4 players</p></div><p style="font-size:18px;font-weight:400;color:var(--green);">$20 pp</p></div>
+        <div style="background:rgba(26,79,154,.07);border:1px solid rgba(26,79,154,.12);border-radius:8px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center;"><div><p style="font-size:11px;font-weight:400;color:var(--text);">Peak split (4 players)</p><p style="font-size:10px;color:var(--dim);">$100/hr ÷ 4 players</p></div><p style="font-size:18px;font-weight:400;color:var(--green);">$25 pp</p></div>
+        <div style="background:rgba(26,79,154,.07);border:1px solid rgba(26,79,154,.12);border-radius:8px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center;"><div><p style="font-size:11px;font-weight:400;color:var(--text);">Monthly membership</p><p style="font-size:10px;color:var(--dim);">Cancellable anytime</p></div><p style="font-size:18px;font-weight:400;color:var(--pdl);">$15 pm</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Sydney & Global Market Pricing Comparison</p></div>
+    <table class="mkt-table">
+      <thead><tr><th>Venue / Operator</th><th>Court Price / Hr</th><th>Membership</th><th>Booking Window</th><th>Model</th></tr></thead>
+      <tbody>
+        <tr><td>IPA Alexandria</td><td>$80–100</td><td>None</td><td>2–3 days</td><td>Pure pay-and-play</td></tr>
+        <tr><td>The Padel Lounge</td><td>$80–100</td><td>None</td><td>2–3 days</td><td>Pure pay-and-play</td></tr>
+        <tr><td>Padel Point Bankstown</td><td>$90–120</td><td>None confirmed</td><td>2–3 days</td><td>Premium pay-and-play</td></tr>
+        <tr><td>Game4Padel UK</td><td>£24–36 (~A$47–70)</td><td>£6.50/mo (~A$13)</td><td>7–10 days</td><td>Low-cost membership + P&P</td></tr>
+        <tr><td>Padel Social Club London</td><td>£50–85 (~A$98–165)</td><td>£33/mo (~A$64)</td><td>10–12 days</td><td>Premium membership club</td></tr>
+        <tr class="you"><td><strong>PDL Marrickville — Off-Peak</strong></td><td><strong>$80/hr</strong></td><td><strong>$15/month</strong></td><td><strong>7 days (members)</strong></td><td><strong>Community + data model</strong></td></tr>
+        <tr class="you"><td><strong>PDL Marrickville — Peak</strong></td><td><strong>$100/hr</strong></td><td><strong>$15/month</strong></td><td><strong>7 days (members)</strong></td><td><strong>Market rate + membership</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="g3">
+    <div class="card"><p class="ct">Year 1 — 600 members</p><p class="cs">$108,000/year predictable recurring revenue. Covers ~13% of annual lease. 600 members gives you a player database large enough to fill every league night and coaching programme from Day 1.</p></div>
+    <div class="card"><p class="ct">Year 2–3 — 1,000 members</p><p class="cs">$180,000/year in membership fees. Entirely predictable, zero court time consumed. 1,000 registered players each have a booking history you can analyse — session frequency, spending, lapsing players to target.</p></div>
+    <div class="card"><p class="ct">The real value is data</p><p class="cs">Every $15/month member is a data point. Session frequency, preferred time slots, spend per visit, how often they bring guests. No competitor in the inner west has this. You will — from Day 1.</p></div>
+  </div>
+</div></div>
+
+<!-- ════ R6: PLAYTOMIC ════ -->
+<div class="page page-locked" id="r6"><div class="inner">
+  <div class="pt-hero gap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><div style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:4px 11px;"><p style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.04em;">PLAYTOMIC</p></div><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,240,0,.7);">Recommended Platform</span></div>
+        <p style="font-size:18px;font-weight:400;color:#fff;line-height:1.35;margin-bottom:12px;">The only platform with the player network already built in Australia.</p>
+        <p style="font-size:11px;color:rgba(255,255,255,.65);line-height:1.7;">Every other Sydney venue runs on Playtomic. Every padel player in Australia already has the app. When you go live on the Champion plan, 2M+ active players can discover and book you immediately.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+        <div class="pt-stat"><p class="pt-stat-val">~40K</p><p class="pt-stat-lbl">Est. Australian active users</p></div>
+        <div class="pt-stat"><p class="pt-stat-val">~20K</p><p class="pt-stat-lbl">NSW players — your market</p></div>
+        <div class="pt-stat"><p class="pt-stat-val">3–5×</p><p class="pt-stat-lbl">Revenue vs non-Playtomic clubs</p></div>
+        <div class="pt-stat"><p class="pt-stat-val">1,226</p><p class="pt-stat-lbl">Competitive tour players AU 2025</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="g2 gap">
+    <div class="tbl-wrap">
+      <div class="tbl-hdr"><p>Estimated Playtomic Users by State</p></div>
+      <table>
+        <thead><tr><th>State</th><th>Est. Users</th><th>% of AU</th><th>Stage</th></tr></thead>
+        <tbody>
+          <tr style="background:rgba(0,47,167,.04);border-left:3px solid var(--pdl);"><td><strong>NSW</strong> <span style="font-size:9px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:1px 5px;border-radius:2px;font-weight:600;">YOUR MARKET</span></td><td style="color:var(--green);font-weight:500;">~18,000–22,000</td><td style="color:var(--green);font-weight:500;">~50%</td><td><span class="badge bg">Most mature</span></td></tr>
+          <tr><td>VIC</td><td>~9,000–12,000</td><td>~27%</td><td><span class="badge bb">Growing fast</span></td></tr>
+          <tr><td>QLD</td><td>~4,000–6,000</td><td>~12%</td><td><span class="badge ba">Emerging</span></td></tr>
+          <tr><td>WA</td><td>~2,500–3,500</td><td>~8%</td><td><span class="badge">Early</span></td></tr>
+          <tr><td>SA + others</td><td>~1,500–2,300</td><td>~5%</td><td><span class="badge">Very early</span></td></tr>
+          <tr class="total-row"><td><strong>Australia Total</strong></td><td><strong>~35,000–45,000</strong></td><td><strong>100%</strong></td><td style="color:#fff;">Ground floor</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-hdr"><p>Playtomic Fee Structure</p></div>
+      <div style="padding:0;">
+        <div class="pt-plan rec"><p style="font-size:12px;font-weight:500;color:var(--text);">Champion Plan <span style="font-size:9px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:1px 6px;border-radius:2px;font-weight:600;margin-left:5px;">RECOMMENDED</span></p><p style="font-size:11px;color:var(--dim);margin-top:3px;">Bookings, CRM, leagues, flat memberships, coaching, campaigns, invoices. 4hr support. Full data access.</p></div>
+        <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Monthly subscription</p><p style="font-size:13px;font-weight:500;color:var(--text);">~$300–500/mo</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">Negotiated directly — not published. As a 14-court anchor venue you have strong leverage.</p></div>
+        <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Booking commission</p><p style="font-size:13px;font-weight:500;color:var(--text);">5–15% per booking</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">Deducted before funds reach your Stripe. On a $100/hr booking: $5–15 to Playtomic.</p></div>
+        <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Membership commission</p><p style="font-size:13px;font-weight:500;color:var(--text);">~13% of $15/mo</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">You net ~$13.05 per member per month. At 1,000 members = ~$13,050/month net.</p></div>
+        <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Stripe processing</p><p style="font-size:13px;font-weight:500;color:var(--text);">~1.7% + $0.30</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">Standard AU Stripe rate, applied on top of Playtomic commission.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="note pdl-note"><p><strong>Day 1 advantage:</strong> ~20,000 NSW players already on Playtomic can find and book PDL Marrickville the moment you go live — with zero marketing spend. Your venue appears in their app as the only inner-west option. This is the Playtomic network effect — and it's why every other Sydney venue uses it.</p></div>
+</div></div>
+
+
+<!-- ════════════════════════════════════════════
+     BUSINESS PLAN — B1: OVERVIEW
+════════════════════════════════════════════ -->
+<div class="page" id="b1"><div class="inner">
+  <div class="overview-hero">
+    <p class="oh-title">PDL Marrickville — Business & Financial Plan</p>
+    <p class="oh-sub">14 indoor padel courts · 3,000 m²+ warehouse · Inner West Sydney · 10+10 year lease · 15% cash incentive · QH Padel Classic courts (invoice ULP20260408 confirmed)</p>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
+      <div class="oh-stat"><p class="oh-val">14</p><p class="oh-lbl">Indoor padel courts</p></div>
+      <div class="oh-stat"><p class="oh-val">3,000 m²</p><p class="oh-lbl">Warehouse minimum</p></div>
+      <div class="oh-stat"><p class="oh-val" id="b1-capex">~$1.30M</p><p class="oh-lbl">Total setup capital</p></div>
+      <div class="oh-stat"><p class="oh-val" id="b1-incentive">$1,008,000</p><p class="oh-lbl">Cash incentive (12%)</p></div>
+      <div class="oh-stat"><p class="oh-val" id="b1-rev">~$5.4M</p><p class="oh-lbl">Year 1 net revenue</p></div>
+      <div class="oh-stat"><p class="oh-val" id="b1-payback">~5 mo</p><p class="oh-lbl">Payback on net investment</p></div>
+    </div>
+  </div>
+
+  <div class="g2 gap">
+    <div class="card green-c">
+      <p class="ct" style="color:var(--green);">Confirmed — Invoice ULP20260408</p>
+      <div style="margin-top:10px;">
+        <div class="inv-item"><div><p class="inv-name">14 × Classic Padel Courts</p><p class="inv-desc">QH Padel, Hebei China · AUD $13,406/court</p></div><p class="inv-amt" style="color:var(--green);">AUD $187,683</p></div>
+        <div class="inv-item"><div><p class="inv-name">FOB Shipping (3×40HQ + 1×20GP)</p><p class="inv-desc">Tianjin Port · valid until Apr 30, 2026</p></div><p class="inv-amt" style="color:var(--green);">AUD $5,152</p></div>
+        <div class="inv-item"><div><p class="inv-name">Invoice Total (FOB)</p><p class="inv-desc">Rate 1.4471 · 8 April 2026</p></div><p class="inv-amt" style="color:var(--green);">AUD $191,854</p></div>
+        <div class="inv-item"><div><p class="inv-name">30% Deposit (before production)</p></div><p class="inv-amt" style="color:var(--green);">AUD $57,556</p></div>
+        <div class="inv-item"><div><p class="inv-name">70% Balance (before pickup)</p></div><p class="inv-amt" style="color:var(--green);">AUD $134,298</p></div>
+        <div class="inv-item"><div><p class="inv-name">Production lead time</p></div><p class="inv-amt">20–25 days from deposit</p></div>
+      </div>
+    </div>
+    <div class="card amber-c">
+      <p class="ct" style="color:var(--amber);">Key Gaps — Costs to Confirm</p>
+      <div style="margin-top:10px;">
+        <div class="inv-item"><div><p class="inv-name">Sea freight + AU landed costs</p></div><p class="inv-amt" style="color:var(--red);">~AUD $63,000</p></div>
+        <div class="inv-item"><div><p class="inv-name">Court installation labour</p></div><p class="inv-amt" style="color:var(--red);">~AUD $46,000</p></div>
+        <div class="inv-item"><div><p class="inv-name">Full warehouse fit-out</p><p class="inv-desc">Civil, electrical, plumbing, amenities</p></div><p class="inv-amt" style="color:var(--red);">~AUD $781K (mid)</p></div>
+        <div class="inv-item"><div><p class="inv-name">Lease (3,000 m² × $280/m²)</p></div><p class="inv-amt" style="color:var(--red);">$840K/yr</p></div>
+        <div class="inv-item"><div><p class="inv-name">12% cash incentive received</p><p class="inv-desc">At lease signing — offsets fit-out entirely</p></div><p class="inv-amt" style="color:var(--green);">+$1,260,000</p></div>
+        <div class="inv-item"><div><p class="inv-name">Security deposit (3 months)</p></div><p class="inv-amt" style="color:var(--red);">~$210,000</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-div"><span>Venue Components</span></div>
+  <div class="g4 gap">
+    <div class="card"><p class="ct">14 Courts</p><p class="cs">Classic indoor panoramic. 20.2m × 10.1m per court. Full glass, turf, LED lighting per invoice. Min 10m ceiling required.</p></div>
+    <div class="card"><p class="ct">Pro Shop</p><p class="cs">Rackets $120–450, shoes $120–280, balls, bags, overgrips. Curated 3–5 models per category. ~$22K opening stock.</p></div>
+    <div class="card"><p class="ct">PDL Merch Store</p><p class="cs">Hoodies $89, jackets $109, shorts $55, tees $45, caps $35. Yves blue + black. Launch capsule: 4 items × 100 units.</p></div>
+    <div class="card"><p class="ct">Health Canteen</p><p class="cs">Cold brew, protein shakes, sports drinks, acai bowls, bars, snacks. 60–70% gross margin. High impulse rate post-match.</p></div>
+    <div class="card"><p class="ct">Locker Rooms</p><p class="cs">Male + female. Showers, lockers, benches. Essential for corporate and league players. Est. $55K fit-out.</p></div>
+    <div class="card"><p class="ct">Court Cameras</p><p class="cs">All 14 courts. Veo or EyeOnPadel. Players share match footage — free marketing. Est. $63K installed + subscription.</p></div>
+    <div class="card"><p class="ct">Playtomic Champion</p><p class="cs">All bookings, memberships, leagues, coaching, CRM. $15/mo membership auto-billed via Stripe.</p></div>
+    <div class="card"><p class="ct">10+10 yr Lease</p><p class="cs">15% cash incentive on first term = $1.26M paid at signing. Full rent from Day 1. 3-month security deposit.</p></div>
+  </div>
+
+  <div class="note pdl-note">
+    <p><strong>Cash incentive strategy:</strong> At $280/m² × 3,000m² × 10 years = $8.4M first-term value. 15% = <strong>$1,260,000 cash paid by landlord at commencement</strong>. Mid-case fit-out is $781K — the incentive covers the entire fit-out and leaves $479K working capital surplus. Net invested capital after incentive is approximately $594K. This is your biggest financial lever. Do not sign a lease without negotiating a cash incentive — 10–20% is standard for 10-year anchor tenants in Sydney's industrial market.</p>
+  </div>
+
+  <div class="g3">
+    <div class="card red-c"><p class="ct" style="color:var(--red);">Legal & Site</p><div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--dim);">
+      <div>○ Warehouse lease signed — Inner West Marrickville</div>
+      <div>○ DA / planning approval for padel courts</div>
+      <div>○ Building consent for internal fit-out</div>
+      <div>○ Business structure / ABN / Pty Ltd setup</div>
+      <div>○ Food business registration (council)</div>
+      <div>○ Liquor licence (if selling alcohol at canteen)</div>
+    </div></div>
+    <div class="card amber-c"><p class="ct" style="color:var(--amber);">Finance & Insurance</p><div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--dim);">
+      <div>○ Capital / investor funding confirmed</div>
+      <div>○ Public liability insurance ($20M minimum)</div>
+      <div>○ Property + contents insurance</div>
+      <div>○ Workers compensation (mandatory NSW)</div>
+      <div>○ Management liability + cyber insurance</div>
+      <div>○ GST registration before importing courts</div>
+    </div></div>
+    <div class="card pdl-c"><p class="ct" style="color:var(--pdl);">Operations & Tech</p><div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--dim);">
+      <div>○ Playtomic Champion plan negotiated</div>
+      <div>○ Camera system vendor selected (Veo/EyeOnPadel)</div>
+      <div>○ Square POS + Xero + Deputy setup</div>
+      <div>○ Court installation contractor engaged</div>
+      <div>○ Customs broker engaged pre-shipment</div>
+      <div>○ Pre-launch membership waitlist opened</div>
+    </div></div>
+  </div>
+</div></div>
+
+<!-- ════ B2: COURT COSTS ════ -->
+<div class="page" id="b2"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Court Procurement</p>
+    <p class="ph-title">QH Padel Classic Courts · Invoice ULP20260408 · All figures AUD</p>
+    <p class="ph-sub">Confirmed FOB pricing at rate 1.48 (live). All costs from Tianjin factory to Marrickville door. Adjust any cost below — totals recalculate instantly.</p>
+  </div>
+
+  <!-- INVOICE CONFIRMED -->
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Confirmed Invoice — AUD at <span id="cc-fx-display">1.48</span></p><p style="font-size:12px;font-weight:500;color:var(--green);">Total landed: <span id="cc-landed-total">$0</span></p></div>
+    <table>
+      <thead><tr><th style="width:32%;">Item</th><th style="width:28%;">Detail</th><th style="width:8%;text-align:right;padding-right:8px;">Qty</th><th style="width:14%;text-align:right;padding-right:8px;">Rate (AUD)</th><th style="width:12%;" class="tr">Total</th></tr></thead>
+      <tbody id="cc-tbody"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="4"><strong>Total Courts — Landed & Installed</strong></td>
+          <td class="tr"><strong id="cc-total-foot">$0</strong></td>
+        </tr>
+        <tr class="subtotal">
+          <td colspan="4">Per court (14 courts)</td>
+          <td class="tr" id="cc-per-court">$0</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="g3">
+    <div class="card"><p class="ct">16 items per court</p><p class="cs">Corner + structural + extended posts, horizontal tubes, lighting poles, 46 fence mesh panels, 18 tempered glass panels (12mm), 4×400W LED lights, 8 lighting arms, padel net, net posts, hardware, seam tape, adhesive, 209m² artificial grass 12mm, free logo printing.</p></div>
+    <div class="card"><p class="ct">Key specs</p><p class="cs">Court footprint: 20.2m × 10.1m = 204m² per court. 14 courts + circulation requires 3,200–3,600m² minimum. Ceiling: min 10m. QH logo printing included — use PDL Yves Blue.</p></div>
+    <div class="card"><p class="ct">Payment timeline</p><p class="cs">Month 0: 30% deposit → production starts (20–25 days). Month 1: 70% balance before pickup. Month 2–3: shipping. Month 3–4: customs + delivery + installation.</p></div>
+  </div>
+</div></div>
+
+<div class="page" id="b3"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Fit-Out</p>
+    <p class="ph-title">Full warehouse conversion — 3,000 m² to PDL standard</p>
+    <p class="ph-sub">Every line item below is fully adjustable. Change hours or rate and the total updates instantly. The 12% cash incentive (~<span id="fo-incentive-display">$1,209,600</span>) received at lease signing is applied against total fit-out cost.</p>
+  </div>
+
+  <!-- FIT-OUT INTERACTIVE TABLE -->
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr">
+      <p>Fit-Out Cost — Fully Adjustable</p>
+      <p style="font-size:12px;font-weight:500;color:var(--green);">Total: <span id="fo-total">$0</span> &nbsp;|&nbsp; After incentive: <span id="fo-net">$0</span></p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:35%;">Item</th>
+          <th style="width:15%;">Category</th>
+          <th style="width:10%;text-align:right;padding-right:8px;">Hrs / Units</th>
+          <th style="width:12%;text-align:right;padding-right:8px;">Rate ($/hr)</th>
+          <th style="width:12%;" class="tr">Total</th>
+        </tr>
+      </thead>
+      <tbody id="fo-tbody"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="4"><strong>Total Fit-Out (excl. courts)</strong></td>
+          <td class="tr"><strong id="fo-total-foot">$0</strong></td>
+        </tr>
+        <tr class="green-row">
+          <td colspan="4">Less: Landlord cash incentive (<span id="fo-incentive-pct">12</span>% × 10yr lease)</td>
+          <td class="tr" id="fo-incentive-row" style="color:var(--green);font-weight:500;">($0)</td>
+        </tr>
+        <tr class="subtotal">
+          <td colspan="4"><strong>Net fit-out after incentive</strong></td>
+          <td class="tr" style="color:var(--green);font-weight:500;" id="fo-net-foot">$0</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="note pdl-note"><p><strong>Cash incentive:</strong> At $280/m² × 3,000m² × 10 years = $8.4M first-term value. 12% = <strong id="fo-incentive-note">$1,008,000</strong> paid in cash by the landlord at commencement. Adjust the incentive % on the Assumptions page — it flows here automatically.</p></div>
+</div></div>
+
+<div class="page" id="b4"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Operating Costs</p>
+    <p class="ph-title">Annual fixed & variable costs — all driven by Assumptions page</p>
+    <p class="ph-sub">Change staff headcount and all costs update automatically. All figures flow into the P&L.</p>
+  </div>
+  <div class="sec-div"><span>Staff Model</span></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+    <!-- MORNING -->
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--amber);border-radius:var(--r);padding:14px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;">Morning · 6am – 12pm</p>
+      <div class="assume-label">Staff on shift</div>
+      <p class="assume-val" id="dayStaffVal">2 people</p>
+      <input type="range" class="assume-range" min="1" max="5" step="1" value="2" oninput="S.dayStaff=+this.value;renderAll()">
+      <div class="range-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <div style="margin-top:8px;" class="assume-label">Shift hours / day</div>
+      <p class="assume-val" id="mornHrsVal">6 hrs</p>
+      <input type="range" class="assume-range" min="4" max="8" step="1" value="6" oninput="S.mornHrs=+this.value;document.getElementById('mornHrsVal').textContent=this.value+' hrs';renderAll()">
+      <div class="range-row"><span>4</span><span>6</span><span>8</span></div>
+      <p class="assume-sub" style="margin-top:6px;">Reception, bar, pro shop. $<span id="dayRateDisp">30</span>/hr casual.</p>
+    </div>
+    <!-- AFTERNOON -->
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--blue);border-radius:var(--r);padding:14px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">Afternoon · 12pm – 6pm</p>
+      <div class="assume-label">Staff on shift</div>
+      <p class="assume-val" id="aftStaffVal">2 people</p>
+      <input type="range" class="assume-range" min="1" max="5" step="1" value="2" oninput="S.aftStaff=+this.value;renderAll()">
+      <div class="range-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <div style="margin-top:8px;" class="assume-label">Shift hours / day</div>
+      <p class="assume-val" id="aftHrsVal">6 hrs</p>
+      <input type="range" class="assume-range" min="4" max="8" step="1" value="6" oninput="S.aftHrs=+this.value;document.getElementById('aftHrsVal').textContent=this.value+' hrs';renderAll()">
+      <div class="range-row"><span>4</span><span>6</span><span>8</span></div>
+      <p class="assume-sub" style="margin-top:6px;">Mixed peak. Afternoon shift. $<span id="aftRateDisp">33</span>/hr casual.</p>
+    </div>
+    <!-- EVENING + MANAGER -->
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--green);border-radius:var(--r);padding:14px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Evening · 6pm – 12am</p>
+      <div class="assume-label">Staff on shift</div>
+      <p class="assume-val" id="eveStaffVal">2 people</p>
+      <input type="range" class="assume-range" min="1" max="5" step="1" value="2" oninput="S.eveStaff=+this.value;document.getElementById('eveStaffVal').textContent=this.value+(+this.value===1?' person':' people');renderAll()">
+      <div class="range-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <div style="margin-top:8px;" class="assume-label">Shift hours / day</div>
+      <p class="assume-val" id="eveHrsVal">6 hrs</p>
+      <input type="range" class="assume-range" min="4" max="8" step="1" value="6" oninput="S.eveHrs=+this.value;document.getElementById('eveHrsVal').textContent=this.value+' hrs';renderAll()">
+      <div class="range-row"><span>4</span><span>6</span><span>8</span></div>
+      <p class="assume-sub" style="margin-top:6px;">Peak hours, leagues. $<span id="aftRateDisp2">33</span>/hr casual.</p>
+    </div>
+  </div>
+  <!-- MANAGER ROW -->
+  <div class="assume-grid-3 gap">
+    <div class="assume-card">
+      <p class="assume-label">Managers / Head Coaches</p>
+      <p class="assume-val" id="mgrCountVal">2 people</p>
+      <input type="range" class="assume-range" min="0" max="4" step="1" value="2" oninput="S.mgrStaff=+this.value;document.getElementById('mgrCountVal').textContent=this.value+(this.value==1?' person':' people');renderAll()">
+      <div class="range-row"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span></div>
+    </div>
+    <div class="assume-card">
+      <p class="assume-label">Manager Annual Salary</p>
+      <p class="assume-val" id="mgrSalVal2">$90,000</p>
+      <input type="range" class="assume-range" min="60000" max="140000" step="5000" value="90000" oninput="S.mgrSalary=+this.value;document.getElementById('mgrSalVal2').textContent='$'+this.value.toLocaleString();renderAll()">
+      <div class="range-row"><span>$60K</span><span>$90K</span><span>$140K</span></div>
+    </div>
+    <div class="assume-card">
+      <p class="assume-label">Staff hourly rates</p>
+      <p class="assume-val" id="ratesSummary">Day $30 · Aft/Eve $33</p>
+      <p class="assume-sub" style="margin-top:6px;">Adjust in Assumptions page → Staff Rates section</p>
+    </div>
+  </div>
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Annual Staff Cost by Time Band (incl. 11.5% superannuation)</p></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th><th>Band</th><th>Headcount</th><th>Rate</th><th>Hours/yr</th><th class="tr">Annual Cost</th>
+        </tr>
+      </thead>
+      <tbody id="staffTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Staff by time band visual -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;">
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--amber);border-radius:var(--r);padding:14px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:6px;">Morning  6am – 12pm</p>
+      <p style="font-size:22px;font-weight:400;color:var(--text);" id="staffCostMorning">—</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:3px;" id="staffDescMorning">—</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--blue);border-radius:var(--r);padding:14px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">Afternoon  12pm – 6pm</p>
+      <p style="font-size:22px;font-weight:400;color:var(--text);" id="staffCostAfternoon">—</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:3px;" id="staffDescAfternoon">—</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--green);border-radius:var(--r);padding:14px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Evening  6pm – 12am</p>
+      <p style="font-size:22px;font-weight:400;color:var(--text);" id="staffCostEvening">—</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:3px;" id="staffDescEvening">—</p>
+    </div>
+  </div>
+  <div class="sec-div"><span>Fixed Annual Operating Costs</span></div>
+  <div class="tbl-wrap">
+    <div class="tbl-hdr"><p>All costs ex-GST · adjustable in Assumptions page</p></div>
+    <table>
+      <thead><tr><th>Category</th><th>Detail</th><th class="tr">Low</th><th class="tr">Mid</th><th class="tr">High</th></tr></thead>
+      <tbody>
+        <tr class="amber-row"><td colspan="5">OCCUPANCY</td></tr>
+        <tr><td>Lease</td><td id="leaseDesc">3,000m² × $280/m² p.a. — payable from Day 1</td><td class="tr">$780,000</td><td id="leaseMidTd" class="tr">$840,000</td><td class="tr">$900,000</td></tr>
+        <tr class="amber-row"><td colspan="5">UTILITIES</td></tr>
+        <tr><td>Electricity — Morning (6am–12pm)</td><td>Courts + reception lighting, minimal HVAC · ~25kW × 6hrs/day</td><td class="tr">$18,000</td><td class="tr">$24,000</td><td class="tr">$32,000</td></tr>
+        <tr><td>Electricity — Afternoon (12pm–6pm)</td><td>Full courts + HVAC ramp-up · ~38kW × 6hrs/day</td><td class="tr">$28,000</td><td class="tr">$38,000</td><td class="tr">$50,000</td></tr>
+        <tr><td>Electricity — Evening (6pm–12am)</td><td>Peak: all courts + full HVAC + F&B · ~55kW × 6hrs/day</td><td class="tr">$40,000</td><td class="tr">$54,000</td><td class="tr">$72,000</td></tr>
+        <tr><td>Electricity — Overnight / Base load</td><td>Security, fridges, alarms, charging · ~5kW × 6hrs</td><td class="tr">$10,000</td><td class="tr">$14,000</td><td class="tr">$14,000</td></tr>
+        <tr><td>Water + gas + waste</td><td>Locker rooms, canteen, council collection</td><td class="tr">$9,500</td><td class="tr">$14,000</td><td class="tr">$21,000</td></tr>
+        <tr class="amber-row"><td colspan="5">INSURANCE</td></tr>
+        <tr><td>Public liability ($20M)</td><td>Sports venue — mandatory</td><td class="tr">$12,000</td><td class="tr">$16,000</td><td class="tr">$22,000</td></tr>
+        <tr><td>Property + contents</td><td>Building improvements + all equipment</td><td class="tr">$8,000</td><td class="tr">$12,000</td><td class="tr">$18,000</td></tr>
+        <tr><td>Workers compensation</td><td>NSW mandatory — ~2.5% of wages</td><td class="tr">$6,500</td><td class="tr">$9,500</td><td class="tr">$14,000</td></tr>
+        <tr><td>Management liability + cyber</td><td>Directors cover + data breach policy</td><td class="tr">$4,000</td><td class="tr">$6,000</td><td class="tr">$9,000</td></tr>
+        <tr class="amber-row"><td colspan="5">TECHNOLOGY & SUBSCRIPTIONS</td></tr>
+        <tr><td>Playtomic Champion</td><td>~$400/mo + commission (see Revenue page)</td><td class="tr">$4,800</td><td class="tr">$5,500</td><td class="tr">$7,200</td></tr>
+        <tr><td>Camera subscription</td><td>Veo / EyeOnPadel cloud + storage, 14 courts</td><td class="tr">$8,400</td><td class="tr">$12,600</td><td class="tr">$16,800</td></tr>
+        <tr><td>Square POS + Shopify</td><td>Retail POS + online merch store</td><td class="tr">$2,400</td><td class="tr">$3,600</td><td class="tr">$4,800</td></tr>
+        <tr><td>Xero + Deputy</td><td>Accounting + staff rostering</td><td class="tr">$2,400</td><td class="tr">$3,200</td><td class="tr">$4,200</td></tr>
+        <tr><td>Internet + phone</td><td>NBN enterprise + business phone</td><td class="tr">$3,600</td><td class="tr">$5,400</td><td class="tr">$7,200</td></tr>
+        <tr class="amber-row"><td colspan="5">MAINTENANCE & MARKETING</td></tr>
+        <tr><td>Court maintenance</td><td>Turf cleaning, glass, net, surface checks</td><td class="tr">$14,000</td><td class="tr">$20,000</td><td class="tr">$28,000</td></tr>
+        <tr><td>General maintenance + cleaning</td><td>3,000m² daily cleaning + ad-hoc repairs</td><td class="tr">$22,000</td><td class="tr">$32,000</td><td class="tr">$45,000</td></tr>
+        <tr><td>Marketing + social</td><td>Digital ads, content, events, pre-launch</td><td class="tr">$24,000</td><td class="tr">$40,000</td><td class="tr">$60,000</td></tr>
+        <tr><td>Accounting + legal (ongoing)</td><td>BAS, tax, contracts, HR</td><td class="tr">$18,000</td><td class="tr">$26,000</td><td class="tr">$38,000</td></tr>
+        <tr><td>Miscellaneous / contingency</td><td>10% buffer on variable opex</td><td class="tr">$15,000</td><td class="tr">$22,000</td><td class="tr">$32,000</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Total Fixed Opex (excl. staff)</strong></td><td class="tr"><strong>$255,100</strong></td><td class="tr"><strong>$367,800</strong></td><td class="tr"><strong>$511,200</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></div>
+
+
+<!-- ════ B5: REVENUE ════ -->
+<div class="page" id="b5"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Revenue Model</p>
+    <p class="ph-title">14 courts · 7 revenue streams · all assumptions adjustable</p>
+    <p class="ph-sub">Adjust any slider and all figures recalculate instantly. Occupancy, pricing, members, hours — all connected to P&L.</p>
+  </div>
+  <div class="assume-grid gap">
+    <div class="assume-card"><p class="assume-label">Peak Rate ($/hr)</p><p class="assume-val" id="peakRateVal">$100</p><input type="range" class="assume-range" min="70" max="140" step="5" value="100" oninput="S.peakRate=+this.value;renderAll()"><div class="range-row"><span>$70</span><span>$100</span><span>$140</span></div></div>
+    <div class="assume-card"><p class="assume-label">Off-Peak Rate ($/hr)</p><p class="assume-val" id="offRateVal">$80</p><input type="range" class="assume-range" min="50" max="115" step="5" value="80" oninput="S.offpeakRate=+this.value;renderAll()"><div class="range-row"><span>$50</span><span>$80</span><span>$115</span></div></div>
+    <div class="assume-card"><p class="assume-label">Peak Hours % of Total</p><p class="assume-val" id="peakPctVal">25%</p><input type="range" class="assume-range" min="0" max="50" step="5" value="25" oninput="S.peakPct=+this.value/100;renderAll()"><div class="range-row"><span>0%</span><span>25%</span><span>50%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Operating Hours / Day</p><p class="assume-val" id="hrsVal">18 hrs</p><input type="range" class="assume-range" min="14" max="20" step="1" value="18" oninput="S.hrs=+this.value;renderAll()"><div class="range-row"><span>14</span><span>18</span><span>20</span></div></div>
+    <div class="assume-card"><p class="assume-label">Playtomic Commission</p><p class="assume-val" id="ptcVal">5%</p><input type="range" class="assume-range" min="5" max="15" step="1" value="5" oninput="S.ptCommission=+this.value/100;renderAll()"><div class="range-row"><span>5%</span><span>10%</span><span>15%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Members (Year 1)</p><p class="assume-val" id="membersVal">500</p><input type="range" class="assume-range" min="100" max="1500" step="50" value="500" oninput="S.members=+this.value;renderAll()"><div class="range-row"><span>100</span><span>600</span><span>1,500</span></div></div>
+    <div class="assume-card"><p class="assume-label">Membership Fee / Month</p><p class="assume-val" id="memFeeVal">$15</p><input type="range" class="assume-range" min="10" max="50" step="5" value="15" oninput="S.memFee=+this.value;renderAll()"><div class="range-row"><span>$10</span><span>$15</span><span>$50</span></div></div>
+    <div class="assume-card"><p class="assume-label">Year 1 Occupancy</p><p class="assume-val" id="y1OccVal">50%</p><input type="range" class="assume-range" min="35" max="90" step="1" value="60" oninput="S.occ[0]=+this.value/100;renderAll()"><div class="range-row"><span>35%</span><span>63%</span><span>90%</span></div></div>
+  </div>
+  <!-- TIME BAND BREAKDOWN -->
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Court Revenue by Time Band — Year 1</p></div>
+    <table id="timeBandTable">
+      <thead>
+        <tr>
+          <th>Time Band</th>
+          <th>Hours</th>
+          <th>Est. Occupancy</th>
+          <th>Rate / Hr</th>
+          <th class="tr">Court Revenue</th>
+          <th class="tr">Bar & F&B</th>
+          <th class="tr">Staff Cost</th>
+          <th class="tr">Net Contribution</th>
+        </tr>
+      </thead>
+      <tbody id="timeBandBody"></tbody>
+    </table>
+  </div>
+
+  <!-- STAFFING BY BAND -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+    <div class="card" style="border-top:3px solid var(--amber);">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:5px;">Morning  6am – 12pm</p>
+      <p style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;" id="mornStaffDesc">1 staff on shift</p>
+      <p style="font-size:11px;color:var(--dim);">Reception + bar + pro shop. Off-peak pricing. Casual players, coaching sessions, corporate early bookings.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:5px;">Afternoon  12pm – 6pm</p>
+      <p style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;" id="aftStaffDesc">Day + afternoon overlap</p>
+      <p style="font-size:11px;color:var(--dim);">Mixed pricing. Afternoon shift starts at 4pm. School holiday peaks, social sessions, league warm-up slots.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green);">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:5px;">Evening  6pm – 12am</p>
+      <p style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;" id="eveStaffDesc">2 staff peak</p>
+      <p style="font-size:11px;color:var(--dim);">Peak pricing. Leagues, social matches, post-work demand, highest F&B spend. Busiest 6 hours of the day.</p>
+    </div>
+  </div>
+
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Revenue — Year 1 Live Calculation</p><p id="totalRevHeader" style="font-size:13px;font-weight:500;color:var(--green);"></p></div>
+    <table><thead><tr><th>Revenue Stream</th><th>Model Basis</th><th class="tr">Gross</th><th class="tr">Cost/Commission</th><th class="tr">Net Revenue</th><th class="tr">Margin %</th></tr></thead>
+    <tbody id="revTableBody"></tbody></table>
+  </div>
+
+</div></div>
+
+<!-- ════ B6: P&L ════ -->
+<div class="page" id="b6"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — P&L Forecast</p>
+    <p class="ph-title">5-Year Profit & Loss — all assumptions connected</p>
+    <p class="ph-sub">Every figure is driven by the sliders across this document. Full lease from Year 1. EBITDA shown for all five years.</p>
+  </div>
+  <div class="g5 gap" id="yrCards"></div>
+  <div class="chart-wrap gap">
+    <p class="chart-title">Revenue vs EBITDA — 5 Year Trajectory</p>
+    <div class="bar-chart" id="plBarChart" style="height:180px;align-items:flex-end;gap:8px;padding-top:20px;"></div>
+    <div class="month-labels" id="plBarLabels"></div>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-hdr"><p>Full 5-Year P&L (AUD)</p></div>
+    <table><thead><tr><th>Line Item</th><th class="tr">Year 1</th><th class="tr">Year 2</th><th class="tr">Year 3</th><th class="tr">Year 4</th><th class="tr">Year 5</th></tr></thead>
+    <tbody id="plTableBody"></tbody></table>
+  </div>
+</div></div>
+
+<!-- ════ B7: CASH FLOW ════ -->
+<div class="page" id="b7"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Cash Flow</p>
+    <p class="ph-title">Capital required · monthly Year 1 · payback · sensitivity</p>
+    <p class="ph-sub">How much, when, and when you get it back. Month-by-month Year 1 operating cash flow shown below. Sensitivity table shows P&L at different occupancy levels.</p>
+  </div>
+  <div class="g4 gap" id="cfSummaryCards"></div>
+
+  <!-- Monthly Cash Flow -->
+  <div class="chart-wrap gap">
+    <p class="chart-title">Year 1 — Monthly Operating Cash Flow (after lease, before depreciation)</p>
+    <div class="bar-chart" id="monthlyBars" style="height:130px;"></div>
+    <div class="month-labels" id="monthlyLabels"></div>
+    <div style="display:flex;gap:14px;margin-top:8px;font-size:10px;">
+      <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--green);"></div><span style="color:var(--dim);">Positive month</span></div>
+      <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--red);"></div><span style="color:var(--dim);">Negative month (ramp-up)</span></div>
+    </div>
+  </div>
+
+  <!-- CAPITAL SUMMARY VISUAL -->
+  <div class="g3 gap">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;grid-column:span 2;">
+      <p style="font-size:11px;font-weight:500;color:var(--text);margin-bottom:12px;">Capital Deployment — Where the money goes</p>
+      <div id="cf-bar-breakdown" style="display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;">
+      <p style="font-size:11px;font-weight:500;color:var(--text);margin-bottom:12px;">Summary</p>
+      <div id="cf-capital-summary" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+  </div>
+
+  <!-- Pre-opening capital timeline -->
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Capital Required — Where Does Every Dollar Go?</p><p style="font-size:11px;font-weight:500;color:var(--pdl);">Total net capital: <span id="cf-net-capital-display">~$594K</span> out-of-pocket after cash incentive</p></div>
+    <table>
+      <thead><tr><th>Phase</th><th>Timing</th><th>Item</th><th class="tr">AUD (Mid)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="amber-row"><td colspan="5">PRE-OPENING CAPITAL (one-off)</td></tr>
+        <tr><td>Lease security deposit</td><td>Month 0</td><td>3 months rent</td><td class="tr">$210,000</td><td>Returned at lease end</td></tr>
+        <tr class="green-row"><td>Cash incentive received</td><td>Month 0</td><td>15% × 10yr term at signing</td><td class="tr" style="color:var(--green);font-weight:700;">+$1,260,000</td><td>Landlord pays at lease commencement</td></tr>
+        <tr><td>Court deposit (30%)</td><td>Month 0</td><td>To QH Padel — before production</td><td class="tr">$57,556</td><td>Production: 20–25 days</td></tr>
+        <tr><td>Fit-out (civil, elec, plumbing)</td><td>Month 1–4</td><td>Structural + mechanical fit-out</td><td class="tr">$350,000</td><td>From cash incentive</td></tr>
+        <tr><td>Court balance (70%)</td><td>Month 1</td><td>Before container pickup</td><td class="tr">$134,298</td><td>Before shipping</td></tr>
+        <tr><td>Sea freight + landed costs</td><td>Month 2–3</td><td>Shipping + customs + delivery</td><td class="tr">$55,500</td><td>Mid estimate</td></tr>
+        <tr><td>Court installation labour</td><td>Month 3–4</td><td>14 courts professional install</td><td class="tr">$46,000</td><td>Mid estimate</td></tr>
+        <tr><td>Interior amenities fit-out</td><td>Month 2–4</td><td>Locker rooms, canteen, reception</td><td class="tr">$110,000</td><td>From cash incentive</td></tr>
+        <tr><td>Technology (cameras, POS, WiFi)</td><td>Month 3–4</td><td>All 14 courts + infrastructure</td><td class="tr">$95,000</td><td>From cash incentive</td></tr>
+        <tr><td>Opening inventory</td><td>Month 4</td><td>Pro shop + merch + canteen + hire fleet</td><td class="tr">$58,000</td><td>Mid estimate</td></tr>
+        <tr><td>Working capital buffer</td><td>Month 0–6</td><td>3 months opex safety buffer</td><td class="tr">$120,000</td><td>From cash incentive surplus</td></tr>
+        <tr><td>Professional fees + pre-launch marketing</td><td>Month 0–4</td><td>Legal, architect, marketing</td><td class="tr">$67,000</td><td>Mid estimate</td></tr>
+        <tr class="total-row"><td colspan="3"><strong>Total Capital Required (Mid)</strong></td><td class="tr"><strong>~$1,303,354</strong></td><td>Before incentive</td></tr>
+        <tr class="green-row"><td colspan="3">Less: Landlord cash incentive</td><td class="tr">($1,260,000)</td><td>Cash at signing</td></tr>
+        <tr class="subtotal"><td colspan="3"><strong>Net Capital Out-of-Pocket (Mid)</strong></td><td class="tr"><strong>~$594,000</strong></td><td>Courts + logistics + deposits + stock</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <!-- Sensitivity Table -->
+  <div class="tbl-wrap">
+    <div class="tbl-hdr"><p>Sensitivity Analysis — Year 1 EBITDA at Different Occupancy Levels</p></div>
+    <table id="sensTable">
+      <thead><tr><th>Occupancy</th><th class="tr">Gross Court Rev</th><th class="tr">Total Revenue</th><th class="tr">Total Opex</th><th class="tr">EBITDA</th><th class="tr">EBITDA Margin</th><th class="tr">vs Break-Even</th></tr></thead>
+      <tbody id="sensBody"></tbody>
+    </table>
+  </div>
+</div></div>
+
+<!-- ════ B8: ASSUMPTIONS ════ -->
+<div class="page" id="b8"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Assumptions</p>
+    <p class="ph-title">All model inputs — change any value, everything updates instantly</p>
+    <p class="ph-sub">Every slider and input below drives the P&L, cash flow, and revenue model simultaneously. Figures are estimates — validate with a qualified accountant before committing capital.</p>
+  </div>
+
+  <div class="sec-div"><span>Occupancy by Year</span></div>
+  <div class="g5 gap">
+    <div class="assume-card"><p class="assume-label">Year 1</p><p class="assume-val" id="occ1v">60%</p><input type="range" class="assume-range" min="30" max="90" step="1" value="63" oninput="S.occ[0]=+this.value/100;renderAll()"><div class="range-row"><span>30%</span><span>90%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Year 2</p><p class="assume-val" id="occ2v">60%</p><input type="range" class="assume-range" min="30" max="95" step="1" value="60" oninput="S.occ[1]=+this.value/100;renderAll()"><div class="range-row"><span>30%</span><span>95%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Year 3</p><p class="assume-val" id="occ3v">70%</p><input type="range" class="assume-range" min="30" max="95" step="1" value="70" oninput="S.occ[2]=+this.value/100;renderAll()"><div class="range-row"><span>30%</span><span>95%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Year 4</p><p class="assume-val" id="occ4v">80%</p><input type="range" class="assume-range" min="30" max="95" step="1" value="80" oninput="S.occ[3]=+this.value/100;renderAll()"><div class="range-row"><span>30%</span><span>95%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Year 5</p><p class="assume-val" id="occ5v">90%</p><input type="range" class="assume-range" min="30" max="95" step="1" value="90" oninput="S.occ[4]=+this.value/100;renderAll()"><div class="range-row"><span>30%</span><span>95%</span></div></div>
+  </div>
+
+  <div class="sec-div"><span>Pricing & Courts</span></div>
+  <div class="assume-grid gap">
+    <div class="assume-card"><p class="assume-label">Courts</p><p class="assume-val" id="courtsV">14</p><input type="range" class="assume-range" min="10" max="14" step="1" value="14" oninput="S.courts=+this.value;renderAll()"><div class="range-row"><span>10</span><span>12</span><span>14</span></div></div>
+    <div class="assume-card"><p class="assume-label">Peak Rate</p><p class="assume-val" id="peakRateV2">$100</p><input type="range" class="assume-range" min="70" max="140" step="5" value="100" oninput="S.peakRate=+this.value;renderAll()"><div class="range-row"><span>$70</span><span>$140</span></div></div>
+    <div class="assume-card"><p class="assume-label">Off-Peak Rate</p><p class="assume-val" id="offRateV2">$80</p><input type="range" class="assume-range" min="50" max="115" step="5" value="80" oninput="S.offpeakRate=+this.value;renderAll()"><div class="range-row"><span>$50</span><span>$115</span></div></div>
+    <div class="assume-card"><p class="assume-label">Peak % of Hours</p><p class="assume-val" id="peakPctV2">25%</p><input type="range" class="assume-range" min="0" max="50" step="5" value="25" oninput="S.peakPct=+this.value/100;renderAll()"><div class="range-row"><span>0%</span><span>50%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Operating Hours / Day</p><p class="assume-val" id="hrsV2">18</p><input type="range" class="assume-range" min="14" max="20" step="1" value="18" oninput="S.hrs=+this.value;renderAll()"><div class="range-row"><span>14</span><span>20</span></div></div>
+    <div class="assume-card"><p class="assume-label">Playtomic Commission</p><p class="assume-val" id="ptcV2">5%</p><input type="range" class="assume-range" min="5" max="15" step="1" value="5" oninput="S.ptCommission=+this.value/100;renderAll()"><div class="range-row"><span>5%</span><span>15%</span></div></div>
+    <div class="assume-card"><p class="assume-label">Members Year 1</p><p class="assume-val" id="memV2">500</p><input type="range" class="assume-range" min="100" max="2000" step="50" value="500" oninput="S.members=+this.value;renderAll()"><div class="range-row"><span>100</span><span>2,000</span></div></div>
+    <div class="assume-card"><p class="assume-label">Membership Fee/Month</p><p class="assume-val" id="memFeeV2">$15</p><input type="range" class="assume-range" min="10" max="60" step="5" value="15" oninput="S.memFee=+this.value;renderAll()"><div class="range-row"><span>$10</span><span>$60</span></div></div>
+  </div>
+
+  <div class="sec-div"><span>Lease & Finance</span></div>
+  <div class="assume-grid gap">
+    <div class="assume-card"><p class="assume-label">Lease Rate / m² p.a.</p><p class="assume-val" id="leaseRateV">$280</p><input type="range" class="assume-range" min="180" max="420" step="10" value="280" oninput="S.leasePerM2=+this.value;renderAll()"><div class="range-row"><span>$180</span><span>$280</span><span>$420</span></div></div>
+    <div class="assume-card"><p class="assume-label">Floor Area (m²)</p><p class="assume-val" id="leaseM2V">3,000</p><input type="range" class="assume-range" min="2500" max="5000" step="100" value="3000" oninput="S.leaseM2=+this.value;renderAll()"><div class="range-row"><span>2,500</span><span>3,000</span><span>5,000</span></div></div>
+    <div class="assume-card"><p class="assume-label">Cash Incentive %</p><p class="assume-val" id="incentiveV">12%</p><input type="range" class="assume-range" min="0" max="25" step="1" value="12" oninput="S.incentivePct=+this.value/100;renderAll()"><div class="range-row"><span>0%</span><span>15%</span><span>25%</span></div><p class="assume-sub" id="incentiveAmt">= $1,260,000 cash at signing</p></div>
+    <div class="assume-card"><p class="assume-label">USD → AUD Rate</p><p class="assume-val" id="fxV">1.48</p><input type="range" class="assume-range" min="1.25" max="1.70" step="0.01" value="1.48" oninput="S.fx=+this.value;renderAll()"><div class="range-row"><span>1.25</span><span>1.4471</span><span>1.70</span></div></div>
+  </div>
+
+  <div class="sec-div"><span>Staff Rates</span></div>
+  <div class="assume-grid-3 gap">
+    <div class="assume-card"><p class="assume-label">Day Staff Rate ($/hr)</p><p class="assume-val" id="dayRateV">$30</p><input type="range" class="assume-range" min="25" max="45" step="1" value="30" oninput="S.dayRate=+this.value;renderAll()"><div class="range-row"><span>$25</span><span>$30</span><span>$45</span></div></div>
+    <div class="assume-card"><p class="assume-label">Afternoon Staff Rate ($/hr)</p><p class="assume-val" id="aftRateV">$33</p><input type="range" class="assume-range" min="28" max="50" step="1" value="33" oninput="S.aftRate=+this.value;renderAll()"><div class="range-row"><span>$28</span><span>$32</span><span>$50</span></div></div>
+    <div class="assume-card"><p class="assume-label">Manager Annual Salary</p><p class="assume-val" id="mgrSalV">$90,000</p><input type="range" class="assume-range" min="60000" max="130000" step="5000" value="90000" oninput="S.mgrSalary=+this.value;renderAll()"><div class="range-row"><span>$60K</span><span>$85K</span><span>$130K</span></div></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr"><p>Live Model Summary — Current Assumptions</p></div>
+    <table><thead><tr><th>Category</th><th>Assumption</th><th>Current Value</th><th>Confidence</th></tr></thead>
+    <tbody id="assumeSummary"></tbody></table>
+  </div>
+</div></div>
+
+
+<!-- ════ B9: MARKETING ════ -->
+<div class="page" id="b9"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Marketing</p>
+    <p class="ph-title">Year 1 Marketing Plan · $260,000 total budget</p>
+    <p class="ph-sub">Pre-opening through steady state. Budget structured across four phases to maximise community building before and after launch.</p>
+  </div>
+
+  <!-- PHASE SUMMARY CARDS -->
+  <div class="g4 gap">
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--pdl);border-radius:var(--r);padding:16px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pdl);margin-bottom:6px;">Pre-Opening</p>
+      <p style="font-size:28px;font-weight:400;color:var(--text);">$50,000</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:4px;">Before Day 1. Social media build, Playtomic listing, local press, member waitlist ads.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:var(--r);padding:16px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Launch Phase · M1–3</p>
+      <p style="font-size:28px;font-weight:400;color:var(--text);">$150,000</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:4px;">$50K/mo. Paid social, Google, influencer, corporate outreach, opening event.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--amber);border-radius:var(--r);padding:16px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:6px;">Ramp-Down · M4–6</p>
+      <p style="font-size:28px;font-weight:400;color:var(--text);">$30,000</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:4px;">$10K/mo. Community events, league promotion, email retention campaigns.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--green);border-radius:var(--r);padding:16px;">
+      <p style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Steady State · M7–12</p>
+      <p style="font-size:28px;font-weight:400;color:var(--text);">$30,000</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:4px;">$5K/mo. Retention, seasonal campaigns, tournament promotion, referral programme.</p>
+    </div>
+  </div>
+
+  <!-- MONTHLY CHART -->
+  <div class="chart-wrap gap">
+    <p class="chart-title">Monthly Marketing Spend — Year 1</p>
+    <div id="mktPageChart" style="height:140px;border-bottom:1px solid var(--border);"></div>
+    <div id="mktPageLabels" style="display:flex;gap:0;margin-top:4px;"></div>
+  </div>
+
+  <!-- CHANNEL BREAKDOWN -->
+  <div class="sec-div"><span>Channel Strategy</span></div>
+  <div class="g3 gap">
+    <div class="card">
+      <p class="ct">Digital — Paid Social & Search</p>
+      <p style="font-size:22px;font-weight:400;color:var(--pdl);margin:6px 0;">~$110,000</p>
+      <p class="cs">Instagram + TikTok for brand awareness and court booking CTAs. Google Search for "padel Marrickville / inner west". Meta retargeting of website visitors. Budget: $30K pre-launch, $20K/mo launch, $5K/mo steady.</p>
+    </div>
+    <div class="card">
+      <p class="ct">Corporate & B2B Outreach</p>
+      <p style="font-size:22px;font-weight:400;color:var(--pdl);margin:6px 0;">~$40,000</p>
+      <p class="cs">LinkedIn outreach to People & Culture managers in Surry Hills, Marrickville, Newtown, Redfern. Intro corporate block packages. Target: 5 anchor corporate accounts in first 3 months. Each account = 1 court block × 52 weeks = ~$5,200/yr.</p>
+    </div>
+    <div class="card">
+      <p class="ct">Events & Community</p>
+      <p style="font-size:22px;font-weight:400;color:var(--pdl);margin:6px 0;">~$60,000</p>
+      <p class="cs">Grand opening event ($15K). Monthly social nights. Beginner "Try Padel Free" sessions. League launch event. Pop-up at Marrickville markets. Every player who tries padel has a 92% chance of returning — spend here has outsized ROI.</p>
+    </div>
+    <div class="card">
+      <p class="ct">Influencer & Content</p>
+      <p style="font-size:22px;font-weight:400;color:var(--pdl);margin:6px 0;">~$25,000</p>
+      <p class="cs">3–5 Sydney micro-influencers (sports/lifestyle, 20–80K followers). Court camera footage clips for organic social. Player highlight reels. Behind-the-scenes build content pre-opening. Every shared clip = free venue marketing.</p>
+    </div>
+    <div class="card">
+      <p class="ct">Retention & CRM</p>
+      <p style="font-size:22px;font-weight:400;color:var(--pdl);margin:6px 0;">~$15,000</p>
+      <p class="cs">Email campaigns via Playtomic CRM. WhatsApp community group. Member birthday promotions. Win-back campaigns for lapsing players (last active >30 days). Referral programme: $10 credit per new member referred.</p>
+    </div>
+    <div class="card">
+      <p class="ct">PR & Local Press</p>
+      <p style="font-size:22px;font-weight:400;color:var(--pdl);margin:6px 0;">~$10,000</p>
+      <p class="cs">Inner West Courier, Time Out Sydney, local podcasts. Press release for opening. Sport-specific media (Padel Paper, Tennis Australia). Council community newsletter. Zero-cost: Playtomic "new venue" feature in the app on launch day.</p>
+    </div>
+  </div>
+
+  <!-- KPI TABLE -->
+  <div class="tbl-wrap">
+    <div class="tbl-hdr"><p>Marketing KPIs — Year 1 Targets</p></div>
+    <table>
+      <thead><tr><th>KPI</th><th>Target</th><th>Measurement</th><th>By When</th></tr></thead>
+      <tbody>
+        <tr><td>Playtomic member registrations</td><td>600 paid members</td><td>Playtomic Manager dashboard</td><td>End Month 6</td></tr>
+        <tr><td>Pre-opening waitlist</td><td>200 pre-registered members</td><td>Stripe subscription count</td><td>Before Day 1</td></tr>
+        <tr><td>Corporate accounts</td><td>5 anchor accounts</td><td>Signed block booking agreements</td><td>Month 3</td></tr>
+        <tr><td>Social following (Instagram)</td><td>2,000 followers</td><td>Instagram Insights</td><td>Month 6</td></tr>
+        <tr><td>Google Maps reviews</td><td>50+ reviews, ★4.5 avg</td><td>Google Business Profile</td><td>Month 6</td></tr>
+        <tr><td>Year 1 occupancy</td><td id="mktOccTarget">63%</td><td>Playtomic booking data</td><td>Month 12</td></tr>
+        <tr><td>Court camera video views</td><td>100K+ total views</td><td>Instagram + YouTube analytics</td><td>Month 12</td></tr>
+        <tr><td>Cost per member acquired</td><td>&lt;$150</td><td>Total mkt spend ÷ members</td><td>Rolling monthly</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></div>
+
+
+<!-- ════ B10: BREAK-EVEN ════ -->
+<div class="page" id="b10"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan — Break-Even Analysis</p>
+    <p class="ph-title">Break-even occupancy · monthly timeline · key milestones</p>
+    <p class="ph-sub">At what occupancy does PDL Marrickville cover all costs? When does cumulative cash flow turn positive? All figures update live with your assumptions.</p>
+  </div>
+
+  <!-- LIVE SUMMARY CARDS -->
+  <div class="g4 gap" id="beCards"></div>
+
+  <!-- BREAK-EVEN VISUAL TRACK -->
+  <div class="chart-wrap gap">
+    <p class="chart-title">Break-Even Occupancy — Current vs Required</p>
+    <div style="margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-bottom:5px;"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+      <div style="height:32px;background:var(--s2);border-radius:6px;overflow:visible;position:relative;border:1px solid var(--border);">
+        <div id="bePage-fill" style="height:100%;border-radius:6px;background:var(--green);transition:width .5s;"></div>
+        <div id="bePage-marker" style="position:absolute;top:-6px;width:2px;height:44px;background:var(--red);">
+          <span id="bePage-label" style="position:absolute;top:-18px;font-size:10px;color:var(--red);font-weight:600;white-space:nowrap;transform:translateX(-50%);"></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:11px;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:4px;background:var(--green);border-radius:2px;display:inline-block;"></span>Current occ: <strong id="bePage-curr"></strong></span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:4px;background:var(--red);border-radius:2px;display:inline-block;"></span>Break-even: <strong id="bePage-be" style="color:var(--red);"></strong></span>
+        <span style="display:flex;align-items:center;gap:5px;color:var(--green);">Safety buffer: <strong id="bePage-buf"></strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUMULATIVE CASH FLOW TO PAYBACK -->
+  <div class="chart-wrap gap">
+    <p class="chart-title">Cumulative Cash Flow — Month-by-Month to Full Payback</p>
+    <div id="cumCfChart" style="height:150px;border-bottom:1px solid var(--border);"></div>
+    <div id="cumCfLabels" style="display:flex;margin-top:4px;"></div>
+    <p style="font-size:10px;color:var(--dim);margin-top:6px;">Starting position: net capital deployed (after cash incentive). Green bars show months above zero — full payback achieved. Chart covers 24 months.</p>
+  </div>
+
+  <!-- SCENARIO TABLE -->
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Break-Even Scenarios — All figures AUD</p></div>
+    <table>
+      <thead><tr><th>Scenario</th><th class="tr">Break-even occ %</th><th class="tr">Annual revenue at BE</th><th class="tr">Monthly court bookings</th><th class="tr">Months to payback</th><th class="tr">Year 1 EBITDA</th></tr></thead>
+      <tbody id="beScenarios"></tbody>
+    </table>
+  </div>
+
+  <!-- KEY MILESTONES TABLE -->
+  <div class="tbl-wrap">
+    <div class="tbl-hdr"><p>Key Financial Milestones</p></div>
+    <table>
+      <thead><tr><th>Milestone</th><th>Target Date</th><th class="tr">Trigger Value</th><th>Notes</th></tr></thead>
+      <tbody id="beMilestones"></tbody>
+    </table>
+  </div>
+</div></div>
+
+</div><!-- /pages -->
+
+
+<script>
+// ═══════════════════════════════════════════════
+// GLOBAL STATE
+// ═══════════════════════════════════════════════
+const S = {
+  courts:14, peakRate:100, offpeakRate:80, peakPct:0.25,
+  occ:[0.50,0.60,0.70,0.80,0.90],
+  hrs:18, members:500, memFee:15, ptCommission:0.05,
+  leasePerM2:280, leaseM2:3000, incentivePct:0.12, fx:1.48,
+  dayStaff:2, aftStaff:2, eveStaff:2, mgrStaff:2, mornHrs:6, aftHrs:6, eveHrs:6,
+  dayRate:30, aftRate:33, mgrSalary:90000
+};
+
+// ═══════════════════════════════════════════════
+// PAGE NAV
+// ═══════════════════════════════════════════════
+function switchTab(tab){
+  // Update top-level tab buttons
+  document.getElementById('tab-market').classList.toggle('tab-active', tab==='market');
+  document.getElementById('tab-business').classList.toggle('tab-active', tab==='business');
+  // Show/hide sub-nav rows
+  document.getElementById('sub-market').classList.toggle('sub-active', tab==='market');
+  document.getElementById('sub-business').classList.toggle('sub-active', tab==='business');
+  // Auto-navigate to first page of tab
+  if(tab==='market') show('r1');
+  else show('b8');
+}
+
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  // Clear active on all sub-buttons in both rows
+  document.querySelectorAll('.nav-sub button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('btn-'+id).classList.add('active');
+  // Auto-switch parent tab if needed
+  const isMarket = id.startsWith('r');
+  document.getElementById('tab-market').classList.toggle('tab-active', isMarket);
+  document.getElementById('tab-business').classList.toggle('tab-active', !isMarket);
+  document.getElementById('sub-market').classList.toggle('sub-active', isMarket);
+  document.getElementById('sub-business').classList.toggle('sub-active', !isMarket);
+  if(id==='r2' && !window.mapReady) initMap();
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+const fmt = n => '$'+Math.round(n).toLocaleString();
+const fmtM = n => '$'+(Math.abs(n)/1e6).toFixed(2)+'M';
+const fmtK = n => '$'+Math.round(Math.abs(n)/1000)+'K';
+const pct = n => Math.round(n*100)+'%';
+
+function cashIncentive(){ return Math.round(S.leasePerM2*S.leaseM2*10*S.incentivePct); }
+function annualLease(){ return S.leasePerM2*S.leaseM2; }
+
+// ═══════════════════════════════════════════════
+// FINANCIAL CALCULATIONS
+// ═══════════════════════════════════════════════
+// Time bands: morning 6am-12pm, afternoon 12pm-6pm, evening 6pm-12am (each 6hrs)
+// Occupancy by band — morning lowest, evening highest
+function timeBands(yr){
+  const occ=S.occ[yr], courts=S.courts, days=365;
+  // Each band = 6 hrs, total 18 hrs
+  // Occupancy distribution across bands (morning 45%, afternoon 65%, evening 88% weighted avg = ~66% = occ)
+  // We scale each band's occ so weighted avg = S.occ[yr]
+  const baseM=0.45, baseA=0.65, baseE=0.90; // base ratios (morning:afternoon:evening)
+  const baseAvg=(baseM+baseA+baseE)/3;
+  const scale=occ/baseAvg;
+  const occM=Math.min(1,baseM*scale), occA=Math.min(1,baseA*scale), occE=Math.min(1,baseE*scale);
+  // Pricing: morning off-peak, afternoon mixed, evening peak
+  const rateM=S.offpeakRate;
+  const rateA=(S.offpeakRate*0.5+S.peakRate*0.5);
+  const rateE=S.peakRate;
+  // Capacity = courts × hrs × days
+  const capPerBand=courts*6*days;
+  // Gross revenue per band
+  const revM=capPerBand*occM*rateM;
+  const revA=capPerBand*occA*rateA;
+  const revE=capPerBand*occE*rateE;
+  const grossTotal=revM+revA+revE;
+  const commission=grossTotal*S.ptCommission;
+  // F&B: roughly tracks occupancy × time — evening highest spend
+  const barM=Math.round(courts*6*occM*4*0.50*6*days);
+  const barA=Math.round(courts*6*occA*4*0.50*7*days);
+  const barE=Math.round(courts*6*occE*4*0.50*10*days);
+  // Staff cost per band (annualised)
+  const staffM=S.dayStaff*S.dayRate*6*days*1.115;
+  const staffA=S.dayStaff*S.dayRate*2*days*1.115 + S.aftStaff*S.aftRate*4*days*1.115;
+  const staffE=S.aftStaff*S.aftRate*6*days*1.115;
+  const staffMgr=S.mgrStaff*S.mgrSalary*1.115;
+  return{
+    morning:{occ:occM,rate:rateM,courtRev:revM,bar:barM,staff:staffM,hrs:6},
+    afternoon:{occ:occA,rate:rateA,courtRev:revA,bar:barA,staff:staffA,hrs:6},
+    evening:{occ:occE,rate:rateE,courtRev:revE,bar:barE,staff:staffE,hrs:6},
+    gross:grossTotal,commission,net:grossTotal-commission,
+    barTotal:barM+barA+barE,
+    staffTotal:staffM+staffA+staffE+staffMgr,
+    mgrCost:staffMgr
+  };
+}
+
+function courtRevenue(yr){
+  const tb=timeBands(yr);
+  return{gross:tb.gross, commission:tb.commission, net:tb.net};
+}
+
+function calcRevenue(yr){
+  const cr=courtRevenue(yr), occ=S.occ[yr];
+  const members=S.members*(1+yr*0.45);
+  const courtHiresPerDay=S.courts*S.hrs*occ; const playerVisits=courtHiresPerDay*4; const bar=Math.round(playerVisits*0.50*8*363);
+  const retail=195000*(1+yr*0.22);
+  const hire=65000*(1+yr*0.15);
+  const merch=90000*(1+yr*0.35);
+  const membership=members*S.memFee*12*0.87;
+  const leagues=Math.round(3*32*40*48)*(1+yr*0.15);
+  const coaching=150000*(1+yr*0.18);
+  const corporate=120000*(1+yr*0.22);
+  const total=cr.net+bar+retail+hire+merch+membership+leagues+coaching+corporate;
+  return{court:cr, bar, retail, hire, merch, membership, leagues, coaching, corporate, total, occ, members};
+}
+
+function calcStaff(){
+  const day=S.dayStaff*S.dayRate*2600;
+  const aft=S.aftStaff*S.aftRate*56*52;
+  const mgr=S.mgrStaff*S.mgrSalary;
+  const base=day+aft+mgr;
+  return{day, aft, mgr, base, total:base*1.115};
+}
+
+function calcOpex(yr){
+  const staff=calcStaff().total;
+  const lease=annualLease()*(1+yr*0.03);
+  const elec=130000*(1+yr*0.03);
+  const insurance=43500*(1+yr*0.02);
+  const tech=26700*(1+yr*0.05);
+  const maint=52000*(1+yr*0.05);
+  const mktg=40000*(1+yr*0.08);
+  const admin=26000*(1+yr*0.03);
+  const misc=22000;
+  const total=staff+lease+elec+insurance+tech+maint+mktg+admin+misc;
+  return{staff,lease,elec,insurance,tech,maint,mktg,admin,misc,total};
+}
+
+// ═══════════════════════════════════════════════
+// RENDER FUNCTIONS
+// ═══════════════════════════════════════════════
+function renderBreakEvenPage(){
+  // Capital breakdown bar chart
+  const cfBarEl = document.getElementById('cf-bar-breakdown');
+  const cfSumEl = document.getElementById('cf-capital-summary');
+  const ci2 = cashIncentive();
+  const segments = [
+    {label:'Court deposit (30%)', amt:57556, col:'var(--pdl)'},
+    {label:'Court balance (70%)', amt:134298, col:'#3a5fcc'},
+    {label:'Sea freight + customs + logistics', amt:55500, col:'var(--accent)'},
+    {label:'Installation labour (14 courts)', amt:46000, col:'#d4824a'},
+    {label:'Fit-out (civil, elec, plumbing)', amt:350000, col:'var(--amber)'},
+    {label:'Interior amenities (lockers, canteen, reception)', amt:110000, col:'#b8940a'},
+    {label:'Technology (cameras, POS, WiFi, CCTV)', amt:95000, col:'var(--green)'},
+    {label:'Opening inventory (shop, merch, canteen)', amt:58000, col:'#2a8a4a'},
+    {label:'Professional fees + pre-launch marketing', amt:67000, col:'#5a7a3a'},
+    {label:'Security deposit (3 months rent)', amt:210000, col:'var(--red)'},
+    {label:'Working capital buffer', amt:120000, col:'#8a3a4a'},
+  ];
+  const grossTotal = segments.reduce((a,s)=>a+s.amt,0);
+  const netTotal = Math.max(0, grossTotal - ci2);
+  if(cfBarEl){
+    const maxAmt = Math.max(...segments.map(s=>s.amt));
+    cfBarEl.innerHTML = segments.map(s=>`
+      <div style="display:grid;grid-template-columns:220px 1fr 70px;align-items:center;gap:8px;">
+        <span style="font-size:10px;color:var(--dim);">${s.label}</span>
+        <div style="height:14px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:${Math.round(s.amt/maxAmt*100)}%;height:100%;background:${s.col};border-radius:3px;"></div>
+        </div>
+        <span style="font-size:11px;font-weight:500;text-align:right;">${fmt(s.amt)}</span>
+      </div>`).join('');
+  }
+  if(cfSumEl){
+    cfSumEl.innerHTML = `
+      <div style="background:var(--rs);border:1px solid rgba(176,48,48,.2);border-radius:6px;padding:10px 12px;">
+        <p style="font-size:10px;color:var(--red);margin-bottom:2px;">GROSS CAPITAL NEEDED</p>
+        <p style="font-size:20px;font-weight:500;color:var(--text);">${fmt(grossTotal)}</p>
+      </div>
+      <div style="background:var(--gs);border:1px solid rgba(26,107,60,.2);border-radius:6px;padding:10px 12px;">
+        <p style="font-size:10px;color:var(--green);margin-bottom:2px;">CASH INCENTIVE (${Math.round(S.incentivePct*100)}%)</p>
+        <p style="font-size:20px;font-weight:500;color:var(--green);">+ ${fmt(ci2)}</p>
+      </div>
+      <div style="background:var(--pdl-s);border:1px solid var(--pdl-b);border-radius:6px;padding:10px 12px;">
+        <p style="font-size:10px;color:var(--pdl);margin-bottom:2px;">NET OUT-OF-POCKET</p>
+        <p style="font-size:20px;font-weight:600;color:var(--pdl);">${fmt(netTotal)}</p>
+      </div>`;
+    const ncEl = document.getElementById('cf-net-capital-display');
+    if(ncEl) ncEl.textContent = fmt(netTotal);
+  }
+
+  // Summary cards
+  const r0=calcRevenue(0), o0=calcOpex(0), ebitda0=r0.total-o0.total;
+  const ci=cashIncentive(), netInv=1303354-ci;
+  // Find break-even occ
+  let beOcc=0;
+  for(let o=1;o<=100;o++){
+    const testOcc=o/100, saved=S.occ[0]; S.occ[0]=testOcc;
+    const tr=calcRevenue(0).total; S.occ[0]=saved;
+    if(tr>=o0.total){beOcc=o;break;}
+  }
+  const currOcc=Math.round(S.occ[0]*100);
+  const buf=currOcc-beOcc;
+  const paybackMo=ebitda0>0?Math.round(netInv/(ebitda0/12)):99;
+
+  // Cards
+  const bcEl=document.getElementById('beCards'); if(!bcEl) return;
+  bcEl.innerHTML=`
+    <div class="stat"><span class="s-val" style="color:var(--red);">${beOcc}%</span><span class="s-lbl">Break-even occupancy — minimum to cover all costs</span></div>
+    <div class="stat"><span class="s-val" style="color:var(--green);">+${buf} pp</span><span class="s-lbl">Safety buffer above break-even at ${currOcc}% occ</span></div>
+    <div class="stat"><span class="s-val" style="color:var(--pdl);">${fmt(netInv)}</span><span class="s-lbl">Net capital to recover (after ${Math.round(S.incentivePct*100)}% incentive)</span></div>
+    <div class="stat"><span class="s-val" style="color:var(--green);">${paybackMo} months</span><span class="s-lbl">Estimated payback period at current assumptions</span></div>`;
+
+  // Break-even bar
+  const fill=document.getElementById('bePage-fill');
+  const marker=document.getElementById('bePage-marker');
+  const label=document.getElementById('bePage-label');
+  const curr=document.getElementById('bePage-curr');
+  const be=document.getElementById('bePage-be');
+  const bufEl=document.getElementById('bePage-buf');
+  if(fill) fill.style.width=Math.min(100,currOcc)+'%';
+  if(marker) marker.style.left=beOcc+'%';
+  if(label) label.textContent=beOcc+'%';
+  if(curr) curr.textContent=currOcc+'%';
+  if(be) be.textContent=beOcc+'%';
+  if(bufEl){ bufEl.textContent=(buf>=0?'+':'')+buf+' pp'; bufEl.style.color=buf>=0?'var(--green)':'var(--red)';}
+
+  // Cumulative cash flow (24 months)
+  const cumEl=document.getElementById('cumCfChart'); const cumLbl=document.getElementById('cumCfLabels');
+  if(cumEl){
+    const monthlyEbitda=ebitda0/12;
+    let cum=-netInv;
+    const months=[];
+    for(let m=1;m<=24;m++){
+      const ramp=m<=3?0.4:m<=6?0.65:m<=9?0.85:1.0;
+      cum+=monthlyEbitda*ramp;
+      months.push({m,cum});
+    }
+    const maxAbs=Math.max(...months.map(d=>Math.abs(d.cum)));
+    cumEl.style.cssText='display:flex;align-items:flex-end;gap:1px;height:150px;border-bottom:1px solid var(--border);';
+    cumEl.innerHTML=months.map(d=>{
+      const h=Math.round(Math.abs(d.cum)/maxAbs*130)+4;
+      const col=d.cum>=0?'var(--green)':'var(--red)';
+      return`<div style="flex:1;height:${h}px;background:${col};border-radius:2px 2px 0 0;opacity:${d.cum>=0?1:0.7};"></div>`;
+    }).join('');
+    if(cumLbl){
+      cumLbl.style.cssText='display:flex;gap:1px;margin-top:4px;';
+      cumLbl.innerHTML=months.map(d=>`<div style="flex:1;text-align:center;font-size:8px;color:var(--dim);">${d.m===1||d.m===6||d.m===12||d.m===18||d.m===24?'M'+d.m:''}</div>`).join('');
+    }
+  }
+
+  // Scenario table
+  const scEl=document.getElementById('beScenarios'); if(!scEl) return;
+  const scenarios=[
+    {name:'Bear case',occ:0.35},
+    {name:'Conservative',occ:0.45},
+    {name:'Base case (current)',occ:S.occ[0]},
+    {name:'Optimistic',occ:0.75},
+    {name:'Strong',occ:0.88},
+  ];
+  scEl.innerHTML=scenarios.map(sc=>{
+    const saved=S.occ[0]; S.occ[0]=sc.occ;
+    const r=calcRevenue(0), o=calcOpex(0); S.occ[0]=saved;
+    const ebitda=r.total-o.total;
+    const payback=ebitda>0?Math.round(netInv/(ebitda/12)):'-';
+    const mCourtBookings=Math.round(S.courts*S.hrs*30*sc.occ);
+    const isCurrent=Math.abs(sc.occ-saved)<0.005;
+    const cls=ebitda>0?'color:var(--green);font-weight:500;':'color:var(--red);';
+    return`<tr style="${isCurrent?'background:var(--pdl-s);font-weight:500;':''}">
+      <td>${sc.name}${isCurrent?' ◀ current':''}</td>
+      <td class="tr">${Math.round(sc.occ*100)}%</td>
+      <td class="tr">${fmt(r.total)}</td>
+      <td class="tr">${mCourtBookings.toLocaleString()}</td>
+      <td class="tr" style="${cls}">${payback} mo</td>
+      <td class="tr" style="${cls}">${ebitda>=0?fmt(ebitda):'('+fmt(Math.abs(ebitda))+')'}</td>
+    </tr>`;
+  }).join('');
+
+  // Milestones
+  const milEl=document.getElementById('beMilestones'); if(!milEl) return;
+  milEl.innerHTML=`
+    <tr><td>Lease signed + cash incentive received</td><td>Month 0</td><td class="tr" style="color:var(--green);">+${fmt(ci)}</td><td>Landlord pays at commencement</td></tr>
+    <tr><td>Court deposit paid to QH Padel</td><td>Month 0</td><td class="tr" style="color:var(--red);">$57,556</td><td>30% of FOB invoice</td></tr>
+    <tr><td>Courts arrive Port Botany</td><td>Month 3</td><td class="tr">—</td><td>20–25 days production + ~45 days shipping</td></tr>
+    <tr><td>Opening Day</td><td>Month 4–5</td><td class="tr">—</td><td>Target: courts installed + fit-out complete</td></tr>
+    <tr><td>First break-even month (monthly cash)</td><td>~Month 5–6</td><td class="tr" style="color:var(--green);">${beOcc}% occ</td><td>Monthly revenue covers monthly costs</td></tr>
+    <tr><td>200 pre-registered members</td><td>Month 4</td><td class="tr" style="color:var(--green);">$2,610/mo</td><td>Pre-sell target before opening</td></tr>
+    <tr><td>600 total members</td><td>Month 6</td><td class="tr" style="color:var(--green);">$9,000/mo</td><td>Year 1 membership target</td></tr>
+    <tr><td>Full payback of net invested capital</td><td>~Month ${paybackMo}</td><td class="tr" style="color:var(--green);">${fmt(netInv)}</td><td>At current occupancy assumption</td></tr>
+    <tr><td>Lease renewal decision (10yr option)</td><td>Year 10</td><td class="tr">—</td><td>Exercise 2nd 10yr term option</td></tr>`;
+}
+
+function renderMarketing(){
+  // Update occ target
+  const el=document.getElementById('mktOccTarget');
+  if(el) el.textContent=Math.round(S.occ[0]*100)+'%';
+  // Marketing chart on b9
+  const mktEl=document.getElementById('mktPageChart');
+  const mktLblEl=document.getElementById('mktPageLabels');
+  if(!mktEl) return;
+  const mktData=[
+    {mo:'Pre',amt:50000,col:'var(--pdl)'},
+    {mo:'M1',amt:50000,col:'var(--accent)'},
+    {mo:'M2',amt:50000,col:'var(--accent)'},
+    {mo:'M3',amt:50000,col:'var(--accent)'},
+    {mo:'M4',amt:10000,col:'var(--amber)'},
+    {mo:'M5',amt:10000,col:'var(--amber)'},
+    {mo:'M6',amt:10000,col:'var(--amber)'},
+    {mo:'M7',amt:5000,col:'var(--green)'},
+    {mo:'M8',amt:5000,col:'var(--green)'},
+    {mo:'M9',amt:5000,col:'var(--green)'},
+    {mo:'M10',amt:5000,col:'var(--green)'},
+    {mo:'M11',amt:5000,col:'var(--green)'},
+    {mo:'M12',amt:5000,col:'var(--green)'},
+  ];
+  mktEl.style.cssText='display:flex;align-items:flex-end;gap:0;height:140px;border-bottom:1px solid var(--border);';
+  mktEl.innerHTML=mktData.map(d=>{
+    const h=Math.max(4,Math.round(d.amt/50000*120));
+    return`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:0 2px;">
+      <span style="font-size:8px;font-weight:600;color:var(--text);">$${d.amt/1000}K</span>
+      <div style="width:100%;height:${h}px;background:${d.col};border-radius:3px 3px 0 0;"></div>
+    </div>`;
+  }).join('');
+  if(mktLblEl){
+    mktLblEl.style.cssText='display:flex;gap:0;margin-top:4px;';
+    mktLblEl.innerHTML=mktData.map(d=>`<div style="flex:1;text-align:center;font-size:8px;color:var(--dim);">${d.mo}</div>`).join('');
+  }
+}
+
+
+function updateLeaseDisplays(){
+  const annualLease = S.leasePerM2 * S.leaseM2;
+  const tenYearValue = annualLease * 10;
+  const incentiveAmt = Math.round(tenYearValue * S.incentivePct);
+  const secDeposit = Math.round(annualLease / 4); // 3 months
+
+  // Assumptions page
+  const iaEl = document.getElementById('incentiveAmt');
+  if(iaEl) iaEl.textContent = '= ' + fmt(incentiveAmt) + ' cash at signing';
+
+  // Fit-out page header
+  const fidEl = document.getElementById('fo-incentive-display');
+  if(fidEl) fidEl.textContent = fmt(incentiveAmt);
+
+  // B7 cash flow - incentive card
+
+  // Overview hero
+  const b1CiEl = document.getElementById('b1-incentive');
+  if(b1CiEl) b1CiEl.textContent = fmt(incentiveAmt);
+
+  // Lease desc in op costs
+  const ldEl = document.getElementById('leaseDesc');
+  if(ldEl) ldEl.textContent = S.leaseM2.toLocaleString()+'m² × $'+S.leasePerM2+'/m² p.a. — $'+fmt(annualLease)+'/yr from Day 1';
+
+  // Lease mid in op costs table
+  const lmEl = document.getElementById('leaseMidTd');
+  if(lmEl) lmEl.textContent = fmt(annualLease);
+
+  // Security deposit note
+}
+
+function renderAll(){
+  updateSliderLabels();
+  updateLeaseDisplays();
+  renderStaff();
+  renderTimeBands();
+  renderRevenue();
+  renderPL();
+  renderCashFlow();
+  renderSensitivity();
+  renderAssumeSummary();
+  renderBreakEvenPage();
+  renderMarketing();
+  renderFitOut();
+  renderCourtCosts();
+  updateB1Hero();
+}
+
+function updateSliderLabels(){
+  // Revenue page
+  if(document.getElementById('peakRateVal')) document.getElementById('peakRateVal').textContent='$'+S.peakRate;
+  if(document.getElementById('offRateVal')) document.getElementById('offRateVal').textContent='$'+S.offpeakRate;
+  if(document.getElementById('peakPctVal')) document.getElementById('peakPctVal').textContent=Math.round(S.peakPct*100)+'%';
+  if(document.getElementById('hrsVal')) document.getElementById('hrsVal').textContent=S.hrs+' hrs';
+  if(document.getElementById('ptcVal')) document.getElementById('ptcVal').textContent=Math.round(S.ptCommission*100)+'%';
+  if(document.getElementById('membersVal')) document.getElementById('membersVal').textContent=S.members;
+  if(document.getElementById('memFeeVal')) document.getElementById('memFeeVal').textContent='$'+S.memFee;
+  if(document.getElementById('y1OccVal')) document.getElementById('y1OccVal').textContent=Math.round(S.occ[0]*100)+'%';
+  // Assumptions page
+  ['courts','peakRateV2','offRateV2','peakPctV2','hrsV2','ptcV2'].forEach(id=>{
+    if(!document.getElementById(id)) return;
+  });
+  if(document.getElementById('courtsV')) document.getElementById('courtsV').textContent=S.courts;
+  if(document.getElementById('peakRateV2')) document.getElementById('peakRateV2').textContent='$'+S.peakRate;
+  if(document.getElementById('offRateV2')) document.getElementById('offRateV2').textContent='$'+S.offpeakRate;
+  if(document.getElementById('peakPctV2')) document.getElementById('peakPctV2').textContent=Math.round(S.peakPct*100)+'%';
+  if(document.getElementById('hrsV2')) document.getElementById('hrsV2').textContent=S.hrs;
+  if(document.getElementById('ptcV2')) document.getElementById('ptcV2').textContent=Math.round(S.ptCommission*100)+'%';
+  if(document.getElementById('memV2')) document.getElementById('memV2').textContent=S.members;
+  if(document.getElementById('memFeeV2')) document.getElementById('memFeeV2').textContent='$'+S.memFee;
+  if(document.getElementById('leaseRateV')) document.getElementById('leaseRateV').textContent='$'+S.leasePerM2;
+  if(document.getElementById('leaseM2V')) document.getElementById('leaseM2V').textContent=S.leaseM2.toLocaleString();
+  if(document.getElementById('incentiveV')) document.getElementById('incentiveV').textContent=Math.round(S.incentivePct*100)+'%';
+  if(document.getElementById('incentiveAmt')) document.getElementById('incentiveAmt').textContent='= '+fmt(cashIncentive())+' cash at signing';
+  if(document.getElementById('fxV')) document.getElementById('fxV').textContent=S.fx.toFixed(4);
+  if(document.getElementById('dayRateV')) document.getElementById('dayRateV').textContent='$'+S.dayRate;
+  if(document.getElementById('aftRateV')) document.getElementById('aftRateV').textContent='$'+S.aftRate;
+  if(document.getElementById('mgrSalV')) document.getElementById('mgrSalV').textContent='$'+S.mgrSalary.toLocaleString();
+  if(document.getElementById('dayStaffVal')) document.getElementById('dayStaffVal').textContent=S.dayStaff+(S.dayStaff>1?' people':' person');
+  if(document.getElementById('aftStaffVal')) document.getElementById('aftStaffVal').textContent=S.aftStaff+(S.aftStaff>1?' people':' person');
+  // Occ by year
+  S.occ.forEach((o,i)=>{ const el=document.getElementById('occ'+(i+1)+'v'); if(el) el.textContent=Math.round(o*100)+'%'; });
+}
+
+function renderStaff(){
+  const el=document.getElementById('staffTableBody'); if(!el) return;
+  const st=calcStaff();
+  const sup=Math.round(st.total-st.base);
+  // Time-band staff cost breakdown
+  // Morning (6am-12pm): day staff only, 6hrs/day × 365
+  const mornHrs=S.dayStaff*6*365;
+  const mornCost=mornHrs*S.dayRate*1.115;
+  // Afternoon (12pm-6pm): day staff 4hrs + aft staff 2hrs (starts 4pm)
+  const aftHrsDay=S.dayStaff*4*365;
+  const aftHrsAft=S.aftStaff*2*365;
+  const aftCost=(aftHrsDay*S.dayRate + aftHrsAft*S.aftRate)*1.115;
+  // Evening (6pm-12am): aft staff 6hrs
+  const eveHrs=S.eveStaff*6*365;
+  const eveCost=eveHrs*S.aftRate*1.115;
+  const mgrCost=S.mgrStaff*S.mgrSalary*1.115;
+
+  el.innerHTML=`
+    <tr class="amber-row"><td colspan="6">MORNING — 6am to 12pm</td></tr>
+    <tr><td>Day Shift (reception, bar, pro shop)</td><td style="color:var(--amber);font-weight:500;">6am–12pm</td><td>${S.dayStaff}</td><td>$${S.dayRate}/hr</td><td>${(S.dayStaff*6*365).toLocaleString()} hrs</td><td class="tr">${fmt(mornCost)}</td></tr>
+    <tr class="amber-row"><td colspan="6">AFTERNOON — 12pm to 6pm</td></tr>
+    <tr><td>Day Shift (continues)</td><td style="color:var(--blue);font-weight:500;">12pm–4pm</td><td>${S.dayStaff}</td><td>$${S.dayRate}/hr</td><td>${(S.dayStaff*4*365).toLocaleString()} hrs</td><td class="tr">${fmt(aftHrsDay*S.dayRate*1.115)}</td></tr>
+    <tr><td>Afternoon Shift (starts)</td><td style="color:var(--blue);font-weight:500;">4pm–6pm</td><td>${S.aftStaff}</td><td>$${S.aftRate}/hr</td><td>${(S.aftStaff*2*365).toLocaleString()} hrs</td><td class="tr">${fmt(aftHrsAft*S.aftRate*1.115)}</td></tr>
+    <tr class="amber-row"><td colspan="6">EVENING — 6pm to 12am</td></tr>
+    <tr><td>Evening Shift (peak hours)</td><td style="color:var(--green);font-weight:500;">6pm–12am</td><td>${S.eveStaff}</td><td>$${S.aftRate}/hr</td><td>${(S.eveStaff*6*365).toLocaleString()} hrs</td><td class="tr">${fmt(eveCost)}</td></tr>
+    <tr class="amber-row"><td colspan="6">MANAGEMENT</td></tr>
+    <tr><td>Manager / Head Coach</td><td style="color:var(--dim);">All hours</td><td>${S.mgrStaff}</td><td>$${S.mgrSalary.toLocaleString()}/yr</td><td>Full-time</td><td class="tr">${fmt(mgrCost)}</td></tr>
+    <tr class="subtotal"><td colspan="5">Superannuation (11.5%) — included in all figures above</td><td class="tr">${fmt(sup)}</td></tr>
+    <tr class="total-row"><td colspan="5"><strong>Total Annual Staff Cost (incl. super)</strong></td><td class="tr"><strong>${fmt(st.total)}</strong></td></tr>`;
+
+  // Update time-band summary cards
+  const cm=document.getElementById('staffCostMorning');
+  const ca=document.getElementById('staffCostAfternoon');
+  const ce=document.getElementById('staffCostEvening');
+  const dm=document.getElementById('staffDescMorning');
+  const da=document.getElementById('staffDescAfternoon');
+  const de=document.getElementById('staffDescEvening');
+  if(cm) cm.textContent=fmt(mornCost);
+  if(ca) ca.textContent=fmt(aftCost);
+  if(ce) ce.textContent=fmt(eveCost);
+  if(dm) dm.textContent=S.dayStaff+' staff · $'+S.dayRate+'/hr · '+S.dayStaff*6*365+' hrs';
+  if(da) da.textContent=S.dayStaff+' day + '+S.aftStaff+' aft from 4pm · '+(S.dayStaff*4+S.aftStaff*2)*365+' hrs total';
+  if(de) de.textContent=S.eveStaff+' staff · $'+S.aftRate+'/hr · '+S.aftStaff*6*365+' hrs (peak)';
+}
+
+function renderTimeBands(){
+  const el=document.getElementById('timeBandBody'); if(!el) return;
+  const tb=timeBands(0);
+  const bands=[
+    {label:'Morning',sub:'6am – 12pm',key:'morning',col:'var(--amber)'},
+    {label:'Afternoon',sub:'12pm – 6pm',key:'afternoon',col:'var(--blue)'},
+    {label:'Evening',sub:'6pm – 12am',key:'evening',col:'var(--green)'},
+  ];
+  let totalCourtRev=0, totalBar=0, totalStaff=0;
+  el.innerHTML=bands.map(b=>{
+    const d=tb[b.key];
+    const netContrib=d.courtRev*(1-S.ptCommission)+d.bar-d.staff;
+    totalCourtRev+=d.courtRev; totalBar+=d.bar; totalStaff+=d.staff;
+    return`<tr>
+      <td><span style="font-weight:500;color:${b.col};">${b.label}</span><br><span style="font-size:10px;color:var(--dim);">${b.sub}</span></td>
+      <td>${d.hrs} hrs</td>
+      <td><span style="font-weight:500;">${Math.round(d.occ*100)}%</span><div style="margin-top:3px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;width:80px;"><div style="width:${Math.round(d.occ*100)}%;height:100%;background:${b.col};border-radius:2px;"></div></div></td>
+      <td>${fmt(d.rate)}/hr</td>
+      <td class="tr">${fmt(d.courtRev)}</td>
+      <td class="tr">${fmt(d.bar)}</td>
+      <td class="tr" style="color:var(--red);">(${fmt(d.staff)})</td>
+      <td class="tr" style="color:${netContrib>0?'var(--green)':'var(--red)'};font-weight:500;">${netContrib>0?fmt(netContrib):'('+fmt(Math.abs(netContrib))+')'}</td>
+    </tr>`;
+  }).join('')+`<tr class="subtotal">
+    <td colspan="4"><strong>Total (all bands)</strong></td>
+    <td class="tr"><strong>${fmt(totalCourtRev)}</strong></td>
+    <td class="tr"><strong>${fmt(totalBar)}</strong></td>
+    <td class="tr" style="color:var(--red);"><strong>(${fmt(totalStaff)})</strong></td>
+    <td class="tr" style="color:var(--green);font-weight:600;">${fmt(totalCourtRev*(1-S.ptCommission)+totalBar-totalStaff)}</td>
+  </tr>`;
+  // Update staff band cards
+  const ms=document.getElementById('mornStaffDesc');
+  const as=document.getElementById('aftStaffDesc');
+  const es=document.getElementById('eveStaffDesc');
+  if(ms) ms.textContent=S.dayStaff+(S.dayStaff>1?' staff':' staff')+' on shift';
+  if(as) as.textContent='Day→afternoon handover (4pm)';
+  if(es) es.textContent=S.aftStaff+(S.aftStaff>1?' staff':' staff')+' peak';
+}
+
+function renderRevenue(){
+  const el=document.getElementById('revTableBody'); if(!el) return;
+  const r=calcRevenue(0);
+  const courtHPD=Math.round(S.courts*S.hrs*S.occ[0]);
+  const playerVPD=courtHPD*4;
+  const rows=[
+    ['Court Hire (Gross)',`${S.courts} courts × ${S.hrs}hrs × ${Math.round(S.occ[0]*100)}% occ = ${courtHPD} court-hrs/day × 365 days × blended $${Math.round(S.peakPct*S.peakRate+(1-S.peakPct)*S.offpeakRate)}/hr`,r.court.gross,0,''],
+    ['Less: Playtomic Commission',`${Math.round(S.ptCommission*100)}% of gross bookings`,-r.court.commission,0,'red'],
+    ['Net Court Revenue','After Playtomic platform commission',r.court.net,0,'green'],
+    ['Drinks & Health Bar',`${S.courts}c × ${S.hrs}h × ${Math.round(S.occ[0]*100)}% occ = ${courtHPD} sessions → ×4 = ${playerVPD} visits/day → 50% buy × $8 avg × 363 days`,r.bar,r.bar*0.35,''],
+    ['Pro Shop Equipment Retail','Rackets, shoes, balls, accessories — avg 42% margin',r.retail,r.retail*0.42,''],
+    ['Racket & Equipment Hire','15 hire sets/day × $12/session × 363 days — 85% margin',r.hire,r.hire*0.85,''],
+    ['PDL Brand Merch','Hoodies $89, jackets $109, shorts $55, tees $45, caps $35 — 60% margin',r.merch,r.merch*0.60,''],
+    ['Memberships',`${Math.round(r.members)} members × $${S.memFee}/mo × 12 months × 87% net (Playtomic 13% cut)`,r.membership,r.membership,''],
+    ['Social Leagues','3 nights/wk × 32 players × $40/player × 48 weeks — 85% margin',r.leagues,r.leagues*0.85,''],
+    ['Coaching & Classes','Group + private lessons + junior programmes — 70% margin',r.coaching,r.coaching*0.70,''],
+    ['Corporate Blocks & Events','5+ anchor accounts + venue buyouts — 80% margin',r.corporate,r.corporate*0.80,''],
+  ];
+  let totalRev=r.total, totalGP=0;
+  rows.forEach(row=>{ if(row[4]!=='red') totalGP+=row[3]; });
+  el.innerHTML=rows.map(([lbl,detail,rev,gp,cls])=>{
+    const color=cls==='green'?'color:var(--green);font-weight:500;':cls==='red'?'color:var(--red);':'';
+    const gpStr=gp>0?fmt(gp):'—', margStr=gp>0&&rev>0?Math.round(gp/rev*100)+'%':'—';
+    return`<tr><td>${lbl}</td><td style="font-size:10px;color:var(--dim);">${detail}</td><td class="tr" style="${color}">${rev<0?'('+fmt(Math.abs(rev))+')':fmt(rev)}</td><td class="tr" style="font-size:11px;color:var(--dim);">${gpStr}</td><td class="tr" style="${color}">${rev<0?'('+fmt(Math.abs(rev))+')':fmt(rev)}</td><td class="tr" style="font-size:11px;">${margStr}</td></tr>`;
+  }).join('')+`<tr class="total-row"><td colspan="2"><strong>Total Net Revenue — Year 1</strong></td><td class="tr"><strong>${fmt(r.total)}</strong></td><td class="tr">${fmt(totalGP)}</td><td class="tr"><strong>${fmt(r.total)}</strong></td><td class="tr">${Math.round(totalGP/r.total*100)}%</td></tr>`;
+  if(document.getElementById('totalRevHeader')) document.getElementById('totalRevHeader').textContent='Year 1: '+fmt(r.total);
+}
+
+function renderPL(){
+  const yrs=[0,1,2,3,4];
+  // Year cards
+  const ycEl=document.getElementById('yrCards'); if(!ycEl) return;
+  const yrColors=['yr1','yr2','yr3','yr4','yr5'];
+  ycEl.innerHTML=yrs.map(y=>{
+    const r=calcRevenue(y), o=calcOpex(y), ebitda=r.total-o.total;
+    const margin=Math.round(ebitda/r.total*100);
+    return`<div class="yr-card ${yrColors[y]}">
+      <p class="yr-label">Year ${y+1}</p>
+      <p class="yr-rev" style="color:${y===0?'var(--amber)':y===1?'var(--blue)':'var(--green)'}">${fmtM(r.total)}</p>
+      <p class="yr-ebitda" style="color:${ebitda>0?'var(--green)':'var(--red)'}">EBITDA ${fmtM(ebitda)}</p>
+      <p class="yr-occ">${Math.round(S.occ[y]*100)}% occ · ${margin}% EBITDA margin</p>
+      <div class="yr-bar"><div class="yr-bar-fill" style="width:${Math.max(5,Math.min(100,margin))}%;background:${y===0?'var(--amber)':y===1?'var(--blue)':'var(--green)'}"></div></div>
+    </div>`;
+  }).join('');
+
+  // Bar chart
+  const bcEl=document.getElementById('plBarChart');
+  if(bcEl){
+    const allVals=yrs.flatMap(y=>{const r=calcRevenue(y),o=calcOpex(y);return[r.total,r.total-o.total];});
+    const maxVal=Math.max(...allVals);
+    const toM=v=>'$'+(v/1e6).toFixed(2)+'M';
+    const barH=150;
+    bcEl.style.cssText='display:flex;align-items:flex-end;gap:12px;height:'+(barH+40)+'px;padding-top:20px;border-bottom:1px solid var(--border);';
+    bcEl.innerHTML=
+      '<div style="display:flex;flex-direction:column;justify-content:space-between;height:'+barH+'px;padding-right:8px;flex-shrink:0;margin-bottom:0;">'
+      +[1,0.75,0.5,0.25,0].map(f=>'<span style="font-size:9px;color:var(--faint);text-align:right;">$'+(maxVal*f/1e6).toFixed(1)+'M</span>').join('')
+      +'</div>'
+      +yrs.map(y=>{
+        const r=calcRevenue(y),o=calcOpex(y),ebitda=r.total-o.total;
+        const rh=Math.round(r.total/maxVal*barH);
+        const eh=Math.round(Math.max(0,ebitda)/maxVal*barH);
+        const barColor=y===0?'var(--amber)':y===1?'var(--pdl)':'var(--green)';
+        return`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+          <div style="display:flex;gap:4px;align-items:flex-end;height:${barH}px;">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;">
+              <span style="font-size:9px;font-weight:600;color:${barColor};">${toM(r.total)}</span>
+              <div style="width:26px;height:${rh}px;background:${barColor};opacity:0.25;border-radius:3px 3px 0 0;border:1px solid ${barColor};"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;">
+              <span style="font-size:9px;font-weight:600;color:var(--green);">${toM(ebitda)}</span>
+              <div style="width:26px;height:${eh}px;background:var(--green);border-radius:3px 3px 0 0;"></div>
+            </div>
+          </div>
+          <span style="font-size:10px;font-weight:500;color:var(--text);">Year ${y+1}</span>
+          <span style="font-size:9px;color:var(--faint);">${Math.round(S.occ[y]*100)}% occ</span>
+        </div>`;
+      }).join('');
+  }
+
+  // P&L table
+  const ptEl=document.getElementById('plTableBody'); if(!ptEl) return;
+  const sections=[
+    {hdr:'REVENUE',rows:[
+      {n:'Court hire (gross)',fn:y=>calcRevenue(y).court.gross},
+      {n:'Less: Playtomic commission',fn:y=>-calcRevenue(y).court.commission,red:true},
+      {n:'Net court revenue',fn:y=>calcRevenue(y).court.net,bold:true},
+      {n:'Bar & health canteen',fn:y=>calcRevenue(y).bar},
+      {n:'Pro shop + equipment hire',fn:y=>calcRevenue(y).retail+calcRevenue(y).hire},
+      {n:'PDL merch',fn:y=>calcRevenue(y).merch},
+      {n:'Memberships',fn:y=>calcRevenue(y).membership},
+      {n:'Leagues + coaching + corporate',fn:y=>calcRevenue(y).leagues+calcRevenue(y).coaching+calcRevenue(y).corporate},
+      {n:'TOTAL NET REVENUE',fn:y=>calcRevenue(y).total,total:true,green:true},
+    ]},
+    {hdr:'OPERATING COSTS',rows:[
+      {n:'Staff (incl. 11.5% super)',fn:y=>calcOpex(y).staff},
+      {n:'Lease ('+fmt(annualLease())+'/yr base)',fn:y=>calcOpex(y).lease},
+      {n:'Electricity & utilities',fn:y=>calcOpex(y).elec},
+      {n:'Insurance (all policies)',fn:y=>calcOpex(y).insurance},
+      {n:'Technology subscriptions',fn:y=>calcOpex(y).tech},
+      {n:'Court & facility maintenance',fn:y=>calcOpex(y).maint},
+      {n:'Marketing',fn:y=>calcOpex(y).mktg},
+      {n:'Admin + accounting + legal',fn:y=>calcOpex(y).admin},
+      {n:'Miscellaneous',fn:y=>calcOpex(y).misc},
+      {n:'TOTAL OPEX',fn:y=>calcOpex(y).total,total:true},
+    ]},
+    {hdr:'PROFITABILITY',rows:[
+      {n:'EBITDA',fn:y=>calcRevenue(y).total-calcOpex(y).total,total:true,green:true},
+      {n:'EBITDA Margin %',fn:y=>Math.round((calcRevenue(y).total-calcOpex(y).total)/calcRevenue(y).total*100),pct:true},
+      {n:'Depreciation (est.)',fn:y=>-280000,red:true},
+      {n:'EBIT',fn:y=>calcRevenue(y).total-calcOpex(y).total-280000,bold:true},
+
+    ]},
+  ];
+  ptEl.innerHTML=sections.map(sec=>{
+    return`<tr class="amber-row"><td colspan="6">${sec.hdr}</td></tr>`+
+    sec.rows.map(row=>{
+      const vals=yrs.map(y=>{
+        const v=row.fn(y);
+        if(row.pct) return`<td class="tr" style="font-size:11px;">${v}%</td>`;
+        const color=row.green&&v>0?'color:var(--green);':row.red||v<0?'color:var(--red);':'';
+        return`<td class="tr" style="${color}${row.bold?'font-weight:500;':''}">${v<0?'('+fmt(Math.abs(v))+')':fmt(v)}</td>`;
+      }).join('');
+      return`<tr class="${row.total?'subtotal':''}"><td style="${row.bold?'font-weight:500;':''}">${row.n}</td>${vals}</tr>`;
+    }).join('');
+  }).join('');
+}
+
+function renderCashFlow(){
+  const cfEl=document.getElementById('cfSummaryCards'); if(!cfEl) return;
+  const ci=cashIncentive();
+  const r0=calcRevenue(0), o0=calcOpex(0), ebitda0=r0.total-o0.total;
+  const netInv=1303354-ci;
+  const paybackMo=netInv>0?Math.round(netInv/(ebitda0/12)):0;
+  cfEl.innerHTML=`
+    <div class="stat"><span class="s-val">${fmt(ci)}</span><span class="s-lbl">Cash incentive at lease signing (${Math.round(S.incentivePct*100)}% × 10yr)</span></div>
+    <div class="stat"><span class="s-val" style="color:var(--red);">${fmt(netInv)}</span><span class="s-lbl">Net capital out-of-pocket (mid, after incentive)</span></div>
+    <div class="stat"><span class="s-val" style="color:var(--green);">${fmtM(ebitda0)}</span><span class="s-lbl">Year 1 EBITDA</span></div>
+    <div class="stat"><span class="s-val" style="color:var(--pdl);">${paybackMo>0?paybackMo+' months':'Covered by incentive'}</span><span class="s-lbl">Payback on net invested capital</span></div>`;
+
+  // Monthly cash flow
+  const mbEl=document.getElementById('monthlyBars'); const mlEl=document.getElementById('monthlyLabels');
+  if(!mbEl) return;
+  const months=['J','F','M','A','M','J','J','A','S','O','N','D'];
+  // Ramp: months 1-4 are pre-opening (negative: opex only), months 5-12 growing revenue
+  const monthlyOpex=o0.total/12;
+  const monthlyData=months.map((m,i)=>{
+    if(i<4) return -monthlyOpex*0.4; // pre-opening partial opex
+    const rampFactor=0.4+(i-4)*0.06; // ramp from 40% to 88% of target
+    return(r0.total/12)*rampFactor-monthlyOpex;
+  });
+  const maxAbs=Math.max(...monthlyData.map(v=>Math.abs(v)));
+  mbEl.innerHTML=monthlyData.map((v,i)=>{
+    const h=Math.round(Math.abs(v)/maxAbs*110)+4;
+    const col=v>=0?'var(--green)':'var(--red)';
+    return`<div class="bar-col"><div class="bar-fill" style="height:${h}px;background:${col};margin-top:auto;"></div></div>`;
+  }).join('');
+  mlEl.innerHTML=months.map(m=>`<div class="month-lbl">${m}</div>`).join('');
+}
+
+
+
+function renderSensitivity(){
+  const el=document.getElementById('sensBody'); if(!el) return;
+  const occs=[0.40,0.50,0.55,S.occ[0],0.70,0.80,0.90];
+  const baseOpex=calcOpex(0).total;
+  el.innerHTML=occs.map(o=>{
+    const savedOcc=S.occ[0]; S.occ[0]=o;
+    const r=calcRevenue(0); S.occ[0]=savedOcc;
+    const ebitda=r.total-baseOpex, margin=Math.round(ebitda/r.total*100);
+    const isCurrent=Math.abs(o-savedOcc)<0.005;
+    const cls=ebitda>200000?'sens-good':ebitda>0?'sens-ok':'sens-bad';
+    return`<tr style="${isCurrent?'background:var(--pdl-s);font-weight:500;':''}">
+      <td>${Math.round(o*100)}% ${isCurrent?'◀ current':''}</td>
+      <td class="tr sens-cell">${fmt(r.court.gross)}</td>
+      <td class="tr sens-cell">${fmt(r.total)}</td>
+      <td class="tr sens-cell">${fmt(baseOpex)}</td>
+      <td class="tr sens-cell ${cls}">${ebitda>=0?fmt(ebitda):'('+fmt(Math.abs(ebitda))+')'}</td>
+      <td class="tr sens-cell ${cls}">${margin}%</td>
+      <td class="tr sens-cell ${cls}">${ebitda>=0?'✓ Profitable':'✗ Loss'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAssumeSummary(){
+  const el=document.getElementById('assumeSummary'); if(!el) return;
+  const rows=[
+    ['Courts','Count',S.courts,'Confirmed (invoice)'],
+    ['Court rate','Peak / off-peak','$'+S.peakRate+' / $'+S.offpeakRate,'Market rate (Sydney venues Apr 2026)'],
+    ['Occupancy Y1–Y5',S.occ.map(o=>Math.round(o*100)+'%').join(' · '),'','Estimate — adjustable'],
+    ['Operating hours',S.hrs+' hrs/day','','Industry standard'],
+    ['Playtomic commission',Math.round(S.ptCommission*100)+'%','','Estimate — negotiated'],
+    ['Membership fee','$'+S.memFee+'/month','','Operator decision'],
+    ['Members Y1',S.members,'','Target'],
+    ['Lease rate','$'+S.leasePerM2+'/m² p.a.','','Colliers Inner West 2025 est.'],
+    ['Floor area',S.leaseM2.toLocaleString()+' m²','','Site TBC'],
+    ['Annual lease',fmt(annualLease()),'','Calculated'],
+    ['Cash incentive',Math.round(S.incentivePct*100)+'% = '+fmt(cashIncentive()),'','Negotiation target'],
+    ['Day staff rate','$'+S.dayRate+'/hr','','Market rate'],
+    ['Afternoon staff rate','$'+S.aftRate+'/hr','','Market rate'],
+    ['Manager salary','$'+S.mgrSalary.toLocaleString()+'/yr','','Market rate'],
+    ['AUD/USD rate',S.fx.toFixed(4),'','Live rate 8 Apr 2026'],
+    ['Court landed cost',fmt(Math.round(191854+(S.fx-1.4471)*132578)),'','Invoice + mid landed est.'],
+    ['Year 1 net revenue',fmt(calcRevenue(0).total),'','Calculated'],
+    ['Year 1 EBITDA',fmt(calcRevenue(0).total-calcOpex(0).total),'','Calculated'],
+  ];
+  el.innerHTML=rows.map(([cat,val,_,conf])=>`<tr><td>${cat}</td><td style="font-weight:500;">${val}</td><td></td><td style="font-size:11px;color:var(--dim);">${conf}</td></tr>`).join('');
+}
+
+function updateB1Hero(){
+  const ci=cashIncentive(), r0=calcRevenue(0), ebitda0=r0.total-calcOpex(0).total;
+  const netInv=1303354-ci;
+  const paybackMo=netInv>0?Math.round(netInv/(ebitda0/12)):0;
+  if(document.getElementById('b1-capex')) document.getElementById('b1-capex').textContent=fmtK(netInv)+' net';
+  if(document.getElementById('b1-rev')) document.getElementById('b1-rev').textContent=fmtM(r0.total);
+  if(document.getElementById('b1-payback')) document.getElementById('b1-payback').textContent=paybackMo>0?'~'+paybackMo+' mo':'< 1 mo';
+}
+
+// ═══════════════════════════════════════════════
+// MAP
+// ═══════════════════════════════════════════════
+const ZONE_COLORS={2.5:'#002FA7',5:'#c4622d',7.5:'#1a6b3c',10:'#6b3a9a'};
+const ZONE_LABELS={2.5:'2.5 km',5:'5 km',7.5:'7.5 km',10:'10 km'};
+
+const suburbs=[
+  {n:'Marrickville',z:2.5,lat:-33.9106,lng:151.1553,pop:27000,age:35,inc:'$2,100/wk median',padel:'Zero',note:'Your venue'},
+  {n:'Newtown',z:2.5,lat:-33.8983,lng:151.1782,pop:14500,age:32,inc:'Very high',padel:'Zero',note:'Core demographic'},
+  {n:'Erskineville',z:2.5,lat:-33.9014,lng:151.1851,pop:7200,age:33,inc:'High — young professionals',padel:'Zero',note:'Strong padel profile'},
+  {n:'St Peters',z:2.5,lat:-33.9136,lng:151.1767,pop:4800,age:34,inc:'High',padel:'Zero',note:'Adjacent suburb'},
+  {n:'Sydenham',z:2.5,lat:-33.9153,lng:151.1647,pop:3200,age:33,inc:'High',padel:'Zero',note:'Metro interchange'},
+  {n:'Tempe',z:2.5,lat:-33.9228,lng:151.1672,pop:6100,age:35,inc:'High',padel:'Zero',note:'Industrial/residential'},
+  {n:'Enmore',z:2.5,lat:-33.9019,lng:151.1753,pop:9100,age:33,inc:'High',padel:'Zero',note:'Adjoins Newtown'},
+  {n:'Dulwich Hill',z:5,lat:-33.9078,lng:151.1378,pop:10200,age:37,inc:'High — families',padel:'Zero',note:'Family demographic'},
+  {n:'Petersham',z:5,lat:-33.8992,lng:151.1517,pop:8900,age:34,inc:'High',padel:'Zero',note:'Inner west core'},
+  {n:'Stanmore',z:5,lat:-33.8958,lng:151.1617,pop:9300,age:33,inc:'Very high',padel:'Zero',note:'Professional base'},
+  {n:'Earlwood',z:5,lat:-33.9267,lng:151.1383,pop:18053,age:38,inc:'Strong — owner-occupier',padel:'Zero',note:'5 min drive'},
+  {n:'Hurlstone Park',z:5,lat:-33.9142,lng:151.1317,pop:8700,age:38,inc:'High — families',padel:'Zero',note:'Family catchment'},
+  {n:'Campsie',z:5,lat:-33.9117,lng:151.1025,pop:16000,age:34,inc:'Moderate–High',padel:'Zero',note:'Growing inner-west'},
+  {n:'Alexandria',z:5,lat:-33.9036,lng:151.1972,pop:16400,age:32,inc:'High',padel:'IPA Alexandria',note:'Competitor here'},
+  {n:'Redfern',z:5,lat:-33.8926,lng:151.2001,pop:13500,age:31,inc:'High — mixed',padel:'Zero',note:'Metro — growing'},
+  {n:'Summer Hill',z:5,lat:-33.8942,lng:151.1378,pop:8200,age:35,inc:'High',padel:'Zero',note:'Inner west lifestyle'},
+  {n:'Camperdown',z:5,lat:-33.8892,lng:151.1800,pop:9800,age:31,inc:'High',padel:'Zero',note:'University corridor'},
+  {n:'Kingsgrove',z:7.5,lat:-33.9428,lng:151.1025,pop:13200,age:36,inc:'High — families',padel:'Zero',note:'South-west catchment'},
+  {n:'Canterbury',z:7.5,lat:-33.9114,lng:151.1225,pop:9800,age:34,inc:'Moderate–High',padel:'Zero',note:'Active community'},
+  {n:'Punchbowl',z:7.5,lat:-33.9281,lng:151.0572,pop:12400,age:30,inc:'Moderate',padel:'Zero',note:'Western catchment'},
+  {n:'Arncliffe',z:7.5,lat:-33.9361,lng:151.1503,pop:10600,age:33,inc:'High',padel:'Zero',note:'Airport corridor'},
+  {n:'Wolli Creek',z:7.5,lat:-33.9358,lng:151.1614,pop:8900,age:30,inc:'High — young professionals',padel:'Zero',note:'Metro connected'},
+  {n:'Bexley',z:7.5,lat:-33.9508,lng:151.1069,pop:10200,age:38,inc:'High — established families',padel:'Zero',note:'Family catchment'},
+  {n:'Surry Hills',z:7.5,lat:-33.8875,lng:151.2097,pop:22000,age:32,inc:'Very high',padel:'Zero',note:'Creative industry'},
+  {n:'Glebe',z:7.5,lat:-33.8792,lng:151.1872,pop:12300,age:34,inc:'Very high',padel:'Zero',note:'University & professional'},
+  {n:'Leichhardt',z:7.5,lat:-33.8836,lng:151.1572,pop:14700,age:36,inc:'High',padel:'Zero',note:'Active sports community'},
+  {n:'Ashfield',z:7.5,lat:-33.8883,lng:151.1233,pop:22000,age:35,inc:'High',padel:'Zero',note:'Western boundary'},
+  {n:'Kensington',z:7.5,lat:-33.9028,lng:151.2247,pop:13200,age:28,inc:'High',padel:'Zero',note:'UNSW corridor'},
+  {n:'Randwick',z:10,lat:-33.9156,lng:151.2380,pop:32000,age:33,inc:'High',padel:'Zero',note:'Eastern suburbs'},
+  {n:'Parramatta',z:10,lat:-33.8136,lng:151.0034,pop:34000,age:32,inc:'Moderate–High',padel:'Zero',note:'Western CBD'},
+  {n:'Homebush',z:10,lat:-33.8719,lng:151.0800,pop:18000,age:30,inc:'High',padel:'Zero',note:'Olympic Park'},
+  {n:'Strathfield',z:10,lat:-33.8733,lng:151.0844,pop:14000,age:34,inc:'High',padel:'Zero',note:'Transport hub'},
+  {n:'Burwood',z:10,lat:-33.8769,lng:151.1028,pop:12000,age:32,inc:'High',padel:'Zero',note:'Inner west expansion'},
+  {n:'Drummoyne',z:10,lat:-33.8483,lng:151.1367,pop:14200,age:37,inc:'Very high',padel:'Zero',note:'Affluent waterfront'},
+  {n:'Bondi Junction',z:10,lat:-33.8915,lng:151.2500,pop:14000,age:31,inc:'Very high',padel:'Zero',note:'Eastern affluent hub'},
+  {n:'Coogee',z:10,lat:-33.9223,lng:151.2544,pop:13000,age:31,inc:'Very high',padel:'Zero',note:'Beach lifestyle'},
+  {n:'Balmain',z:10,lat:-33.8600,lng:151.1800,pop:16200,age:38,inc:'Very high',padel:'Zero',note:'High-value catchment'},
+  {n:'Chatswood',z:10,lat:-33.7969,lng:151.1822,pop:22000,age:33,inc:'Very high',padel:'Zero',note:'Northern business district'},
+  {n:'Rozelle',z:10,lat:-33.8628,lng:151.1669,pop:10500,age:36,inc:'Very high',padel:'Zero',note:'Gentrifying inner west'},
+];
+
+const competitors=[
+  {n:'IPA Alexandria',lat:-33.9071,lng:151.1953,courts:10,note:'Market leader'},
+  {n:'Sydney Racquet Club',lat:-33.8917,lng:151.2181,courts:3,note:'Moore Park — outdoor'},
+  {n:'The Padel Lounge',lat:-33.9275,lng:151.0736,courts:4,note:'Greenacre — nearest rival'},
+];
+
+let map,circles={},subMarkers=[],activeZone=2.5;
+window.mapReady=false;
+
+function initMap(){
+  window.mapReady=true;
+  map=L.map('catchment-map',{zoomControl:false,scrollWheelZoom:true}).setView([-33.9106,151.155],13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}).addTo(map);
+  L.control.zoom({position:'bottomright'}).addTo(map);
+  [2.5,5,7.5,10].forEach(z=>{
+    circles[z]=L.circle([-33.9106,151.1553],{radius:z*1000,color:ZONE_COLORS[z],fillColor:ZONE_COLORS[z],fillOpacity:0.08,weight:2.5,dashArray:'6,5',opacity:0}).addTo(map);
+  });
+  const youIcon=L.divIcon({html:`<div style="width:16px;height:16px;background:var(--accent);border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.3)"></div>`,className:'',iconAnchor:[8,8]});
+  L.marker([-33.9106,151.1553],{icon:youIcon,zIndexOffset:2000}).bindPopup(`<div class="lpop"><p class="lpop-title">PDL Marrickville</p><div class="lpop-row"><span class="lpop-k">Courts planned</span><span class="lpop-v">14 indoor</span></div><div class="lpop-row"><span class="lpop-k">Status</span><span class="lpop-v">Site TBC</span></div></div>`).addTo(map);
+  const cIcon=L.divIcon({html:`<div style="width:12px;height:12px;background:var(--green);border-radius:50%;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>`,className:'',iconAnchor:[6,6]});
+  competitors.forEach(c=>{L.marker([c.lat,c.lng],{icon:cIcon,zIndexOffset:1000}).bindPopup(`<div class="lpop"><p class="lpop-title">${c.n}</p><div class="lpop-row"><span class="lpop-k">Courts</span><span class="lpop-v">${c.courts}</span></div><div class="lpop-row"><span class="lpop-k">Note</span><span class="lpop-v">${c.note}</span></div></div>`).addTo(map);});
+  suburbs.forEach(s=>{
+    const col=ZONE_COLORS[s.z];
+    const icon=L.divIcon({html:`<div style="width:8px;height:8px;background:${col};border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div>`,className:'',iconAnchor:[4,4]});
+    const m=L.marker([s.lat,s.lng],{icon,zIndexOffset:100}).bindPopup(`<div class="lpop"><p class="lpop-title">${s.n}</p><div class="lpop-row"><span class="lpop-k">Population</span><span class="lpop-v">${s.pop.toLocaleString()}</span></div><div class="lpop-row"><span class="lpop-k">Median age</span><span class="lpop-v">${s.age} yrs</span></div><div class="lpop-row"><span class="lpop-k">Income</span><span class="lpop-v">${s.inc}</span></div><div class="lpop-row"><span class="lpop-k">Padel venues</span><span class="lpop-v">${s.padel}</span></div></div>`);
+    m._subZone=s.z; subMarkers.push(m);
+  });
+  setZone(2.5,document.querySelector('.zone-btn.z25'));
+}
+
+function setZone(z,btn){
+  activeZone=z;
+  document.querySelectorAll('.zone-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  [2.5,5,7.5,10].forEach(rz=>{
+    if(!circles[rz]) return;
+    const show=rz===z;
+    circles[rz].setStyle({opacity:show?0.9:0,fillOpacity:show?0.08:0});
+  });
+  subMarkers.forEach(m=>{
+    if(m._subZone===z){if(!map.hasLayer(m)) m.addTo(map);}
+    else{if(map.hasLayer(m)) map.removeLayer(m);}
+  });
+  const filtered=suburbs.filter(s=>s.z===z);
+  const totalPop=filtered.reduce((a,s)=>a+s.pop,0);
+  document.getElementById('stat-suburbs').textContent=filtered.length;
+  document.getElementById('stat-pop').textContent='~'+Math.round(totalPop/1000)+'K';
+  const col=ZONE_COLORS[z];
+  document.getElementById('suburb-list').innerHTML=filtered.map(s=>`
+    <div class="sub-card" onclick="if(window.map){map.flyTo([${s.lat},${s.lng}],15,{duration:0.7});}" style="border-left:3px solid ${col};">
+      <p class="sub-name"><span class="sub-zone-dot" style="background:${col};"></span>${s.n}<span style="font-size:9px;color:${col};margin-left:auto;font-weight:500;">${ZONE_LABELS[z]}</span></p>
+      <div class="sub-row"><span>Population</span><span class="sub-val">${s.pop.toLocaleString()}</span></div>
+      <div class="sub-row"><span>Median age</span><span class="sub-val">${s.age} yrs</span></div>
+      <div class="sub-row"><span>Income</span><span class="sub-val">${s.inc}</span></div>
+      <div class="sub-row"><span>Padel venues</span><span class="sub-val" style="color:${s.padel==='Zero'?'var(--green)':'var(--red)'};font-weight:500;">${s.padel}</span></div>
+    </div>`).join('');
+  if(map) map.flyTo([-33.9106,151.155],z===2.5?14:z===5?13:z===7.5?12:11,{duration:0.8});
+}
+
+// ── FIT-OUT INTERACTIVE ──
+const FO_ITEMS = [
+  ['Floor preparation & levelling','Civil',80,1375],
+  ['Court sub-base (compacted)','Civil',20,1000],
+  ['Electrical fit-out (3-phase)','Electrical',60,1400],
+  ['HVAC / industrial ventilation','Mechanical',56,1600],
+  ['Plumbing rough-in','Plumbing',55,1200],
+  ['Fire safety compliance','Safety',28,1000],
+  ['Locker rooms (M+F)','Interior',70,785],
+  ['Reception / front desk','Interior',22,820],
+  ['Pro shop fit-out','Interior',28,785],
+  ['Health canteen fit-out','Interior',42,833],
+  ['Common area / seating','Interior',32,688],
+  ['Court cameras (14 courts)','Technology',14,4500],
+  ['Networking / WiFi / AV','Technology',18,1000],
+  ['Security / CCTV','Technology',16,875],
+  ['Signage (external + internal)','Brand',28,1107],
+  ['Pro shop opening stock','Inventory',1,22000],
+  ['PDL merch launch capsule','Inventory',1,16000],
+  ['Canteen opening stock','Inventory',1,9000],
+  ['Racket hire fleet (20 sets)','Inventory',1,11000],
+  ['Architect / building designer','Professional Fees',1,28000],
+  ['Legal (lease + company)','Professional Fees',1,14000],
+  ['Project management','Professional Fees',1,25000],
+];
+let foData = FO_ITEMS.map(([label,cat,hrs,rate])=>([label,cat,hrs,rate]));
+
+function renderFitOut(){
+  const tbody = document.getElementById('fo-tbody'); if(!tbody) return;
+
+  // Only build rows if empty (first call) — then just update totals
+  if(tbody.rows.length === 0){
+    tbody.innerHTML = foData.map((item,i)=>{
+      const [label,cat,hrs,rate] = item;
+      const lineTotal = hrs * rate;
+      return `<tr id="fo-row-${i}">
+        <td style="font-size:12px;">${label}</td>
+        <td style="font-size:11px;color:var(--dim);letter-spacing:.02em;">${cat}</td>
+        <td style="padding:3px 4px;">
+          <input id="fo-h-${i}" type="text" inputmode="numeric" value="${hrs}"
+            style="width:72px;border:1px solid var(--border);border-radius:4px;padding:4px 7px;font-size:12px;font-family:inherit;text-align:right;outline:none;"
+            onchange="foData[${i}][2]=parseFloat(this.value.replace(/[^0-9.]/g,''))||0;updateFoTotals()">
+        </td>
+        <td style="padding:3px 4px;">
+          <input id="fo-r-${i}" type="text" inputmode="numeric" value="${rate.toLocaleString()}"
+            style="width:92px;border:1px solid var(--border);border-radius:4px;padding:4px 7px;font-size:12px;font-family:inherit;text-align:right;outline:none;"
+            onchange="foData[${i}][3]=parseFloat(this.value.replace(/[^0-9,]/g,'').replace(/,/g,''))||0;updateFoTotals()">
+        </td>
+        <td class="tr" id="fo-t-${i}" style="font-weight:500;font-size:12px;">${fmt(lineTotal)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  updateFoTotals();
+}
+
+function resetFoTable(){ const t=document.getElementById("fo-tbody"); if(t) t.innerHTML=""; }
+function updateFoTotals(){
+  let total = 0;
+  foData.forEach((item,i)=>{
+    const lineTotal = item[2] * item[3];
+    total += lineTotal;
+    const tc = document.getElementById('fo-t-'+i);
+    if(tc) tc.textContent = fmt(lineTotal);
+  });
+  const incentive = Math.round(S.leasePerM2 * S.leaseM2 * 10 * S.incentivePct);
+  const net = total - incentive;
+  const surplus = net < 0;
+  const netStr = surplus ? 'Surplus ' + fmt(-net) : fmt(net);
+  const netCol = surplus ? 'var(--green)' : 'var(--red)';
+  ['fo-total','fo-total-foot'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=fmt(total); });
+  ['fo-net','fo-net-foot'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.textContent=netStr; el.style.color=netCol; }});
+  const ir = document.getElementById('fo-incentive-row'); if(ir) ir.textContent='('+fmt(incentive)+')';
+  const ip = document.getElementById('fo-incentive-display'); if(ip) ip.textContent=fmt(incentive);
+  const in2 = document.getElementById('fo-incentive-note'); if(in2) in2.textContent=fmt(incentive);
+  const ipct = document.getElementById('fo-incentive-pct'); if(ipct) ipct.textContent=Math.round(S.incentivePct*100);
+  // Also sync lease-connected displays
+  updateLeaseDisplays();
+}
+function renderCourtCosts(){
+  const tbody = document.getElementById('cc-tbody'); if(!tbody) return;
+  const courtUnitAUD = Math.round(9264 * S.fx);
+  ccData[0][3] = courtUnitAUD;
+
+  if(tbody.rows.length === 0){
+    tbody.innerHTML = ccData.map((item,i)=>{
+      const [label,detail,qty,rate] = item;
+      const lineTotal = qty * rate;
+      const ro = i===0;
+      const qStyle = `width:52px;border:1px solid var(--border);border-radius:4px;padding:4px 7px;font-size:12px;font-family:inherit;text-align:right;outline:none;${ro?'background:var(--s2);':''}`;
+      const rStyle = `width:92px;border:1px solid var(--border);border-radius:4px;padding:4px 7px;font-size:12px;font-family:inherit;text-align:right;outline:none;${ro?'background:var(--s2);':''}`;
+      return `<tr id="cc-row-${i}">
+        <td style="font-size:12px;font-weight:400;">${label}</td>
+        <td style="font-size:11px;color:var(--dim);">${detail}</td>
+        <td style="padding:3px 4px;">
+          <input id="cc-q-${i}" type="text" inputmode="numeric" value="${qty}" ${ro?'readonly':''} style="${qStyle}"
+            onchange="ccData[${i}][2]=parseFloat(this.value.replace(/[^0-9.]/g,''))||0;updateCcTotals()">
+        </td>
+        <td style="padding:3px 4px;">
+          <input id="cc-r-${i}" type="text" inputmode="numeric" value="${rate.toLocaleString()}" ${ro?'readonly':''} style="${rStyle}"
+            onchange="ccData[${i}][3]=parseFloat(this.value.replace(/[^0-9,]/g,'').replace(/,/g,''))||0;updateCcTotals()">
+        </td>
+        <td class="tr" id="cc-t-${i}" style="font-weight:500;font-size:12px;">${fmt(lineTotal)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  updateCcTotals();
+}
+
+function updateCcTotals(){
+  // Update court unit price from FX before calc
+  const courtUnitAUD = Math.round(9264 * S.fx);
+  ccData[0][3] = courtUnitAUD;
+  const fxEl = document.getElementById('cc-r-0');
+  if(fxEl && document.activeElement !== fxEl) fxEl.value = courtUnitAUD.toLocaleString();
+
+  let total = 0;
+  ccData.forEach((item,i)=>{
+    const lineTotal = item[2] * item[3];
+    total += lineTotal;
+    const tc = document.getElementById('cc-t-'+i);
+    if(tc) tc.textContent = fmt(lineTotal);
+  });
+  const perCourt = Math.round(total/14);
+  ['cc-total-foot','cc-landed-total'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=fmt(total); });
+  const pc = document.getElementById('cc-per-court'); if(pc) pc.textContent=fmt(perCourt);
+  const fxd = document.getElementById('cc-fx-display'); if(fxd) fxd.textContent=S.fx.toFixed(2);
+}
+
+// ── COURT COSTS DATA ──
+const CC_ITEMS_BASE = [
+  ['14 × Classic Courts (FOB, per court)','QH Padel invoice ULP20260408',14,0],
+  ['Sea freight (Tianjin → Port Botany)','3×40HQ + 1×20GP containers',1,22000],
+  ['Australian customs duty (~5%)','On FOB steel structures',1,10500],
+  ['Customs broker + AQIS + port fees','Broker + biosecurity inspection',1,5000],
+  ['Container transport to Marrickville','Port Botany → site, 4 containers',1,5500],
+  ['Installation labour (professional)','14 courts with technical guide',14,3300],
+];
+let ccData = CC_ITEMS_BASE.map(item=>([...item]));
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+renderAll();
+</script>
+</body>
+</html>
