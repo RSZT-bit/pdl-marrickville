@@ -1980,7 +1980,7 @@ function updateLeaseDisplays(){
 
   // Lease desc in op costs
   const ldEl = document.getElementById('leaseDesc');
-  if(ldEl) ldEl.textContent = S.leaseM2.toLocaleString()+'m&sup2; &times; $'+S.leasePerM2+'/m&sup2; p.a. &mdash; $'+fmt(annualLease)+'/yr from Day 1';
+  if(ldEl) ldEl.textContent = S.leaseM2.toLocaleString()+'m\u00B2 \u00D7 $'+S.leasePerM2+'/m\u00B2 p.a. \u2014 $'+fmt(annualLease)+'/yr from Day 1';
 
   // Lease mid in op costs table
   const lmEl = document.getElementById('leaseMidTd');
@@ -2044,7 +2044,7 @@ function updateSliderLabels(){
   if(document.getElementById('eveHrsVal')) document.getElementById('eveHrsVal').textContent=S.eveHrs+' hrs';
   if(document.getElementById('mgrCountVal')) document.getElementById('mgrCountVal').textContent=S.mgrStaff+(S.mgrStaff==1?' person':' people');
   if(document.getElementById('mgrSalVal2')) document.getElementById('mgrSalVal2').textContent='$'+S.mgrSalary.toLocaleString();
-  if(document.getElementById('ratesSummary')) document.getElementById('ratesSummary').textContent='Day $'+S.dayRate+' &middot; Aft/Eve $'+S.aftRate;
+  if(document.getElementById('ratesSummary')) document.getElementById('ratesSummary').textContent='Day $'+S.dayRate+' \u00B7 Aft/Eve $'+S.aftRate;
   // Occ by year
   S.occ.forEach((o,i)=>{ const el=document.getElementById('occ'+(i+1)+'v'); if(el) el.textContent=Math.round(o*100)+'%'; });
 }
@@ -2091,9 +2091,9 @@ function renderStaff(){
   if(cm) cm.textContent=fmt(mornCost);
   if(ca) ca.textContent=fmt(aftCost);
   if(ce) ce.textContent=fmt(eveCost);
-  if(dm) dm.textContent=S.dayStaff+' staff &middot; $'+S.dayRate+'/hr &middot; '+mornHrs+' hrs';
-  if(da) da.textContent=S.dayStaff+' day + '+S.aftStaff+' aft from 4pm &middot; '+(aftHrsDay+aftHrsAft)+' hrs total';
-  if(de) de.textContent=S.eveStaff+' staff &middot; $'+S.aftRate+'/hr &middot; '+eveHrs+' hrs (peak)';
+  if(dm) dm.textContent=S.dayStaff+' staff \u00B7 $'+S.dayRate+'/hr \u00B7 '+mornHrs+' hrs';
+  if(da) da.textContent=S.dayStaff+' day + '+S.aftStaff+' aft from 4pm \u00B7 '+(aftHrsDay+aftHrsAft)+' hrs total';
+  if(de) de.textContent=S.eveStaff+' staff \u00B7 $'+S.aftRate+'/hr \u00B7 '+eveHrs+' hrs (peak)';
 }
 
 function renderTimeBands(){
@@ -2131,7 +2131,7 @@ function renderTimeBands(){
   const as=document.getElementById('aftStaffDesc');
   const es=document.getElementById('eveStaffDesc');
   if(ms) ms.textContent=S.dayStaff+(S.dayStaff>1?' staff':' staff')+' on shift';
-  if(as) as.textContent='Day&rarr;afternoon handover (4pm)';
+  if(as) as.textContent='Day\u2192afternoon handover (4pm)';
   if(es) es.textContent=S.aftStaff+(S.aftStaff>1?' staff':' staff')+' peak';
 }
 
