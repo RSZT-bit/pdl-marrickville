@@ -952,12 +952,19 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <p class="oh-title">PDL Marrickville &mdash; Business & Financial Plan</p>
     <p class="oh-sub">20 indoor padel courts (18 standard + 2 pro) &middot; 6,000 m&sup2; warehouse &middot; Inner West Sydney &middot; 10+10 year lease &middot; Multi-segment facility: courts, cafe, pro shop, recovery, gym, academy &middot; QH Padel Classic courts (invoice ULP20260408 confirmed)</p>
     <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;">
-      <div class="oh-stat"><p class="oh-val">20</p><p class="oh-lbl">Indoor padel courts</p></div>
-      <div class="oh-stat"><p class="oh-val">6,000 m&sup2;</p><p class="oh-lbl">Total floor area</p></div>
-      <div class="oh-stat"><p class="oh-val" id="b1-capex">~$2.6M</p><p class="oh-lbl">Total setup capital</p></div>
-      <div class="oh-stat"><p class="oh-val" id="b1-incentive">$2,016,000</p><p class="oh-lbl">Cash incentive (12%)</p></div>
-      <div class="oh-stat"><p class="oh-val" id="b1-rev">~$3.9M</p><p class="oh-lbl">Year 1 gross revenue</p></div>
-      <div class="oh-stat"><p class="oh-val" id="b1-payback">~5 mo</p><p class="oh-lbl">Payback on net investment</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="M.courtsTotal">20</p><p class="oh-lbl">Indoor padel courts</p></div>
+      <div class="oh-stat"><p class="oh-val"><span data-bind="S.leaseM2.toLocaleString()">6,000</span> m&sup2;</p><p class="oh-lbl">Total floor area</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="fmtM(M.fitoutTotal + M.courtProcurement)">$2.60M</p><p class="oh-lbl">Total setup capital</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="fmt(M.incentiveCash)">$2,016,000</p><p class="oh-lbl">Cash incentive</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="fmtM(M.totalRev[1])">$5.73M</p><p class="oh-lbl">Year 2 gross revenue</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="fmtM(M.ebitda[1])">$1.62M</p><p class="oh-lbl">Year 2 EBITDA</p></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px;">
+      <div class="oh-stat"><p class="oh-val" data-bind="pct(M.ebitdaMargin[1])">28%</p><p class="oh-lbl">Y2 EBITDA margin</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="fmtM(M.npat[1])">$1.00M</p><p class="oh-lbl">Y2 net profit after tax</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="pct(M.npatMargin[1])">17%</p><p class="oh-lbl">Y2 net profit margin</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="fmtM(M.ebitda[4])">$3.24M</p><p class="oh-lbl">Y5 EBITDA</p></div>
+      <div class="oh-stat"><p class="oh-val" data-bind="pct(M.ebitdaMargin[4])">40%</p><p class="oh-lbl">Y5 EBITDA margin</p></div>
     </div>
   </div>
 
@@ -1042,21 +1049,24 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <p class="ph-sub">Confirmed FOB pricing at rate 1.48 (live). All costs from Tianjin factory to Marrickville door. Adjust any cost below &mdash; totals recalculate instantly.</p>
   </div>
 
-  <!-- INVOICE CONFIRMED -->
+  <!-- EDITABLE COURT PROCUREMENT -->
   <div class="tbl-wrap gap">
-    <div class="tbl-hdr"><p>Confirmed Invoice &mdash; AUD at <span id="cc-fx-display">1.48</span></p><p style="font-size:12px;font-weight:500;color:var(--green);">Total landed: <span id="cc-landed-total">$0</span></p></div>
+    <div class="tbl-hdr">
+      <p>Court Procurement &mdash; every field editable</p>
+      <p style="font-size:12px;font-weight:500;color:var(--green);">Total landed + installed: <strong data-bind="fmt(M.courtProcurement)">$0</strong></p>
+    </div>
     <table>
-      <thead><tr><th style="width:32%;">Item</th><th style="width:28%;">Detail</th><th style="width:8%;text-align:right;padding-right:8px;">Qty</th><th style="width:14%;text-align:right;padding-right:8px;">Rate (AUD)</th><th style="width:12%;" class="tr">Total</th></tr></thead>
-      <tbody id="cc-tbody"></tbody>
+      <thead><tr><th style="width:32%;">Item</th><th style="width:30%;">Detail</th><th class="tr" style="width:10%;">Qty</th><th class="tr" style="width:14%;">Rate (AUD)</th><th class="tr" style="width:14%;">Total</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Standard padel courts</strong></td><td>QH Padel Classic, Hebei China, FOB Tianjin</td><td class="tr"><input type="number" class="mv-in" data-model-in="courtsStd" value="16" min="0" max="40" step="1"></td><td class="tr"><input type="number" class="mv-in" data-model-in="courtCostAud" value="13406" min="0" step="100"></td><td class="tr" data-bind="fmt(S.courtsStd * S.courtCostAud)">&mdash;</td></tr>
+        <tr><td><strong>Pro courts</strong></td><td>Reinforced build, spectator-grade finish</td><td class="tr"><input type="number" class="mv-in" data-model-in="courtsPro" value="2" min="0" max="20" step="1"></td><td class="tr"><input type="number" class="mv-in" data-model-in="courtCostAud" value="13406" min="0" step="100" disabled style="opacity:0.6;"></td><td class="tr" data-bind="fmt(S.courtsPro * S.courtCostAud)">&mdash;</td></tr>
+        <tr><td>Sea freight FOB (scales with court count)</td><td>Tianjin &rarr; Sydney, scaled from base 14-court invoice</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="shippingTotal" value="7360" min="0" step="100"></td><td class="tr" data-bind="fmt(M.courtShipping)">&mdash;</td></tr>
+        <tr><td>Installation labour</td><td>Professional install, 1 team, 2&ndash;3 days/court</td><td class="tr" data-bind="M.courtsTotal">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="installPerCourt" value="3300" min="0" step="100"></td><td class="tr" data-bind="fmt(M.courtInstallTotal)">&mdash;</td></tr>
+        <tr><td>Extras / contingency</td><td>Customs, landing, allowance for damages</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="courtExtras" value="0" min="0" step="1000"></td><td class="tr" data-bind="fmt(S.courtExtras)">&mdash;</td></tr>
+      </tbody>
       <tfoot>
-        <tr class="total-row">
-          <td colspan="4"><strong>Total Courts &mdash; Landed & Installed</strong></td>
-          <td class="tr"><strong id="cc-total-foot">$0</strong></td>
-        </tr>
-        <tr class="subtotal">
-          <td colspan="4">Per court (18 courts total: 16 standard + 2 pro)</td>
-          <td class="tr" id="cc-per-court">$0</td>
-        </tr>
+        <tr class="total-row"><td colspan="4"><strong>Total courts landed + installed</strong></td><td class="tr"><strong data-bind="fmt(M.courtProcurement)">$0</strong></td></tr>
+        <tr class="subtotal"><td colspan="4">Per court average (<span data-bind="M.courtsTotal">18</span> courts)</td><td class="tr" data-bind="fmt(M.courtProcurement / Math.max(1,M.courtsTotal))">$0</td></tr>
       </tfoot>
     </table>
   </div>
@@ -1075,51 +1085,34 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <p class="ph-sub">16 standard courts + 2 pro courts with stadium, cafe, pro shop, recovery suite, gym, members lounge, kids wall. Every line item below is fully adjustable. The 12% cash incentive (~<span id="fo-incentive-display">$2,016,000</span>) received at lease signing is applied against total fit-out cost.</p>
   </div>
 
-  <!-- FIT-OUT ZONE-BASED $/m² TABLE -->
+  <!-- FIT-OUT — ALL FIELDS EDITABLE -->
   <div class="tbl-wrap gap">
     <div class="tbl-hdr">
-      <p>Fit-Out Cost &mdash; Per m&sup2; by Zone</p>
-      <p style="font-size:12px;font-weight:500;color:var(--green);">Total gross: $2,472,000 &nbsp;|&nbsp; After 12% incentive: Surplus ~$456,000 returned to working capital</p>
+      <p>Fit-Out Cost &mdash; editable m&sup2; &amp; $/m&sup2; per zone</p>
+      <p style="font-size:12px;font-weight:500;color:var(--green);">Total gross: <strong data-bind="fmt(M.fitoutTotal)">$0</strong> &nbsp;|&nbsp; Net after incentive: <strong data-bind="fmt(M.fitoutNet)">$0</strong></p>
     </div>
     <table>
-      <thead>
-        <tr>
-          <th style="width:24%;">Zone</th>
-          <th style="width:36%;">Build scope</th>
-          <th class="tr" style="width:10%;">Area m&sup2;</th>
-          <th class="tr" style="width:13%;">Cost $/m&sup2;</th>
-          <th class="tr" style="width:14%;">Total</th>
-        </tr>
-      </thead>
+      <thead><tr><th style="width:22%;">Zone</th><th style="width:34%;">Build scope</th><th class="tr" style="width:12%;">Area m&sup2;</th><th class="tr" style="width:14%;">Cost $/m&sup2;</th><th class="tr" style="width:14%;">Total</th></tr></thead>
       <tbody>
-        <tr><td><strong>Standard courts &times; 16</strong></td><td>Court surface prep, concrete pad, drainage, glass, turf, LED lighting trusses, ball netting above. Per PDL Yves spec.</td><td class="tr">4,500</td><td class="tr">$180</td><td class="tr">$810,000</td></tr>
-        <tr><td><strong>Pro courts &times; 2 + stadium</strong></td><td>Premium court build, reinforced structure, filmed-match infrastructure, 4-tier stadium seating, media lighting.</td><td class="tr">780</td><td class="tr">$280</td><td class="tr">$218,400</td></tr>
-        <tr><td><strong>Cafe &amp; bar</strong></td><td>Commercial kitchen, bar build, plumbing, coolroom, POS, bar top, 32-cover fit-out, acoustics.</td><td class="tr">150</td><td class="tr">$1,800</td><td class="tr">$270,000</td></tr>
-        <tr><td><strong>Pro shop</strong></td><td>Retail shelving, glass fixtures, changeroom, lighting, POS, visual merch display.</td><td class="tr">60</td><td class="tr">$850</td><td class="tr">$51,000</td></tr>
-        <tr><td><strong>Recovery suite</strong></td><td>25-person commercial sauna, 8 cold plunge plumbing + chillers, magnesium bath, red light panels, 2-bed massage partitions, waterproofing, premium finishes.</td><td class="tr">180</td><td class="tr">$2,400</td><td class="tr">$432,000</td></tr>
-        <tr><td><strong>Gym</strong></td><td>Rubber flooring, mirrors, AV, ventilation, cardio + weights equipment fit-out.</td><td class="tr">120</td><td class="tr">$700</td><td class="tr">$84,000</td></tr>
-        <tr><td><strong>Showers &amp; bathrooms</strong></td><td>Full plumbing, waterproofing, tile, lockers, benches, premium fixtures.</td><td class="tr">100</td><td class="tr">$1,400</td><td class="tr">$140,000</td></tr>
-        <tr><td><strong>Members lounge</strong></td><td>Joinery, coffee station, work pods, AV, soft furnishings.</td><td class="tr">40</td><td class="tr">$900</td><td class="tr">$36,000</td></tr>
-        <tr><td><strong>Reception / concierge</strong></td><td>Front desk joinery, host station, POS, signage, branded wayfinding.</td><td class="tr">30</td><td class="tr">$1,100</td><td class="tr">$33,000</td></tr>
-        <tr><td><strong>Kids hit wall</strong></td><td>Single padel wall panel, glass backstop, turf, netting.</td><td class="tr">10</td><td class="tr">$600</td><td class="tr">$6,000</td></tr>
-        <tr><td><strong>Storage / plant / BOH</strong></td><td>Mechanical, electrical switchboard, HVAC plant room, shelving, loading dock.</td><td class="tr">80</td><td class="tr">$450</td><td class="tr">$36,000</td></tr>
-        <tr><td><strong>Circulation</strong></td><td>Corridors, fire egress, stairs, wayfinding, lighting.</td><td class="tr">160</td><td class="tr">$300</td><td class="tr">$48,000</td></tr>
-        <tr><td><strong>Shared services</strong></td><td>Site-wide: HVAC plant, fire system, main switchboard, IT cabling, CCTV, sound system, wayfinding signage.</td><td class="tr">&mdash; (whole site)</td><td class="tr">&mdash;</td><td class="tr">$195,000</td></tr>
-        <tr><td><strong>Camera system</strong></td><td>18 court cameras (Veo / EyeOnPadel) + pro court streaming rig.</td><td class="tr">&mdash;</td><td class="tr">&mdash;</td><td class="tr">$112,000</td></tr>
+        <tr><td><strong>Standard courts</strong></td><td>Surface prep, pad, drainage, glass, turf, LED</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.stdCourts" value="4500" min="0" step="50"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.stdCourts" value="180" min="0" step="10"></td><td class="tr" data-bind="fmt(M.fitoutByZone.stdCourts)">&mdash;</td></tr>
+        <tr><td><strong>Pro courts + stadium</strong></td><td>Premium build, 4-tier stadium, media lighting</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.proCourts" value="780" min="0" step="10"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.proCourts" value="280" min="0" step="10"></td><td class="tr" data-bind="fmt(M.fitoutByZone.proCourts)">&mdash;</td></tr>
+        <tr><td><strong>Cafe &amp; bar</strong></td><td>Commercial kitchen, bar, coolroom, POS, seating</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.cafe" value="150" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.cafe" value="1800" min="0" step="50"></td><td class="tr" data-bind="fmt(M.fitoutByZone.cafe)">&mdash;</td></tr>
+        <tr><td><strong>Pro shop</strong></td><td>Retail shelving, fixtures, fitting, POS</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.proShop" value="60" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.proShop" value="850" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.proShop)">&mdash;</td></tr>
+        <tr><td><strong>Recovery suite</strong></td><td>Sauna, 8 plunges, magnesium, red light, massage</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.recovery" value="180" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.recovery" value="2400" min="0" step="50"></td><td class="tr" data-bind="fmt(M.fitoutByZone.recovery)">&mdash;</td></tr>
+        <tr><td><strong>Gym</strong></td><td>Flooring, mirrors, AV, cardio + weights fit-out</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.gym" value="120" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.gym" value="700" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.gym)">&mdash;</td></tr>
+        <tr><td><strong>Showers &amp; bathrooms</strong></td><td>Full plumbing, waterproofing, tile, lockers</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.bathrooms" value="100" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.bathrooms" value="1400" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.bathrooms)">&mdash;</td></tr>
+        <tr><td><strong>Members lounge</strong></td><td>Joinery, coffee station, work pods, AV</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.lounge" value="40" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.lounge" value="900" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.lounge)">&mdash;</td></tr>
+        <tr><td><strong>Reception / concierge</strong></td><td>Front desk, host station, POS, signage</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.reception" value="30" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.reception" value="1100" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.reception)">&mdash;</td></tr>
+        <tr><td><strong>Kids hit wall</strong></td><td>Wall panel, glass backstop, turf, netting</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.kidsWall" value="10" min="0" step="1"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.kidsWall" value="600" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.kidsWall)">&mdash;</td></tr>
+        <tr><td><strong>Storage / plant / BOH</strong></td><td>Mechanical, electrical, HVAC, shelving, loading</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.boh" value="80" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.boh" value="450" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.boh)">&mdash;</td></tr>
+        <tr><td><strong>Circulation</strong></td><td>Corridors, fire egress, stairs, lighting</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.circulation" value="160" min="0" step="5"></td><td class="tr"><input type="number" class="mv-in" data-model-in="fitoutRate.circulation" value="300" min="0" step="25"></td><td class="tr" data-bind="fmt(M.fitoutByZone.circulation)">&mdash;</td></tr>
+        <tr><td><strong>Shared services (lump)</strong></td><td>HVAC, fire, switchboard, IT, CCTV, sound, signage</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in mv-in-wide" data-model-in="fitoutLump.sharedServices" value="195000" min="0" step="5000"></td><td class="tr" data-bind="fmt(S.fitoutLump.sharedServices)">&mdash;</td></tr>
+        <tr><td><strong>Camera system (lump)</strong></td><td>18 court cameras + pro streaming rig</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in mv-in-wide" data-model-in="fitoutLump.cameras" value="112000" min="0" step="5000"></td><td class="tr" data-bind="fmt(S.fitoutLump.cameras)">&mdash;</td></tr>
       </tbody>
       <tfoot>
-        <tr class="total-row">
-          <td colspan="4"><strong>Total Fit-Out (gross)</strong></td>
-          <td class="tr"><strong>$2,471,400</strong></td>
-        </tr>
-        <tr class="green-row">
-          <td colspan="4">Less: Landlord cash incentive (12% &times; 10yr lease &times; $280/m&sup2; &times; 6,000 m&sup2;)</td>
-          <td class="tr" style="color:var(--green);font-weight:500;">($2,016,000)</td>
-        </tr>
-        <tr class="subtotal">
-          <td colspan="4"><strong>Net fit-out after incentive</strong></td>
-          <td class="tr" style="color:var(--green);font-weight:500;">$455,400</td>
-        </tr>
+        <tr class="total-row"><td colspan="4"><strong>Total Fit-Out (gross)</strong></td><td class="tr"><strong data-bind="fmt(M.fitoutTotal)">$0</strong></td></tr>
+        <tr class="green-row"><td colspan="4">Less: Landlord cash incentive (<input type="number" class="mv-in mv-in-small" data-model-in="incentivePct" value="0.12" min="0" max="0.30" step="0.01" style="width:55px;">% &times; 10yr lease &times; $<input type="number" class="mv-in mv-in-small" data-model-in="leasePerM2" value="280" min="0" max="500" step="5" style="width:55px;">/m&sup2; &times; <input type="number" class="mv-in mv-in-med" data-model-in="leaseM2" value="6000" min="0" step="100">m&sup2;)</td><td class="tr" style="color:var(--green);font-weight:500;" data-bind="'(' + fmt(M.incentiveCash) + ')'">($0)</td></tr>
+        <tr class="subtotal"><td colspan="4"><strong>Net fit-out after incentive</strong></td><td class="tr" style="font-weight:500;" data-bind="fmt(M.fitoutNet)">$0</td></tr>
       </tfoot>
     </table>
   </div>
@@ -1151,24 +1144,29 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
         </tr>
       </thead>
       <tbody>
-        <tr><td><strong>16 Standard Courts</strong></td><td>4&times;4 grid of padel courts. 20m&times;10m play + 2m clearance glass-to-glass and glass-to-wall shared across rows.</td><td class="tr">50m &times; 90m hall</td><td class="tr"><strong>4,500</strong></td><td class="tr">75.0%</td></tr>
-        <tr><td><strong>2 Pro Courts + Stadium</strong></td><td>Side-by-side pro courts with 3m perimeter on all sides. 4-tier stadium seating behind both courts for ~100 spectators. Used for pro league, tournaments, filmed content.</td><td class="tr">29m &times; 26m + 78m&sup2; stadium</td><td class="tr"><strong>780</strong></td><td class="tr">13.0%</td></tr>
-        <tr><td><strong>Cafe &amp; Bar</strong></td><td>Kitchen 30 + service counter 12 + ~32-cover seating 68 + cool room &amp; dry storage 20 + staff back 10 + circulation 10. Licensed beer &amp; wine.</td><td class="tr">150 m&sup2;</td><td class="tr"><strong>150</strong></td><td class="tr">2.5%</td></tr>
-        <tr><td><strong>Pro Shop</strong></td><td>Display floor 45 + fitting 8 + BOH stock 7. Includes Zimma &times; PDL capsule range.</td><td class="tr">60 m&sup2;</td><td class="tr"><strong>60</strong></td><td class="tr">1.0%</td></tr>
-        <tr><td><strong>Recovery Suite</strong></td><td>25-person sauna + anteroom 40 + 8 individual cold plunge pools 55 + magnesium bath 22 + red light therapy (2 beds) 18 + open-plan 2-bed massage 35 + circulation 10.</td><td class="tr">180 m&sup2;</td><td class="tr"><strong>180</strong></td><td class="tr">3.0%</td></tr>
-        <tr><td><strong>Gym</strong></td><td>Cardio zone (2&times;treadmill, 2&times;row, 2&times;ski) 50 + light weights + functional 50 + stretching floor 20.</td><td class="tr">120 m&sup2;</td><td class="tr"><strong>120</strong></td><td class="tr">2.0%</td></tr>
-        <tr><td><strong>Showers &amp; Bathrooms</strong></td><td>Men 45 + women 45 + accessible 10. Lockers, dry bench, shower stalls, WCs.</td><td class="tr">100 m&sup2;</td><td class="tr"><strong>100</strong></td><td class="tr">1.7%</td></tr>
-        <tr><td><strong>Members Lounge</strong></td><td>Lounge seating + work pods + coffee station. Breakaway zone for Pro/Owner members.</td><td class="tr">40 m&sup2;</td><td class="tr"><strong>40</strong></td><td class="tr">0.7%</td></tr>
-        <tr><td><strong>Reception &amp; Concierge</strong></td><td>Front desk, check-in, host station, Owner concierge desk.</td><td class="tr">30 m&sup2;</td><td class="tr"><strong>30</strong></td><td class="tr">0.5%</td></tr>
-        <tr><td><strong>Kids Hit Wall</strong></td><td>Single 3m &times; 3m padel wall panel + minimal ball run-off. Tucked into circulation zone near cafe so parents can watch.</td><td class="tr">10 m&sup2;</td><td class="tr"><strong>10</strong></td><td class="tr">0.2%</td></tr>
-        <tr><td><strong>Storage / Plant / BOH</strong></td><td>Court equipment storage + cafe dry &amp; cleaning + electrical/mechanical plant + loading dock. Compressed footprint, tall shelving.</td><td class="tr">80 m&sup2;</td><td class="tr"><strong>80</strong></td><td class="tr">1.3%</td></tr>
-        <tr><td><strong>Circulation</strong></td><td>Corridors, stairs, fire egress, kids wall run-off zone, member flow paths. Generous at this footprint &mdash; no cramped hallways.</td><td class="tr">160 m&sup2;</td><td class="tr"><strong>160</strong></td><td class="tr">2.7%</td></tr>
+        <tr><td><strong>Standard Courts</strong></td><td>4&times;4 grid of padel courts. 20m&times;10m play + 2m clearance</td><td class="tr"><span data-bind="S.courtsStd + ' courts'">16 courts</span></td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.stdCourts" value="4500" min="0" step="50"></td><td class="tr" data-bind="Math.round((S.floorM2.stdCourts/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Pro Courts + Stadium</strong></td><td>Side-by-side pro courts, 4-tier stadium seating</td><td class="tr"><span data-bind="S.courtsPro + ' courts'">2 courts</span></td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.proCourts" value="780" min="0" step="10"></td><td class="tr" data-bind="Math.round((S.floorM2.proCourts/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Cafe &amp; Bar</strong></td><td>Kitchen, counter, ~32-cover seating, coolroom, bar</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.cafe" value="150" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.cafe/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Pro Shop</strong></td><td>Display, fitting, BOH. Zimma &times; PDL capsule</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.proShop" value="60" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.proShop/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Recovery Suite</strong></td><td>Sauna + 8 plunges + magnesium + red light + 2-bed massage</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.recovery" value="180" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.recovery/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Gym</strong></td><td>Cardio + weights + stretching</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.gym" value="120" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.gym/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Showers &amp; Bathrooms</strong></td><td>Men + women + accessible + staff</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.bathrooms" value="100" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.bathrooms/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Members Lounge</strong></td><td>Breakaway, work pods, coffee station</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.lounge" value="40" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.lounge/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Reception &amp; Concierge</strong></td><td>Front desk + concierge station</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.reception" value="30" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.reception/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Kids Hit Wall</strong></td><td>Wall panel + run-off + netting (near cafe)</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.kidsWall" value="10" min="0" step="1"></td><td class="tr" data-bind="Math.round((S.floorM2.kidsWall/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Storage / Plant / BOH</strong></td><td>Equipment, plant, loading, cleaning</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.boh" value="80" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.boh/M.floorTotal)*100)+'%'">&mdash;</td></tr>
+        <tr><td><strong>Circulation</strong></td><td>Corridors, stairs, fire egress, flow paths</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in" data-model-in="floorM2.circulation" value="160" min="0" step="5"></td><td class="tr" data-bind="Math.round((S.floorM2.circulation/M.floorTotal)*100)+'%'">&mdash;</td></tr>
       </tbody>
       <tfoot>
         <tr class="total-row">
           <td colspan="3"><strong>Total buildable floor area</strong></td>
-          <td class="tr"><strong>6,000</strong></td>
+          <td class="tr"><strong data-bind="M.floorTotal.toLocaleString()">6,000</strong></td>
           <td class="tr"><strong>100%</strong></td>
+        </tr>
+        <tr class="subtotal">
+          <td colspan="3">Warehouse footprint (from Lease assumption)</td>
+          <td class="tr" data-bind="S.leaseM2.toLocaleString()">6,000</td>
+          <td class="tr" data-bind="M.floorTotal > S.leaseM2 ? 'OVER BUDGET' : 'UNDER/OK'">OK</td>
         </tr>
       </tfoot>
     </table>
@@ -1205,8 +1203,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 
     <div class="card" style="border-top:3px solid #94a3b8;">
       <p class="ct" style="color:#64748b;">SOCIAL &mdash; Entry tier</p>
-      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;"><span id="m-social-price">$19</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
-      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Unlimited members. No cap.</p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;">$<input type="number" class="mv-in" data-model-in="tierPrice.social" value="19" min="0" max="500" step="1" style="width:70px;font-size:22px;"><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Members Y2: <input type="number" class="mv-in mv-in-small" data-model-in="tierCount.y2.social" value="400" min="0" step="10"> &middot; <span data-bind="fmt(S.tierPrice.social * S.tierCount.y2.social * 12)">$0</span>/yr</p>
       <p style="font-size:11px;font-weight:500;margin-bottom:6px;">Included</p>
       <div style="font-size:11px;color:var(--dim);line-height:1.7;">
         &#10003; Free locker use (on session)<br>
@@ -1227,8 +1225,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 
     <div class="card" style="border-top:3px solid var(--pdl);">
       <p class="ct" style="color:var(--pdl);">CORE &mdash; Core member</p>
-      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;"><span id="m-player-price">$55</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
-      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Target: 30&ndash;35% of membership base.</p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;">$<input type="number" class="mv-in" data-model-in="tierPrice.core" value="55" min="0" max="500" step="1" style="width:70px;font-size:22px;"><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Members Y2: <input type="number" class="mv-in mv-in-small" data-model-in="tierCount.y2.core" value="250" min="0" step="10"> &middot; <span data-bind="fmt(S.tierPrice.core * S.tierCount.y2.core * 12)">$0</span>/yr</p>
       <p style="font-size:11px;font-weight:500;margin-bottom:6px;">Included</p>
       <div style="font-size:11px;color:var(--dim);line-height:1.7;">
         &#10003; Everything in Social<br>
@@ -1251,7 +1249,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 
     <div class="card" style="border-top:3px solid var(--green);">
       <p class="ct" style="color:var(--green);">PRO &mdash; Serious player</p>
-      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;"><span id="m-pro-price">$199</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;">$<input type="number" class="mv-in" data-model-in="tierPrice.pro" value="199" min="0" max="1000" step="1" style="width:70px;font-size:22px;"><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Members Y2: <input type="number" class="mv-in mv-in-small" data-model-in="tierCount.y2.pro" value="130" min="0" step="5"> &middot; <span data-bind="fmt(S.tierPrice.pro * S.tierCount.y2.pro * 12)">$0</span>/yr</p>
       <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Target: 15&ndash;20% of membership base.</p>
       <p style="font-size:11px;font-weight:500;margin-bottom:6px;">Included</p>
       <div style="font-size:11px;color:var(--dim);line-height:1.7;">
@@ -1271,8 +1270,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 
     <div class="card" style="border-top:3px solid #b45309;">
       <p class="ct" style="color:#b45309;">OWNER &mdash; Capped at 200</p>
-      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;"><span id="m-owner-price">$449</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
-      <p style="font-size:10px;color:#b45309;margin-bottom:12px;">Invitation only. Hard cap 200 members.</p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;">$<input type="number" class="mv-in" data-model-in="tierPrice.owner" value="449" min="0" max="2000" step="5" style="width:80px;font-size:22px;"><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:#b45309;margin-bottom:12px;">Y2 count: <input type="number" class="mv-in mv-in-small" data-model-in="tierCount.y2.owner" value="20" min="0" max="200" step="1"> / 200 cap &middot; <span data-bind="fmt(S.tierPrice.owner * S.tierCount.y2.owner * 12)">$0</span>/yr</p>
       <p style="font-size:11px;font-weight:500;margin-bottom:6px;">Included</p>
       <div style="font-size:11px;color:var(--dim);line-height:1.7;">
         &#10003; Everything in Pro<br>
@@ -1298,14 +1297,18 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 
   <div class="sec-div"><span>Day Passes &amp; Single-Use Pricing</span></div>
   <div class="g3 gap">
-    <div class="card"><p class="ct">FULL DAY &mdash; <span id="dp-full">$89</span></p>
-      <p class="cs" style="margin-top:8px;">Everything, one day. 1 court booking (subject to availability) + full gym + full recovery suite + locker + towel + cafe/pro shop at public rates. Premium visitor rate. Benchmarked to Equinox Sydney ($75).</p>
+    <div class="card"><p class="ct">FULL DAY &mdash; $<input type="number" class="mv-in mv-in-small" data-model-in="dayPass.full" value="89" min="0" step="1"></p>
+      <p class="cs" style="margin-top:8px;">Everything, one day. Court booking + full gym + full recovery + locker + towel. Premium visitor rate.</p>
     </div>
-    <div class="card"><p class="ct">GYM ONLY &mdash; <span id="dp-gym">$35</span></p>
-      <p class="cs" style="margin-top:8px;">Cardio + weights + stretching + locker + towel. Benchmarked to F45 ($30) and Barry's ($34). Converts regular users to Player tier &mdash; 2 weeks of day passes = cost of 1 month membership with gym free.</p>
+    <div class="card"><p class="ct">GYM ONLY &mdash; $<input type="number" class="mv-in mv-in-small" data-model-in="dayPass.gym" value="35" min="0" step="1"></p>
+      <p class="cs" style="margin-top:8px;">Cardio + weights + stretching + locker + towel. Converts to Core tier &mdash; 2 weeks of day passes = 1 month Core.</p>
     </div>
-    <div class="card"><p class="ct">RECOVERY ONLY &mdash; <span id="dp-recovery">$65</span></p>
-      <p class="cs" style="margin-top:8px;">2-hour access to sauna + cold plunge + magnesium + red light. Towel + locker included. Benchmarked to Sauna Culture ($45) and Alba ($75). 4-modality space few Sydney competitors match. Converts to Pro tier after 2 visits.</p>
+    <div class="card"><p class="ct">RECOVERY ONLY &mdash; $<input type="number" class="mv-in mv-in-small" data-model-in="dayPass.recovery" value="65" min="0" step="1"></p>
+      <p class="cs" style="margin-top:8px;">2hr access to sauna + cold + magnesium + red light. Towel + locker. Converts to Pro tier after 2 visits.</p>
+    </div>
+    <div class="card" style="grid-column:span 3;">
+      <p class="ct">Daily volume &amp; blended assumptions (edit)</p>
+      <p class="cs" style="margin-top:8px;">Avg day passes/day: <input type="number" class="mv-in mv-in-small" data-model-in="dayPass.avgPerDay" value="15" min="0" step="1"> &middot; Blended price: $<input type="number" class="mv-in mv-in-small" data-model-in="dayPass.blendedPrice" value="55" min="0" step="1"> &rarr; Y2 day-pass revenue <strong data-bind="fmt(M.dayPassRev[1])">$0</strong></p>
     </div>
   </div>
 
@@ -1315,8 +1318,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <table>
       <thead><tr><th>Court</th><th class="tr">Peak (4pm&ndash;10pm + weekends)</th><th class="tr">Off-peak (9am&ndash;4pm weekdays)</th><th class="tr">Early (6am&ndash;9am)</th></tr></thead>
       <tbody>
-        <tr><td>Standard court (&times;16)</td><td class="tr"><span id="ch-std-peak">$120</span></td><td class="tr"><span id="ch-std-off">$89</span></td><td class="tr">$78</td></tr>
-        <tr><td>Pro court (&times;2)</td><td class="tr"><span id="ch-pro-peak">$149</span></td><td class="tr"><span id="ch-pro-off">$120</span></td><td class="tr">$100</td></tr>
+        <tr><td>Standard court (&times;<span data-bind="S.courtsStd">16</span>)</td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="stdPeak" value="120" min="0" step="1"></td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="stdOff" value="89" min="0" step="1"></td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="stdEarly" value="78" min="0" step="1"></td></tr>
+        <tr><td>Pro court (&times;<span data-bind="S.courtsPro">2</span>)</td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="proPeak" value="149" min="0" step="1"></td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="proOff" value="120" min="0" step="1"></td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="proEarly" value="100" min="0" step="1"></td></tr>
       </tbody>
       <tfoot><tr class="subtotal"><td colspan="4" style="font-size:11px;color:var(--dim);padding-top:10px;">Member discounts: Core 10% &middot; Pro 15% &middot; Owner 20% &middot; Social: no discount. Private coaches hiring a court for lessons get court at 20% discount off peak/off-peak rate.</td></tr></tfoot>
     </table>
@@ -1380,20 +1383,20 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
   </div>
 
   <div class="tbl-wrap gap">
-    <div class="tbl-hdr"><p>League &amp; Programme Revenue &mdash; packed-out targets</p><p style="font-size:12px;font-weight:500;color:var(--green);">Annual: ~$780K</p></div>
+    <div class="tbl-hdr"><p>League &amp; Programme Revenue &mdash; every field editable</p><p style="font-size:12px;font-weight:500;color:var(--green);">Y2 total: <strong data-bind="fmt(M.morningLeagueRev[1]+M.eveningLeagueRev[1]+M.corpLeagueRev[1]+M.kidsRev[1]+M.proLeagueRev[1]+M.contentRev[1]+M.coachingRev[1])">$0</strong></p></div>
     <table>
-      <thead><tr><th>Programme</th><th class="tr">Sessions/yr</th><th class="tr">Players/sessions</th><th class="tr">Avg entry</th><th class="tr">Annual</th></tr></thead>
+      <thead><tr><th>Programme</th><th class="tr">Qty/yr</th><th class="tr">Players per</th><th class="tr">Fee</th><th class="tr">Y2 Annual</th></tr></thead>
       <tbody>
-        <tr><td>Corporate League</td><td class="tr">24 teams/yr</td><td class="tr">6/team</td><td class="tr">$2,400/team</td><td class="tr">$57,600</td></tr>
-        <tr><td>Morning League</td><td class="tr">6 seasons</td><td class="tr">96 players</td><td class="tr">$240</td><td class="tr">$138,240</td></tr>
-        <tr><td>Evening League</td><td class="tr">8 seasons</td><td class="tr">120 players</td><td class="tr">$310</td><td class="tr">$297,600</td></tr>
-        <tr><td>Kids Play (after-school + evening)</td><td class="tr">220 sessions</td><td class="tr">10 kids avg</td><td class="tr">$65</td><td class="tr">$143,000</td></tr>
-        <tr><td>Pro League &mdash; non-member entries</td><td class="tr">2 seasons</td><td class="tr">~60 non-member slots</td><td class="tr">$850</td><td class="tr">$51,000</td></tr>
-        <tr><td>Pro League stadium tournament tickets</td><td class="tr">2 events</td><td class="tr">~80 seats</td><td class="tr">$50</td><td class="tr">$8,000</td></tr>
-        <tr><td>Pro League sponsorship / content</td><td class="tr">annual</td><td class="tr">&mdash;</td><td class="tr">&mdash;</td><td class="tr">$45,000</td></tr>
-        <tr><td>Private coaching (court rent to coaches)</td><td class="tr">~150 hrs/wk &times; 50 wks</td><td class="tr">at $80 blended</td><td class="tr">$80/1.5hr</td><td class="tr">$400,000</td></tr>
+        <tr><td>Corporate League</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.corporate.teams" value="24" min="0" step="1"> teams</td><td class="tr">6/team</td><td class="tr">$<input type="number" class="mv-in" data-model-in="leagues.corporate.feePerTeam" value="2400" min="0" step="100">/team</td><td class="tr" data-bind="fmt(M.corpLeagueRev[1])">&mdash;</td></tr>
+        <tr><td>Morning League</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.morning.seasons" value="6" min="0" step="1"> seasons</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.morning.players" value="96" min="0" step="4"></td><td class="tr">M $<input type="number" class="mv-in mv-in-small" data-model-in="leagues.morning.feeMember" value="220" min="0" step="5"> / NM $<input type="number" class="mv-in mv-in-small" data-model-in="leagues.morning.feeNon" value="280" min="0" step="5"></td><td class="tr" data-bind="fmt(M.morningLeagueRev[1])">&mdash;</td></tr>
+        <tr><td>Evening League</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.evening.seasons" value="8" min="0" step="1"> seasons</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.evening.players" value="120" min="0" step="4"></td><td class="tr">M $<input type="number" class="mv-in mv-in-small" data-model-in="leagues.evening.feeMember" value="280" min="0" step="5"> / NM $<input type="number" class="mv-in mv-in-small" data-model-in="leagues.evening.feeNon" value="360" min="0" step="5"></td><td class="tr" data-bind="fmt(M.eveningLeagueRev[1])">&mdash;</td></tr>
+        <tr><td>Kids Play (after-school + evening)</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.kids.sessions" value="220" min="0" step="10"> sessions</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.kids.kidsPerSession" value="10" min="0" step="1"> kids</td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="leagues.kids.feePerKid" value="65" min="0" step="5"></td><td class="tr" data-bind="fmt(M.kidsRev[1])">&mdash;</td></tr>
+        <tr><td>Pro League non-member entries</td><td class="tr">&mdash;</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.pro.nonMemberSeats" value="60" min="0" step="5"> slots</td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="leagues.pro.feePerSeat" value="850" min="0" step="25"></td><td class="tr">&mdash;</td></tr>
+        <tr><td>Pro League stadium tickets</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.pro.tournaments" value="2" min="0" step="1"> events</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="leagues.pro.ticketsEach" value="80" min="0" step="5"> seats</td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="leagues.pro.ticketPrice" value="50" min="0" step="5"></td><td class="tr" data-bind="fmt(M.proLeagueRev[1])">&mdash;</td></tr>
+        <tr><td>Pro League sponsorship / content</td><td class="tr">annual (Y1\u2013Y5 ramp)</td><td class="tr">&mdash;</td><td class="tr">&mdash;</td><td class="tr" data-bind="fmt(M.contentRev[1])">&mdash;</td></tr>
+        <tr><td>Private coaching (court rent to coaches)</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="coachingHoursWk" value="150" min="0" step="5"> hrs/wk</td><td class="tr"><input type="number" class="mv-in mv-in-small" data-model-in="coachingWeeks" value="50" min="0" step="1"> wks</td><td class="tr">$<input type="number" class="mv-in mv-in-small" data-model-in="coachingRate" value="80" min="0" step="5">/1.5hr</td><td class="tr" data-bind="fmt(M.coachingRev[1])">&mdash;</td></tr>
       </tbody>
-      <tfoot><tr class="total-row"><td colspan="4"><strong>League + coaching total</strong></td><td class="tr"><strong>$1,140,440</strong></td></tr></tfoot>
+      <tfoot><tr class="total-row"><td colspan="4"><strong>League + coaching Y2 total</strong></td><td class="tr"><strong data-bind="fmt(M.morningLeagueRev[1]+M.eveningLeagueRev[1]+M.corpLeagueRev[1]+M.kidsRev[1]+M.proLeagueRev[1]+M.contentRev[1]+M.coachingRev[1])">$0</strong></td></tr></tfoot>
     </table>
   </div>
 
@@ -1498,31 +1501,34 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <table>
       <thead><tr><th>Category</th><th>Detail</th><th class="tr">Low</th><th class="tr">Mid</th><th class="tr">High</th></tr></thead>
       <tbody>
-        <tr class="amber-row"><td colspan="5">OCCUPANCY</td></tr>
-        <tr><td>Lease</td><td id="leaseDesc">6,000m&sup2; &times; $280/m&sup2; p.a. &mdash; payable from Day 1</td><td class="tr">$1,560,000</td><td id="leaseMidTd" class="tr">$1,680,000</td><td class="tr">$1,800,000</td></tr>
+        <tr class="amber-row"><td colspan="5">OCCUPANCY &mdash; editable from any page</td></tr>
+        <tr><td>Lease</td><td><input type="number" class="mv-in" data-model-in="leaseM2" value="6000" min="0" step="100">m&sup2; &times; $<input type="number" class="mv-in mv-in-small" data-model-in="leasePerM2" value="280" min="0" step="5">/m&sup2; p.a.</td><td class="tr" data-bind="fmt(M.leaseAnnual * 0.93)">&mdash;</td><td class="tr" data-bind="fmt(M.leaseAnnual)">&mdash;</td><td class="tr" data-bind="fmt(M.leaseAnnual * 1.07)">&mdash;</td></tr>
         <tr class="amber-row"><td colspan="5">UTILITIES</td></tr>
         <tr><td>Electricity &mdash; Morning (6am&ndash;12pm)</td><td>Courts + reception lighting, minimal HVAC &middot; ~25kW &times; 6hrs/day</td><td class="tr">$18,000</td><td class="tr">$24,000</td><td class="tr">$32,000</td></tr>
         <tr><td>Electricity &mdash; Afternoon (12pm&ndash;6pm)</td><td>Full courts + HVAC ramp-up &middot; ~38kW &times; 6hrs/day</td><td class="tr">$28,000</td><td class="tr">$38,000</td><td class="tr">$50,000</td></tr>
         <tr><td>Electricity &mdash; Evening (6pm&ndash;12am)</td><td>Peak: all courts + full HVAC + F&B &middot; ~55kW &times; 6hrs/day</td><td class="tr">$40,000</td><td class="tr">$54,000</td><td class="tr">$72,000</td></tr>
         <tr><td>Electricity &mdash; Overnight / Base load</td><td>Security, fridges, alarms, charging &middot; ~5kW &times; 6hrs</td><td class="tr">$10,000</td><td class="tr">$14,000</td><td class="tr">$14,000</td></tr>
         <tr><td>Water + gas + waste</td><td>Locker rooms, canteen, council collection</td><td class="tr">$9,500</td><td class="tr">$14,000</td><td class="tr">$21,000</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Utilities total (editable mid)</strong></td><td class="tr">&mdash;</td><td class="tr">$<input type="number" class="mv-in" data-model-in="opex.utilities" value="148000" min="0" step="1000"></td><td class="tr">&mdash;</td></tr>
         <tr class="amber-row"><td colspan="5">INSURANCE</td></tr>
         <tr><td>Public liability ($20M)</td><td>Sports venue &mdash; mandatory</td><td class="tr">$12,000</td><td class="tr">$16,000</td><td class="tr">$22,000</td></tr>
         <tr><td>Property + contents</td><td>Building improvements + all equipment</td><td class="tr">$8,000</td><td class="tr">$12,000</td><td class="tr">$18,000</td></tr>
         <tr><td>Workers compensation</td><td>NSW mandatory &mdash; ~2.5% of wages</td><td class="tr">$6,500</td><td class="tr">$9,500</td><td class="tr">$14,000</td></tr>
         <tr><td>Management liability + cyber</td><td>Directors cover + data breach policy</td><td class="tr">$4,000</td><td class="tr">$6,000</td><td class="tr">$9,000</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Insurance total (editable mid)</strong></td><td class="tr">&mdash;</td><td class="tr">$<input type="number" class="mv-in" data-model-in="opex.insurance" value="43500" min="0" step="500"></td><td class="tr">&mdash;</td></tr>
         <tr class="amber-row"><td colspan="5">TECHNOLOGY & SUBSCRIPTIONS</td></tr>
         <tr><td>Playtomic Champion</td><td>~$400/mo + commission (see Revenue page)</td><td class="tr">$4,800</td><td class="tr">$5,500</td><td class="tr">$7,200</td></tr>
         <tr><td>Camera subscription</td><td>Veo / EyeOnPadel cloud + storage, 18 courts (incl. 2 pro)</td><td class="tr">$10,800</td><td class="tr">$16,200</td><td class="tr">$21,600</td></tr>
         <tr><td>Square POS + Shopify</td><td>Retail POS + online merch store</td><td class="tr">$2,400</td><td class="tr">$3,600</td><td class="tr">$4,800</td></tr>
         <tr><td>Xero + Deputy</td><td>Accounting + staff rostering</td><td class="tr">$2,400</td><td class="tr">$3,200</td><td class="tr">$4,200</td></tr>
         <tr><td>Internet + phone</td><td>NBN enterprise + business phone</td><td class="tr">$3,600</td><td class="tr">$5,400</td><td class="tr">$7,200</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Tech total (editable mid)</strong></td><td class="tr">&mdash;</td><td class="tr">$<input type="number" class="mv-in" data-model-in="opex.tech" value="32300" min="0" step="500"></td><td class="tr">&mdash;</td></tr>
         <tr class="amber-row"><td colspan="5">MAINTENANCE & MARKETING</td></tr>
         <tr><td>Court maintenance</td><td>Turf cleaning, glass, net, surface checks</td><td class="tr">$14,000</td><td class="tr">$20,000</td><td class="tr">$28,000</td></tr>
-        <tr><td>General maintenance + cleaning</td><td>6,000m&sup2; daily cleaning + ad-hoc repairs (cafe, recovery, gym, bathrooms all added)</td><td class="tr">$44,000</td><td class="tr">$64,000</td><td class="tr">$90,000</td></tr>
-        <tr><td>Marketing + social</td><td>Digital ads, content, events, pre-launch</td><td class="tr">$24,000</td><td class="tr">$40,000</td><td class="tr">$60,000</td></tr>
-        <tr><td>Accounting + legal (ongoing)</td><td>BAS, tax, contracts, HR</td><td class="tr">$18,000</td><td class="tr">$26,000</td><td class="tr">$38,000</td></tr>
-        <tr><td>Miscellaneous / contingency</td><td>10% buffer on variable opex</td><td class="tr">$15,000</td><td class="tr">$22,000</td><td class="tr">$32,000</td></tr>
+        <tr><td>Court maintenance + cleaning</td><td>6,000m&sup2; daily cleaning + court turf care + ad-hoc repairs</td><td class="tr">&mdash;</td><td class="tr">$<input type="number" class="mv-in" data-model-in="opex.cleaningMaint" value="84000" min="0" step="1000"></td><td class="tr">&mdash;</td></tr>
+        <tr><td>Marketing + social &mdash; <strong>from Marketing page bars</strong></td><td>Y1 = sum of 12 monthly bars (adjust on Marketing tab). Y2+ use $ cell.</td><td class="tr">&mdash;</td><td class="tr"><span data-bind="fmt(M.marketingY1)">$0</span> Y1 &middot; Y2 $<input type="number" class="mv-in" data-model-in="marketingByYr.1" value="40000" min="0" step="1000"></td><td class="tr">&mdash;</td></tr>
+        <tr><td>Accounting + legal (ongoing)</td><td>BAS, tax, contracts, HR</td><td class="tr">&mdash;</td><td class="tr">$<input type="number" class="mv-in" data-model-in="opex.legalAccounting" value="26000" min="0" step="500"></td><td class="tr">&mdash;</td></tr>
+        <tr><td>Miscellaneous / contingency</td><td>10% buffer on variable opex</td><td class="tr">&mdash;</td><td class="tr">$<input type="number" class="mv-in" data-model-in="opex.contingency" value="22000" min="0" step="500"></td><td class="tr">&mdash;</td></tr>
         <tr class="total-row"><td colspan="2"><strong>Total Fixed Opex (excl. staff)</strong></td><td class="tr"><strong>$299,100</strong></td><td class="tr"><strong>$433,800</strong></td><td class="tr"><strong>$606,000</strong></td></tr>
       </tbody>
     </table>
@@ -1625,6 +1631,24 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
   </script>
 
   <style>
+    .mv-in {
+      width: 90px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 12px;
+      text-align: right;
+      outline: none;
+      background: #fff;
+    }
+    .mv-in:focus { border-color: var(--pdl); }
+    .mv-in:disabled { background: #f5f4f0; cursor: not-allowed; }
+    .mv-in::-webkit-inner-spin-button, .mv-in::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .mv-in { -moz-appearance: textfield; }
+    .mv-in-small { width: 60px; }
+    .mv-in-med { width: 75px; }
+    .mv-in-wide { width: 110px; }
     .ss-hc, .ss-rate {
       width: 80px;
       padding: 5px 8px;
@@ -1707,20 +1731,23 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <p style="margin-top:10px;"><strong>Owner massage &mdash; set to Tenant Model (Option C):</strong> Therapist rents the 2-bed suite at $3,500/mo. Owner members get a direct rate ($90 vs $150 public). PDL earns rent with zero delivery cost. Therapist builds their book on premium clientele. Members still get the premium experience. Swap to option A ($449 fee, in-house) or B (2/wk cap, $349) by editing here.</p>
   </div>
 
-  <div class="sec-div"><span>Assumptions &mdash; Locked Inputs (Year 1)</span></div>
+  <div class="sec-div"><span>Assumptions &mdash; every field editable</span></div>
   <div class="assume-grid gap">
-    <div class="assume-card"><p class="assume-label">Standard Courts</p><p class="assume-val">16</p><p class="assume-sub">4&times;4 grid, 2m clearance</p></div>
-    <div class="assume-card"><p class="assume-label">Pro Courts</p><p class="assume-val">2</p><p class="assume-sub">Side-by-side + 4-tier stadium</p></div>
-    <div class="assume-card"><p class="assume-label">Standard Peak Rate</p><p class="assume-val" id="peakRateVal">$120</p><p class="assume-sub">Per 1.5hr &middot; 4pm&ndash;10pm + weekends</p></div>
-    <div class="assume-card"><p class="assume-label">Standard Off-Peak</p><p class="assume-val" id="offRateVal">$89</p><p class="assume-sub">Per 1.5hr &middot; 9am&ndash;4pm weekdays</p></div>
-    <div class="assume-card"><p class="assume-label">Pro Court Peak</p><p class="assume-val">$149</p><p class="assume-sub">Per 1.5hr</p></div>
-    <div class="assume-card"><p class="assume-label">Pro Court Off-Peak</p><p class="assume-val">$120</p><p class="assume-sub">Per 1.5hr</p></div>
-    <div class="assume-card"><p class="assume-label">Peak Hours % of Total</p><p class="assume-val" id="peakPctVal">25%</p><p class="assume-sub">Peak slots as share of total</p></div>
-    <div class="assume-card"><p class="assume-label">Operating Hours / Day</p><p class="assume-val" id="hrsVal">16 hrs</p><p class="assume-sub">6am&ndash;10pm &middot; 18 courts live</p></div>
-    <div class="assume-card"><p class="assume-label">Year 1 Occupancy</p><p class="assume-val" id="y1OccVal">50%</p><p class="assume-sub">Ramp to 65/75/80/82%</p></div>
-    <div class="assume-card"><p class="assume-label">Playtomic Commission</p><p class="assume-val" id="ptcVal">5%</p><p class="assume-sub">On court bookings</p></div>
-    <div class="assume-card"><p class="assume-label">Members (Year 1)</p><p class="assume-val" id="membersVal">500</p><p class="assume-sub">Blended across 4 tiers</p></div>
-    <div class="assume-card"><p class="assume-label">Avg Membership Fee</p><p class="assume-val" id="memFeeVal">$95</p><p class="assume-sub">Blended (Social/Core/Pro/Owner)</p></div>
+    <div class="assume-card"><p class="assume-label">Standard Courts</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="courtsStd" value="16" min="0" max="40" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">4&times;4 grid, 2m clearance</p></div>
+    <div class="assume-card"><p class="assume-label">Pro Courts</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="courtsPro" value="2" min="0" max="10" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">+ 4-tier stadium</p></div>
+    <div class="assume-card"><p class="assume-label">Std Peak</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="stdPeak" value="120" min="0" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">/1.5hr</p></div>
+    <div class="assume-card"><p class="assume-label">Std Off-Peak</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="stdOff" value="89" min="0" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">/1.5hr</p></div>
+    <div class="assume-card"><p class="assume-label">Pro Peak</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="proPeak" value="149" min="0" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">/1.5hr</p></div>
+    <div class="assume-card"><p class="assume-label">Pro Off-Peak</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="proOff" value="120" min="0" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">/1.5hr</p></div>
+    <div class="assume-card"><p class="assume-label">Peak %</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="peakPct" value="0.25" min="0" max="1" step="0.05" style="width:70px;text-align:center;"></p><p class="assume-sub">0\u20131 (= 25%)</p></div>
+    <div class="assume-card"><p class="assume-label">Hours / Day</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="hrs" value="16" min="6" max="24" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">Open hours</p></div>
+    <div class="assume-card"><p class="assume-label">Y1 Occ %</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="occ.0" value="0.50" min="0" max="1" step="0.05" style="width:70px;text-align:center;"></p><p class="assume-sub">0\u20131 range</p></div>
+    <div class="assume-card"><p class="assume-label">Y2 Occ %</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="occ.1" value="0.65" min="0" max="1" step="0.05" style="width:70px;text-align:center;"></p><p class="assume-sub">&middot;</p></div>
+    <div class="assume-card"><p class="assume-label">Y3 Occ %</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="occ.2" value="0.75" min="0" max="1" step="0.05" style="width:70px;text-align:center;"></p><p class="assume-sub">&middot;</p></div>
+    <div class="assume-card"><p class="assume-label">Y5 Occ %</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="occ.4" value="0.82" min="0" max="1" step="0.05" style="width:70px;text-align:center;"></p><p class="assume-sub">&middot;</p></div>
+    <div class="assume-card"><p class="assume-label">Playtomic Commission</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="ptCommission" value="0.05" min="0" max="0.30" step="0.01" style="width:70px;text-align:center;"></p><p class="assume-sub">0\u20131</p></div>
+    <div class="assume-card"><p class="assume-label">Cafe avg ticket</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="cafeTicket" value="18" min="0" step="1" style="width:70px;text-align:center;"></p><p class="assume-sub">per customer</p></div>
+    <div class="assume-card"><p class="assume-label">Cafe Y2 covers/day</p><p class="assume-val"><input type="number" class="mv-in" data-model-in="cafeCoversByYr.1" value="100" min="0" step="5" style="width:70px;text-align:center;"></p><p class="assume-sub">Y2 baseline</p></div>
   </div>
   <!-- TIME BAND BREAKDOWN -->
   <div class="tbl-wrap gap">
@@ -1786,59 +1813,57 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
         <tr><th style="width:28%;">Line Item</th><th class="tr">Year 1</th><th class="tr">Year 2</th><th class="tr">Year 3</th><th class="tr">Year 4</th><th class="tr">Year 5</th></tr>
       </thead>
       <tbody>
-        <tr class="amber-row"><td colspan="6">REVENUE</td></tr>
-        <tr><td>Court hire &mdash; walk-in (18 courts)</td><td class="tr">$2,080,000</td><td class="tr">$2,720,000</td><td class="tr">$3,180,000</td><td class="tr">$3,400,000</td><td class="tr">$3,490,000</td></tr>
-        <tr><td>Private coaching (coach court rent @ 20% off)</td><td class="tr">$240,000</td><td class="tr">$400,000</td><td class="tr">$500,000</td><td class="tr">$560,000</td><td class="tr">$600,000</td></tr>
-        <tr><td>Membership (Social/Core/Pro/Owner)</td><td class="tr">$380,000</td><td class="tr">$674,400</td><td class="tr">$985,000</td><td class="tr">$1,150,000</td><td class="tr">$1,210,000</td></tr>
-        <tr><td>Cafe &amp; bar</td><td class="tr">$360,000</td><td class="tr">$520,000</td><td class="tr">$620,000</td><td class="tr">$700,000</td><td class="tr">$752,000</td></tr>
-        <tr><td>Day passes (Full / Gym / Recovery)</td><td class="tr">$198,000</td><td class="tr">$301,100</td><td class="tr">$340,000</td><td class="tr">$355,000</td><td class="tr">$365,000</td></tr>
-        <tr><td>Pro shop (incl. Zimma capsule)</td><td class="tr">$108,000</td><td class="tr">$180,000</td><td class="tr">$230,000</td><td class="tr">$260,000</td><td class="tr">$280,000</td></tr>
-        <tr><td>Leagues &mdash; Evening (8 seasons, packed)</td><td class="tr">$178,560</td><td class="tr">$297,600</td><td class="tr">$340,000</td><td class="tr">$362,000</td><td class="tr">$372,000</td></tr>
-        <tr><td>Leagues &mdash; Morning (6 seasons, packed)</td><td class="tr">$82,944</td><td class="tr">$138,240</td><td class="tr">$158,000</td><td class="tr">$168,000</td><td class="tr">$172,000</td></tr>
-        <tr><td>Leagues &mdash; Corporate (24 teams/yr)</td><td class="tr">$34,560</td><td class="tr">$57,600</td><td class="tr">$67,200</td><td class="tr">$72,000</td><td class="tr">$76,800</td></tr>
-        <tr><td>Kids Play (after-school + evening, 220 sessions)</td><td class="tr">$85,800</td><td class="tr">$143,000</td><td class="tr">$165,000</td><td class="tr">$175,000</td><td class="tr">$182,000</td></tr>
-        <tr><td>Pro League non-member entries + stadium tickets</td><td class="tr">$28,000</td><td class="tr">$59,000</td><td class="tr">$75,000</td><td class="tr">$88,000</td><td class="tr">$95,000</td></tr>
-        <tr><td>Pro League content / sponsorship</td><td class="tr">$15,000</td><td class="tr">$45,000</td><td class="tr">$90,000</td><td class="tr">$130,000</td><td class="tr">$160,000</td></tr>
-        <tr><td>Events / tournaments / venue hire</td><td class="tr">$20,000</td><td class="tr">$48,000</td><td class="tr">$75,000</td><td class="tr">$90,000</td><td class="tr">$100,000</td></tr>
-        <tr><td>Court cameras (Veo sharing)</td><td class="tr">$43,200</td><td class="tr">$72,000</td><td class="tr">$86,000</td><td class="tr">$92,000</td><td class="tr">$95,000</td></tr>
-        <tr><td>Massage room rent (tenant)</td><td class="tr">$42,000</td><td class="tr">$42,000</td><td class="tr">$48,000</td><td class="tr">$48,000</td><td class="tr">$54,000</td></tr>
-        <tr><td>Playtomic partner commission (inbound)</td><td class="tr">$10,800</td><td class="tr">$18,000</td><td class="tr">$22,000</td><td class="tr">$24,000</td><td class="tr">$25,000</td></tr>
-        <tr class="total-row"><td><strong>TOTAL GROSS REVENUE</strong></td><td class="tr"><strong>$3,906,864</strong></td><td class="tr"><strong>$5,715,940</strong></td><td class="tr"><strong>$6,981,200</strong></td><td class="tr"><strong>$7,674,000</strong></td><td class="tr"><strong>$8,028,800</strong></td></tr>
+        <tr class="amber-row"><td colspan="6">REVENUE &mdash; every row live from MODEL</td></tr>
+        <tr><td>Court hire &mdash; walk-in</td><td class="tr" data-bind="fmt(M.courtHireRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.courtHireRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.courtHireRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.courtHireRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.courtHireRev[4])">&mdash;</td></tr>
+        <tr><td>Private coaching (court rent)</td><td class="tr" data-bind="fmt(M.coachingRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.coachingRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.coachingRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.coachingRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.coachingRev[4])">&mdash;</td></tr>
+        <tr><td>Membership (4 tiers)</td><td class="tr" data-bind="fmt(M.memberRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.memberRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.memberRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.memberRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.memberRev[4])">&mdash;</td></tr>
+        <tr><td>Cafe &amp; bar</td><td class="tr" data-bind="fmt(M.cafeRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.cafeRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.cafeRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.cafeRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.cafeRev[4])">&mdash;</td></tr>
+        <tr><td>Day passes (Full / Gym / Recovery)</td><td class="tr" data-bind="fmt(M.dayPassRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.dayPassRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.dayPassRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.dayPassRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.dayPassRev[4])">&mdash;</td></tr>
+        <tr><td>Pro shop</td><td class="tr" data-bind="fmt(M.proShopRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.proShopRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.proShopRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.proShopRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.proShopRev[4])">&mdash;</td></tr>
+        <tr><td>Leagues &mdash; Evening</td><td class="tr" data-bind="fmt(M.eveningLeagueRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.eveningLeagueRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.eveningLeagueRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.eveningLeagueRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.eveningLeagueRev[4])">&mdash;</td></tr>
+        <tr><td>Leagues &mdash; Morning</td><td class="tr" data-bind="fmt(M.morningLeagueRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.morningLeagueRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.morningLeagueRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.morningLeagueRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.morningLeagueRev[4])">&mdash;</td></tr>
+        <tr><td>Leagues &mdash; Corporate</td><td class="tr" data-bind="fmt(M.corpLeagueRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.corpLeagueRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.corpLeagueRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.corpLeagueRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.corpLeagueRev[4])">&mdash;</td></tr>
+        <tr><td>Kids Play</td><td class="tr" data-bind="fmt(M.kidsRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.kidsRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.kidsRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.kidsRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.kidsRev[4])">&mdash;</td></tr>
+        <tr><td>Pro League entries + tickets</td><td class="tr" data-bind="fmt(M.proLeagueRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.proLeagueRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.proLeagueRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.proLeagueRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.proLeagueRev[4])">&mdash;</td></tr>
+        <tr><td>Pro League content / sponsorship</td><td class="tr" data-bind="fmt(M.contentRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.contentRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.contentRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.contentRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.contentRev[4])">&mdash;</td></tr>
+        <tr><td>Events / venue hire</td><td class="tr" data-bind="fmt(M.eventsRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.eventsRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.eventsRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.eventsRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.eventsRev[4])">&mdash;</td></tr>
+        <tr><td>Court cameras (Veo sharing)</td><td class="tr" data-bind="fmt(M.cameraRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.cameraRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.cameraRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.cameraRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.cameraRev[4])">&mdash;</td></tr>
+        <tr><td>Massage room rent (tenant)</td><td class="tr" data-bind="fmt(M.massageRentRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.massageRentRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.massageRentRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.massageRentRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.massageRentRev[4])">&mdash;</td></tr>
+        <tr><td>Playtomic partner commission</td><td class="tr" data-bind="fmt(M.playtomicInRev[0])">&mdash;</td><td class="tr" data-bind="fmt(M.playtomicInRev[1])">&mdash;</td><td class="tr" data-bind="fmt(M.playtomicInRev[2])">&mdash;</td><td class="tr" data-bind="fmt(M.playtomicInRev[3])">&mdash;</td><td class="tr" data-bind="fmt(M.playtomicInRev[4])">&mdash;</td></tr>
+        <tr class="total-row"><td><strong>TOTAL GROSS REVENUE</strong></td><td class="tr"><strong data-bind="fmt(M.totalRev[0])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.totalRev[1])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.totalRev[2])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.totalRev[3])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.totalRev[4])">&mdash;</strong></td></tr>
 
         <tr class="amber-row"><td colspan="6">COST OF SALES (variable)</td></tr>
-        <tr><td>Cafe COGS (35% of cafe revenue)</td><td class="tr">($126,000)</td><td class="tr">($182,000)</td><td class="tr">($217,000)</td><td class="tr">($245,000)</td><td class="tr">($263,200)</td></tr>
-        <tr><td>Pro shop COGS (45% of retail revenue)</td><td class="tr">($48,600)</td><td class="tr">($81,000)</td><td class="tr">($103,500)</td><td class="tr">($117,000)</td><td class="tr">($126,000)</td></tr>
-        <tr><td>Playtomic commission (5% on courts)</td><td class="tr">($104,000)</td><td class="tr">($136,000)</td><td class="tr">($159,000)</td><td class="tr">($170,000)</td><td class="tr">($174,500)</td></tr>
-        <tr><td>Payment processing (1.8% of all revenue)</td><td class="tr">($70,300)</td><td class="tr">($102,900)</td><td class="tr">($125,700)</td><td class="tr">($138,100)</td><td class="tr">($144,500)</td></tr>
-        <tr><td>League programme costs (coaching, catering, prizes)</td><td class="tr">($52,000)</td><td class="tr">($88,000)</td><td class="tr">($104,000)</td><td class="tr">($112,000)</td><td class="tr">($116,000)</td></tr>
-        <tr class="subtotal"><td><strong>Total cost of sales</strong></td><td class="tr"><strong>($400,900)</strong></td><td class="tr"><strong>($589,900)</strong></td><td class="tr"><strong>($709,200)</strong></td><td class="tr"><strong>($782,100)</strong></td><td class="tr"><strong>($824,200)</strong></td></tr>
-        <tr class="total-row"><td><strong>GROSS PROFIT</strong></td><td class="tr"><strong>$3,505,964</strong></td><td class="tr"><strong>$5,126,040</strong></td><td class="tr"><strong>$6,272,000</strong></td><td class="tr"><strong>$6,891,900</strong></td><td class="tr"><strong>$7,204,600</strong></td></tr>
+        <tr><td>Cafe COGS</td><td class="tr" data-bind="'('+fmt(M.cafeCOGS[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cafeCOGS[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cafeCOGS[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cafeCOGS[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cafeCOGS[4])+')'">&mdash;</td></tr>
+        <tr><td>Pro shop COGS</td><td class="tr" data-bind="'('+fmt(M.proShopCOGS[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.proShopCOGS[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.proShopCOGS[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.proShopCOGS[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.proShopCOGS[4])+')'">&mdash;</td></tr>
+        <tr><td>Playtomic commission</td><td class="tr" data-bind="'('+fmt(M.playtomicCost[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.playtomicCost[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.playtomicCost[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.playtomicCost[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.playtomicCost[4])+')'">&mdash;</td></tr>
+        <tr><td>Payment processing (1.8%)</td><td class="tr" data-bind="'('+fmt(M.paymentProc[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.paymentProc[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.paymentProc[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.paymentProc[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.paymentProc[4])+')'">&mdash;</td></tr>
+        <tr><td>League programme costs</td><td class="tr" data-bind="'('+fmt(M.leagueProgramCost[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leagueProgramCost[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leagueProgramCost[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leagueProgramCost[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leagueProgramCost[4])+')'">&mdash;</td></tr>
+        <tr class="subtotal"><td><strong>Total cost of sales</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalCOGS[0])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalCOGS[1])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalCOGS[2])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalCOGS[3])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalCOGS[4])+')'">&mdash;</strong></td></tr>
+        <tr class="total-row"><td><strong>GROSS PROFIT</strong></td><td class="tr"><strong data-bind="fmt(M.grossProfit[0])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.grossProfit[1])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.grossProfit[2])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.grossProfit[3])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.grossProfit[4])">&mdash;</strong></td></tr>
 
-        <tr class="amber-row"><td colspan="6">OPERATING EXPENSES</td></tr>
-        <tr><td>Lease (6,000 m&sup2; &times; $280, 3% annual escalation)</td><td class="tr">($1,680,000)</td><td class="tr">($1,730,400)</td><td class="tr">($1,782,300)</td><td class="tr">($1,835,800)</td><td class="tr">($1,890,900)</td></tr>
-        <tr><td>Court staff (reception, bar, pro shop)</td><td class="tr">($540,000)</td><td class="tr">($620,000)</td><td class="tr">($680,000)</td><td class="tr">($720,000)</td><td class="tr">($740,000)</td></tr>
-        <tr><td>Segment staff (cafe mgr + baristas)</td><td class="tr">($225,000)</td><td class="tr">($261,625)</td><td class="tr">($285,000)</td><td class="tr">($305,000)</td><td class="tr">($320,000)</td></tr>
-        <tr><td>Segment staff (recovery host)</td><td class="tr">($68,000)</td><td class="tr">($82,000)</td><td class="tr">($88,000)</td><td class="tr">($92,000)</td><td class="tr">($95,000)</td></tr>
-        <tr><td>Segment staff (gym PT)</td><td class="tr">($52,000)</td><td class="tr">($65,000)</td><td class="tr">($72,000)</td><td class="tr">($76,000)</td><td class="tr">($80,000)</td></tr>
-        <tr><td>Segment staff (retail + concierge)</td><td class="tr">($98,000)</td><td class="tr">($122,775)</td><td class="tr">($135,000)</td><td class="tr">($142,000)</td><td class="tr">($148,000)</td></tr>
-        <tr><td>Managers / head coaches (2 &times; $90K)</td><td class="tr">($200,700)</td><td class="tr">($206,700)</td><td class="tr">($212,900)</td><td class="tr">($219,300)</td><td class="tr">($225,900)</td></tr>
-        <tr><td>Utilities (electricity, water, gas, waste)</td><td class="tr">($148,000)</td><td class="tr">($156,000)</td><td class="tr">($164,000)</td><td class="tr">($172,000)</td><td class="tr">($180,000)</td></tr>
-        <tr><td>Insurance (public, property, workers comp, cyber)</td><td class="tr">($43,500)</td><td class="tr">($45,700)</td><td class="tr">($48,000)</td><td class="tr">($50,400)</td><td class="tr">($52,900)</td></tr>
-        <tr><td>Tech &amp; subscriptions (Playtomic, cameras, POS, Xero)</td><td class="tr">($32,300)</td><td class="tr">($34,000)</td><td class="tr">($35,700)</td><td class="tr">($37,500)</td><td class="tr">($39,400)</td></tr>
-        <tr><td>Cleaning + maintenance (6,000 m&sup2;)</td><td class="tr">($84,000)</td><td class="tr">($88,200)</td><td class="tr">($92,600)</td><td class="tr">($97,200)</td><td class="tr">($102,000)</td></tr>
-        <tr><td>Marketing + content</td><td class="tr">($60,000)</td><td class="tr">($40,000)</td><td class="tr">($35,000)</td><td class="tr">($32,000)</td><td class="tr">($30,000)</td></tr>
-        <tr><td>Accounting + legal + HR</td><td class="tr">($26,000)</td><td class="tr">($27,500)</td><td class="tr">($29,000)</td><td class="tr">($30,500)</td><td class="tr">($32,000)</td></tr>
-        <tr><td>Miscellaneous / contingency</td><td class="tr">($22,000)</td><td class="tr">($25,000)</td><td class="tr">($28,000)</td><td class="tr">($30,000)</td><td class="tr">($32,000)</td></tr>
-        <tr class="subtotal"><td><strong>Total operating expenses</strong></td><td class="tr"><strong>($3,279,500)</strong></td><td class="tr"><strong>($3,504,900)</strong></td><td class="tr"><strong>($3,687,500)</strong></td><td class="tr"><strong>($3,839,700)</strong></td><td class="tr"><strong>($3,968,100)</strong></td></tr>
-        <tr class="total-row"><td><strong>EBITDA</strong></td><td class="tr"><strong>$226,464</strong></td><td class="tr"><strong>$1,621,140</strong></td><td class="tr"><strong>$2,584,500</strong></td><td class="tr"><strong>$3,052,200</strong></td><td class="tr"><strong>$3,236,500</strong></td></tr>
-        <tr><td>EBITDA margin</td><td class="tr">5.8%</td><td class="tr">28.4%</td><td class="tr">37.0%</td><td class="tr">39.8%</td><td class="tr">40.3%</td></tr>
+        <tr class="amber-row"><td colspan="6">OPERATING EXPENSES &mdash; live from MODEL</td></tr>
+        <tr><td>Lease (<span data-bind="S.leaseM2.toLocaleString()">6,000</span> m&sup2; &times; $<span data-bind="S.leasePerM2">280</span>, 3% escalation)</td><td class="tr" data-bind="'('+fmt(M.leaseByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leaseByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leaseByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leaseByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.leaseByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Court staff (reception, bar, pro shop time bands)</td><td class="tr" data-bind="'('+fmt(M.courtStaffByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.courtStaffByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.courtStaffByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.courtStaffByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.courtStaffByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Segment staff (cafe + recovery + gym + retail + concierge)</td><td class="tr" data-bind="'('+fmt(M.segmentStaffByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.segmentStaffByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.segmentStaffByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.segmentStaffByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.segmentStaffByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Managers / head coaches</td><td class="tr" data-bind="'('+fmt(M.managersByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.managersByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.managersByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.managersByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.managersByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Utilities</td><td class="tr" data-bind="'('+fmt(M.utilitiesByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.utilitiesByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.utilitiesByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.utilitiesByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.utilitiesByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Insurance</td><td class="tr" data-bind="'('+fmt(M.insuranceByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.insuranceByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.insuranceByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.insuranceByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.insuranceByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Tech &amp; subscriptions</td><td class="tr" data-bind="'('+fmt(M.techByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.techByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.techByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.techByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.techByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Cleaning + maintenance</td><td class="tr" data-bind="'('+fmt(M.cleaningByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cleaningByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cleaningByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cleaningByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.cleaningByYr[4])+')'">&mdash;</td></tr>
+        <tr style="background:rgba(26,79,154,.04);"><td><strong>Marketing</strong> &mdash; Y1 from Marketing page bars, Y2&ndash;Y5 editable in Operating Costs</td><td class="tr" data-bind="'('+fmt(M.marketingByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.marketingByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.marketingByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.marketingByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.marketingByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Accounting + legal + HR</td><td class="tr" data-bind="'('+fmt(M.legalByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.legalByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.legalByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.legalByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.legalByYr[4])+')'">&mdash;</td></tr>
+        <tr><td>Miscellaneous / contingency</td><td class="tr" data-bind="'('+fmt(M.contingencyByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.contingencyByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.contingencyByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.contingencyByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.contingencyByYr[4])+')'">&mdash;</td></tr>
+        <tr class="subtotal"><td><strong>Total operating expenses</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalOpex[0])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalOpex[1])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalOpex[2])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalOpex[3])+')'">&mdash;</strong></td><td class="tr"><strong data-bind="'('+fmt(M.totalOpex[4])+')'">&mdash;</strong></td></tr>
+        <tr class="total-row"><td><strong>EBITDA</strong></td><td class="tr"><strong data-bind="fmt(M.ebitda[0])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.ebitda[1])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.ebitda[2])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.ebitda[3])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.ebitda[4])">&mdash;</strong></td></tr>
+        <tr><td>EBITDA margin</td><td class="tr" data-bind="pct(M.ebitdaMargin[0])">&mdash;</td><td class="tr" data-bind="pct(M.ebitdaMargin[1])">&mdash;</td><td class="tr" data-bind="pct(M.ebitdaMargin[2])">&mdash;</td><td class="tr" data-bind="pct(M.ebitdaMargin[3])">&mdash;</td><td class="tr" data-bind="pct(M.ebitdaMargin[4])">&mdash;</td></tr>
 
         <tr class="amber-row"><td colspan="6">BELOW-THE-LINE</td></tr>
-        <tr><td>Depreciation (courts + fit-out, 10-yr SL)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td></tr>
-        <tr><td>Interest (debt facility assumed $500K @ 8%)</td><td class="tr">($40,000)</td><td class="tr">($32,000)</td><td class="tr">($22,000)</td><td class="tr">($10,000)</td><td class="tr">$0</td></tr>
-        <tr class="total-row"><td><strong>PROFIT BEFORE TAX</strong></td><td class="tr"><strong>($69,536)</strong></td><td class="tr"><strong>$1,333,140</strong></td><td class="tr"><strong>$2,306,500</strong></td><td class="tr"><strong>$2,786,200</strong></td><td class="tr"><strong>$2,980,500</strong></td></tr>
-        <tr><td>Income tax (25% company rate)</td><td class="tr">$0</td><td class="tr">($333,285)</td><td class="tr">($576,625)</td><td class="tr">($696,550)</td><td class="tr">($745,125)</td></tr>
-        <tr class="total-row"><td><strong>NET PROFIT AFTER TAX</strong></td><td class="tr"><strong>($69,536)</strong></td><td class="tr"><strong>$999,855</strong></td><td class="tr"><strong>$1,729,875</strong></td><td class="tr"><strong>$2,089,650</strong></td><td class="tr"><strong>$2,235,375</strong></td></tr>
+        <tr><td>Depreciation (courts + fit-out, 10-yr SL)</td><td class="tr" data-bind="'('+fmt(M.depreciation[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.depreciation[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.depreciation[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.depreciation[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.depreciation[4])+')'">&mdash;</td></tr>
+        <tr><td>Interest (debt facility <span data-bind="fmtK(S.debtFacility)">$500K</span> @ <span data-bind="pct(S.debtRate)">8%</span>)</td><td class="tr" data-bind="'('+fmt(M.interestByYr[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.interestByYr[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.interestByYr[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.interestByYr[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.interestByYr[4])+')'">&mdash;</td></tr>
+        <tr class="total-row"><td><strong>PROFIT BEFORE TAX</strong></td><td class="tr"><strong data-bind="fmt(M.pbt[0])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.pbt[1])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.pbt[2])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.pbt[3])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.pbt[4])">&mdash;</strong></td></tr>
+        <tr><td>Income tax (<span data-bind="pct(S.taxRate)">25%</span> company rate)</td><td class="tr" data-bind="'('+fmt(M.tax[0])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.tax[1])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.tax[2])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.tax[3])+')'">&mdash;</td><td class="tr" data-bind="'('+fmt(M.tax[4])+')'">&mdash;</td></tr>
+        <tr class="total-row"><td><strong>NET PROFIT AFTER TAX</strong></td><td class="tr"><strong data-bind="fmt(M.npat[0])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.npat[1])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.npat[2])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.npat[3])">&mdash;</strong></td><td class="tr"><strong data-bind="fmt(M.npat[4])">&mdash;</strong></td></tr>
+        <tr><td>Net profit margin</td><td class="tr" data-bind="pct(M.npatMargin[0])">&mdash;</td><td class="tr" data-bind="pct(M.npatMargin[1])">&mdash;</td><td class="tr" data-bind="pct(M.npatMargin[2])">&mdash;</td><td class="tr" data-bind="pct(M.npatMargin[3])">&mdash;</td><td class="tr" data-bind="pct(M.npatMargin[4])">&mdash;</td></tr>
       </tbody>
     </table>
   </div>
@@ -2025,9 +2050,141 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 <div class="page" id="b9"><div class="inner">
   <div class="page-hero">
     <p class="ph-label">Business Plan &mdash; Marketing</p>
-    <p class="ph-title">Year 1 Marketing Plan &middot; $260,000 total budget</p>
-    <p class="ph-sub">Pre-opening through steady state. Budget structured across four phases to maximise community building before and after launch.</p>
+    <p class="ph-title">Year 1 Marketing Plan &middot; <span data-bind="fmt(M.marketingY1)">$0</span> total (drag bars below)</p>
+    <p class="ph-sub">Drag any monthly bar up or down to change that month's spend. Total Y1 marketing budget updates live and flows into the P&amp;L (Operating Costs). Year 2&ndash;5 marketing editable in Operating Costs tab.</p>
   </div>
+
+  <div class="sec-div"><span>Monthly Marketing Spend &mdash; drag bars to adjust</span></div>
+  <div class="tbl-wrap gap" style="padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;">
+      <p style="font-size:12px;color:var(--dim);">Each bar = 1 month of Y1 marketing spend. Click + drag vertically. Range $0&ndash;$50K/mo.</p>
+      <p style="font-size:13px;font-weight:500;color:var(--pdl);">Y1 Total: <strong data-bind="fmt(M.marketingY1)">$0</strong> &nbsp;|&nbsp; Monthly avg: <strong data-bind="fmt(M.marketingY1/12)">$0</strong></p>
+    </div>
+    <div id="mkt-chart" style="display:flex;gap:6px;align-items:flex-end;height:260px;padding:16px 10px 30px 10px;border:1px solid var(--border);border-radius:8px;background:#fafaf8;position:relative;user-select:none;"></div>
+    <div id="mkt-labels" style="display:flex;gap:6px;justify-content:space-around;margin-top:8px;font-size:10px;color:var(--dim);"></div>
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:14px;">
+      <button type="button" onclick="mktPreset('steady')" style="padding:8px 14px;border:1px solid var(--border);background:#fff;border-radius:4px;font-size:11px;font-family:inherit;cursor:pointer;">Steady: even $15K/mo</button>
+      <button type="button" onclick="mktPreset('frontload')" style="padding:8px 14px;border:1px solid var(--border);background:#fff;border-radius:4px;font-size:11px;font-family:inherit;cursor:pointer;">Front-loaded: heavy first 6mo</button>
+      <button type="button" onclick="mktPreset('lowbuild')" style="padding:8px 14px;border:1px solid var(--border);background:#fff;border-radius:4px;font-size:11px;font-family:inherit;cursor:pointer;">Lean: $8K/mo baseline</button>
+      <button type="button" onclick="mktPreset('zero')" style="padding:8px 14px;border:1px solid var(--border);background:#fff;border-radius:4px;font-size:11px;font-family:inherit;cursor:pointer;">Zero: $0 all months</button>
+    </div>
+  </div>
+
+  <div class="sec-div"><span>Year 2&ndash;5 Marketing Budget</span></div>
+  <div class="g4 gap">
+    <div class="assume-card"><p class="assume-label">Y2 marketing</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="marketingByYr.1" value="40000" min="0" step="1000" style="width:100px;text-align:center;"></p><p class="assume-sub">Steady state &mdash; members acquire members</p></div>
+    <div class="assume-card"><p class="assume-label">Y3 marketing</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="marketingByYr.2" value="35000" min="0" step="1000" style="width:100px;text-align:center;"></p><p class="assume-sub">Retention spend</p></div>
+    <div class="assume-card"><p class="assume-label">Y4 marketing</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="marketingByYr.3" value="32000" min="0" step="1000" style="width:100px;text-align:center;"></p><p class="assume-sub">Brand extension</p></div>
+    <div class="assume-card"><p class="assume-label">Y5 marketing</p><p class="assume-val">$<input type="number" class="mv-in" data-model-in="marketingByYr.4" value="30000" min="0" step="1000" style="width:100px;text-align:center;"></p><p class="assume-sub">Ongoing</p></div>
+  </div>
+
+  <script>
+    (function initMktChart(){
+      const MAX_MO = 50000;
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      function render(){
+        const chart = document.getElementById('mkt-chart');
+        const lbls = document.getElementById('mkt-labels');
+        if(!chart) return;
+        chart.innerHTML = '';
+        lbls.innerHTML = '';
+        S.marketingMonthly.forEach((v,i)=>{
+          const pct = Math.min(100, Math.max(0, v/MAX_MO*100));
+          const bar = document.createElement('div');
+          bar.className = 'mkt-bar';
+          bar.setAttribute('data-mo', i);
+          bar.style.cssText = 'flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:ns-resize;position:relative;height:100%;';
+          const fill = document.createElement('div');
+          fill.style.cssText = 'width:100%;background:linear-gradient(180deg,#1a4f9a,#3a6eb8);border-radius:3px 3px 0 0;transition:background .15s;height:'+pct+'%;position:relative;';
+          const label = document.createElement('div');
+          label.style.cssText = 'position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:500;color:var(--pdl);white-space:nowrap;';
+          label.textContent = '$'+Math.round(v/1000)+'K';
+          fill.appendChild(label);
+          bar.appendChild(fill);
+          chart.appendChild(bar);
+          const mlbl = document.createElement('div');
+          mlbl.style.cssText = 'flex:1;text-align:center;';
+          mlbl.textContent = months[i];
+          lbls.appendChild(mlbl);
+        });
+      }
+      function setMonth(i, value){
+        value = Math.max(0, Math.min(MAX_MO, Math.round(value/500)*500));
+        S.marketingMonthly[i] = value;
+        render();
+        renderBindings();
+        if(typeof renderAll === 'function') try{ renderAll(); }catch(e){}
+      }
+      let dragging = null;
+      document.addEventListener('mousedown', function(e){
+        const bar = e.target.closest('.mkt-bar');
+        if(!bar) return;
+        e.preventDefault();
+        const i = parseInt(bar.getAttribute('data-mo'),10);
+        const chart = document.getElementById('mkt-chart');
+        const rect = chart.getBoundingClientRect();
+        dragging = { i, rect };
+        handleDrag(e);
+      });
+      document.addEventListener('mousemove', function(e){ if(dragging) handleDrag(e); });
+      document.addEventListener('mouseup', ()=>{ dragging = null; });
+      function handleDrag(e){
+        if(!dragging) return;
+        const { i, rect } = dragging;
+        const relY = e.clientY - rect.top;
+        const totalH = rect.height - 30; // account for padding
+        const pctFromTop = relY / totalH;
+        const pct = Math.max(0, Math.min(1, 1 - pctFromTop));
+        setMonth(i, pct * MAX_MO);
+      }
+      // Touch support
+      document.addEventListener('touchstart', function(e){
+        const bar = e.target.closest && e.target.closest('.mkt-bar');
+        if(!bar) return;
+        e.preventDefault();
+        const i = parseInt(bar.getAttribute('data-mo'),10);
+        const chart = document.getElementById('mkt-chart');
+        const rect = chart.getBoundingClientRect();
+        dragging = { i, rect };
+        const t = e.touches[0];
+        const relY = t.clientY - rect.top;
+        const totalH = rect.height - 30;
+        const pct = Math.max(0, Math.min(1, 1 - relY / totalH));
+        setMonth(i, pct * MAX_MO);
+      }, {passive:false});
+      document.addEventListener('touchmove', function(e){
+        if(!dragging) return;
+        e.preventDefault();
+        const t = e.touches[0];
+        const relY = t.clientY - dragging.rect.top;
+        const totalH = dragging.rect.height - 30;
+        const pct = Math.max(0, Math.min(1, 1 - relY / totalH));
+        setMonth(dragging.i, pct * MAX_MO);
+      }, {passive:false});
+      document.addEventListener('touchend', ()=>{ dragging = null; });
+      // Presets
+      window.mktPreset = function(name){
+        if(name === 'steady') S.marketingMonthly = Array(12).fill(15000);
+        else if(name === 'frontload') S.marketingMonthly = [28000,26000,24000,22000,20000,18000,18000,16000,14000,12000,12000,10000];
+        else if(name === 'lowbuild') S.marketingMonthly = Array(12).fill(8000);
+        else if(name === 'zero') S.marketingMonthly = Array(12).fill(0);
+        render();
+        renderBindings();
+        if(typeof renderAll === 'function') try{ renderAll(); }catch(e){}
+      };
+      // Initial render
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render);
+      else setTimeout(render, 50);
+      // Re-render on any show() navigation
+      const origShow = window.show;
+      if(origShow){
+        window.show = function(id){ origShow(id); if(id==='b9') setTimeout(render,50); };
+      }
+    })();
+  </script>
+  <style>
+    .mkt-bar:hover > div { background: linear-gradient(180deg,#143f7e,#2f5fa0); }
+  </style>
 
   <!-- PHASE SUMMARY CARDS -->
   <div class="g4 gap">
@@ -2180,12 +2337,96 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 // GLOBAL STATE
 // &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
 const S = {
-  courts:14, peakRate:100, offpeakRate:80, peakPct:0.25,
-  occ:[0.50,0.60,0.70,0.80,0.90],
-  hrs:18, members:500, memFee:15, ptCommission:0.05,
-  leasePerM2:280, leaseM2:3000, incentivePct:0.12, fx:1.48,
-  dayStaff:2, aftStaff:2, eveStaff:2, mgrStaff:2, mornHrs:6, aftHrs:6, eveHrs:6,
-  dayRate:30, aftRate:33, mgrSalary:90000
+  // Court inventory
+  courtsStd:16, courtsPro:2,
+  get courts(){ return this.courtsStd + this.courtsPro; },
+
+  // Walk-in court rates (per 1.5hr)
+  stdPeak:120, stdOff:89, stdEarly:78,
+  proPeak:149, proOff:120, proEarly:100,
+  coachDiscount:0.20,
+
+  // Legacy support for existing court model
+  get peakRate(){ return Math.round(this.stdPeak / 1.5); },
+  get offpeakRate(){ return Math.round(this.stdOff / 1.5); },
+  peakPct:0.25,
+
+  // Occupancy by year
+  occ:[0.50,0.65,0.75,0.80,0.82],
+  hrs:16,
+
+  // Membership tiers
+  tierPrice:{ social:19, core:55, pro:199, owner:449 },
+  tierCount:{
+    y1:{ social:200, core:125, pro:65, owner:10 },
+    y2:{ social:400, core:250, pro:130, owner:20 },
+    y3:{ social:500, core:350, pro:200, owner:100 },
+    y4:{ social:550, core:400, pro:230, owner:180 },
+    y5:{ social:600, core:450, pro:250, owner:200 }
+  },
+
+  // Day passes
+  dayPass:{ full:89, gym:35, recovery:65, avgPerDay:15, blendedPrice:55 },
+
+  // Leagues
+  leagues:{
+    morning:{ seasons:6, players:96, feeMember:220, feeNon:280 },
+    evening:{ seasons:8, players:120, feeMember:280, feeNon:360 },
+    corporate:{ teams:24, feePerTeam:2400 },
+    kids:{ sessions:220, kidsPerSession:10, feePerKid:65 },
+    pro:{ nonMemberSeats:60, feePerSeat:850, tournaments:2, ticketsEach:80, ticketPrice:50, sponsorship:45000 }
+  },
+
+  // Private coaching (coach rents court at 20% off)
+  coachingHoursWk:150, coachingRate:80, coachingWeeks:50,
+
+  // Cafe
+  cafeTicket:18, cafeCoversByYr:[70,100,120,135,145], cafeCogsPct:0.35,
+
+  // Pro shop (gross revenue target by year)
+  proShopByYr:[108000,180000,230000,260000,280000], proShopCogs:0.45,
+
+  // Massage tenant rent
+  massageRentMo:3500,
+
+  // Cameras + misc
+  camerasByYr:[43200,72000,86000,92000,95000],
+  playtomicInByYr:[10800,18000,22000,24000,25000],
+  eventsByYr:[20000,48000,75000,90000,100000],
+  contentSponsorByYr:[15000,45000,90000,130000,160000],
+
+  // Legacy
+  members:500, memFee:95, ptCommission:0.05,
+
+  // Facility
+  leasePerM2:280, leaseM2:6000, incentivePct:0.12, fx:1.48, leaseEscalation:0.03,
+
+  // Floor plan allocations (m²)
+  floorM2:{ stdCourts:4500, proCourts:780, cafe:150, proShop:60, recovery:180, gym:120, bathrooms:100, lounge:40, reception:30, kidsWall:10, boh:80, circulation:160 },
+
+  // Fit-out $/m² by zone
+  fitoutRate:{ stdCourts:180, proCourts:280, cafe:1800, proShop:850, recovery:2400, gym:700, bathrooms:1400, lounge:900, reception:1100, kidsWall:600, boh:450, circulation:300 },
+  fitoutLump:{ sharedServices:195000, cameras:112000 },
+
+  // Court procurement
+  courtCostAud:13406, shippingTotal:7360, installPerCourt:3300, courtExtras:0,
+
+  // Court staff (existing)
+  dayStaff:2, aftStaff:3, eveStaff:4, mgrStaff:2, mornHrs:6, aftHrs:6, eveHrs:6,
+  dayRate:32, aftRate:35, mgrSalary:90000,
+
+  // Operating costs (Y1 baseline — escalate 3% p.a.)
+  opex:{
+    utilities:148000, insurance:43500, tech:32300,
+    cleaningMaint:84000, legalAccounting:26000, contingency:22000
+  },
+
+  // Marketing — 12-month Y1 budget (editable via bar chart, sums to Y1 spend)
+  marketingMonthly:[28000,26000,24000,22000,20000,18000,18000,16000,14000,12000,12000,10000],
+  marketingByYr:[null,40000,35000,32000,30000], // Y1 derived from monthly; Y2–Y5 editable
+
+  // Debt + tax
+  debtFacility:500000, debtRate:0.08, taxRate:0.25, depYears:10
 };
 
 // &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
@@ -2229,6 +2470,216 @@ const pct = n => Math.round(n*100)+'%';
 
 function cashIncentive(){ return Math.round(S.leasePerM2*S.leaseM2*10*S.incentivePct); }
 function annualLease(){ return S.leasePerM2*S.leaseM2; }
+
+// ═════════ GLOBAL MODEL COMPUTATION (all pages derive from S) ═════════
+function sumObj(o){ let t=0; for(const k in o) t+=+o[k]||0; return t; }
+function arrSum(a){ return a.reduce((s,v)=>s+(+v||0),0); }
+
+function computeModel(){
+  const M = {};
+  // ── Capex ──
+  M.courtsTotal = S.courtsStd + S.courtsPro;
+  M.courtCostTotal = M.courtsTotal * S.courtCostAud;
+  M.courtShipping = S.shippingTotal * (M.courtsTotal / 14); // scale from base
+  M.courtInstallTotal = M.courtsTotal * S.installPerCourt;
+  M.courtProcurement = M.courtCostTotal + M.courtShipping + M.courtInstallTotal + S.courtExtras;
+
+  // ── Floor plan totals ──
+  M.floorTotal = sumObj(S.floorM2);
+
+  // ── Fit-out totals ──
+  M.fitoutByZone = {};
+  let fitoutTotal = 0;
+  for(const k in S.fitoutRate){
+    const z = (S.floorM2[k]||0) * (S.fitoutRate[k]||0);
+    M.fitoutByZone[k] = z;
+    fitoutTotal += z;
+  }
+  M.fitoutLumpTotal = sumObj(S.fitoutLump);
+  M.fitoutTotal = fitoutTotal + M.fitoutLumpTotal;
+  M.leaseAnnual = S.leasePerM2 * S.leaseM2;
+  M.incentiveCash = Math.round(M.leaseAnnual * 10 * S.incentivePct);
+  M.fitoutNet = M.fitoutTotal - M.incentiveCash;
+
+  // ── Membership revenue by year ──
+  M.memberRev = [1,2,3,4,5].map(y=>{
+    const c = S.tierCount['y'+y];
+    return 12 * (c.social*S.tierPrice.social + c.core*S.tierPrice.core + c.pro*S.tierPrice.pro + c.owner*S.tierPrice.owner);
+  });
+  M.memberTotal = [1,2,3,4,5].map(y=>{
+    const c = S.tierCount['y'+y];
+    return c.social+c.core+c.pro+c.owner;
+  });
+
+  // ── Court hire revenue (walk-in) ──
+  M.courtHireRev = S.occ.map((occ,i)=>{
+    const hrsPerYr = S.hrs * 365;
+    const blended = (S.stdPeak*S.peakPct + S.stdOff*(1-S.peakPct)) / 1.5; // per hour
+    // Scale down because members take some slots at discount — assume 70% of court time is walk-in
+    const walkInShare = 0.65;
+    return Math.round(S.courtsStd * hrsPerYr * occ * blended * walkInShare);
+  });
+
+  // ── Private coaching (rent to coaches @ 20% off) ──
+  const coachBlended = S.coachingRate; // already a blended $/1.5hr rate
+  M.coachingRev = [1,2,3,4,5].map(y=>{
+    const scale = [0.6,1.0,1.25,1.40,1.50][y-1]; // ramp
+    return Math.round(S.coachingHoursWk * scale * S.coachingWeeks * coachBlended);
+  });
+
+  // ── Cafe revenue ──
+  M.cafeRev = S.cafeCoversByYr.map(c=>Math.round(c * S.cafeTicket * 360));
+  M.cafeCOGS = M.cafeRev.map(r=>Math.round(r * S.cafeCogsPct));
+
+  // ── Leagues ──
+  const L = S.leagues;
+  const morningRev = L.morning.seasons * L.morning.players * ((L.morning.feeMember+L.morning.feeNon)/2);
+  const eveningRev = L.evening.seasons * L.evening.players * ((L.evening.feeMember+L.evening.feeNon)/2);
+  const corpRev = L.corporate.teams * L.corporate.feePerTeam;
+  const kidsRev = L.kids.sessions * L.kids.kidsPerSession * L.kids.feePerKid;
+  const proEntryRev = L.pro.nonMemberSeats * L.pro.feePerSeat;
+  const proTixRev = L.pro.tournaments * L.pro.ticketsEach * L.pro.ticketPrice;
+  // Ramp factors Y1-Y5 for leagues (scale up as facility beds in)
+  const ramp = [0.6,1.0,1.10,1.15,1.18];
+  M.morningLeagueRev = ramp.map(r=>Math.round(morningRev*r));
+  M.eveningLeagueRev = ramp.map(r=>Math.round(eveningRev*r));
+  M.corpLeagueRev = ramp.map(r=>Math.round(corpRev*r));
+  M.kidsRev = ramp.map(r=>Math.round(kidsRev*r));
+  M.proLeagueRev = ramp.map(r=>Math.round((proEntryRev+proTixRev)*r));
+  M.contentRev = S.contentSponsorByYr.slice();
+
+  // ── Day passes ──
+  M.dayPassRev = [1,2,3,4,5].map(y=>{
+    const scale = [0.66,1.0,1.13,1.18,1.21][y-1];
+    return Math.round(S.dayPass.avgPerDay * S.dayPass.blendedPrice * 365 * scale);
+  });
+
+  // ── Pro shop ──
+  M.proShopRev = S.proShopByYr.slice();
+  M.proShopCOGS = M.proShopRev.map(r=>Math.round(r*S.proShopCogs));
+
+  // ── Massage tenant rent ──
+  M.massageRentRev = [S.massageRentMo*12, S.massageRentMo*12, Math.round(S.massageRentMo*12*1.15), Math.round(S.massageRentMo*12*1.15), Math.round(S.massageRentMo*12*1.30)];
+
+  // ── Cameras + events + playtomic ──
+  M.cameraRev = S.camerasByYr.slice();
+  M.eventsRev = S.eventsByYr.slice();
+  M.playtomicInRev = S.playtomicInByYr.slice();
+
+  // ── Total gross revenue by year ──
+  M.totalRev = [0,1,2,3,4].map(i=>(
+    M.courtHireRev[i] + M.coachingRev[i] + M.memberRev[i] + M.cafeRev[i] +
+    M.dayPassRev[i] + M.proShopRev[i] + M.morningLeagueRev[i] + M.eveningLeagueRev[i] +
+    M.corpLeagueRev[i] + M.kidsRev[i] + M.proLeagueRev[i] + M.contentRev[i] +
+    M.eventsRev[i] + M.cameraRev[i] + M.massageRentRev[i] + M.playtomicInRev[i]
+  ));
+
+  // ── Cost of sales ──
+  M.playtomicCost = M.courtHireRev.map(r=>Math.round(r*S.ptCommission));
+  M.paymentProc = M.totalRev.map(r=>Math.round(r*0.018));
+  M.leagueProgramCost = [52000,88000,104000,112000,116000]; // coaches/catering/prizes
+  M.totalCOGS = [0,1,2,3,4].map(i=>M.cafeCOGS[i]+M.proShopCOGS[i]+M.playtomicCost[i]+M.paymentProc[i]+M.leagueProgramCost[i]);
+  M.grossProfit = M.totalRev.map((r,i)=>r-M.totalCOGS[i]);
+
+  // ── Staff costs (editable table adds up elsewhere; keep baseline here) ──
+  M.courtStaffByYr = [540000,620000,680000,720000,740000];
+  M.segmentStaffByYr = [400000,460000,500000,530000,550000];
+  M.managersByYr = [200700,206700,212900,219300,225900];
+
+  // ── Operating expenses ──
+  M.leaseByYr = [0,1,2,3,4].map(i=>Math.round(M.leaseAnnual * Math.pow(1+S.leaseEscalation, i)));
+  M.utilitiesByYr = [0,1,2,3,4].map(i=>Math.round(S.opex.utilities * Math.pow(1.05, i)));
+  M.insuranceByYr = [0,1,2,3,4].map(i=>Math.round(S.opex.insurance * Math.pow(1.05, i)));
+  M.techByYr = [0,1,2,3,4].map(i=>Math.round(S.opex.tech * Math.pow(1.05, i)));
+  M.cleaningByYr = [0,1,2,3,4].map(i=>Math.round(S.opex.cleaningMaint * Math.pow(1.05, i)));
+  M.legalByYr = [0,1,2,3,4].map(i=>Math.round(S.opex.legalAccounting * Math.pow(1.05, i)));
+  M.contingencyByYr = [0,1,2,3,4].map(i=>Math.round(S.opex.contingency * Math.pow(1.08, i)));
+
+  // Marketing Y1 = sum of monthly; Y2–Y5 from marketingByYr
+  M.marketingY1 = arrSum(S.marketingMonthly);
+  M.marketingByYr = [M.marketingY1, S.marketingByYr[1]||0, S.marketingByYr[2]||0, S.marketingByYr[3]||0, S.marketingByYr[4]||0];
+
+  M.totalOpex = [0,1,2,3,4].map(i=>
+    M.leaseByYr[i] + M.courtStaffByYr[i] + M.segmentStaffByYr[i] + M.managersByYr[i] +
+    M.utilitiesByYr[i] + M.insuranceByYr[i] + M.techByYr[i] + M.cleaningByYr[i] +
+    M.marketingByYr[i] + M.legalByYr[i] + M.contingencyByYr[i]
+  );
+
+  // ── EBITDA ──
+  M.ebitda = M.grossProfit.map((gp,i)=>gp - M.totalOpex[i]);
+  M.ebitdaMargin = M.ebitda.map((e,i)=>M.totalRev[i]>0 ? e/M.totalRev[i] : 0);
+
+  // ── Below the line ──
+  M.depreciation = [1,1,1,1,1].map(()=>Math.round((M.courtProcurement + M.fitoutTotal)/S.depYears));
+  M.interestByYr = [40000,32000,22000,10000,0];
+  M.pbt = M.ebitda.map((e,i)=>e - M.depreciation[i] - M.interestByYr[i]);
+  M.tax = M.pbt.map(p=>p>0 ? Math.round(p*S.taxRate) : 0);
+  M.npat = M.pbt.map((p,i)=>p - M.tax[i]);
+  M.npatMargin = M.npat.map((p,i)=>M.totalRev[i]>0 ? p/M.totalRev[i] : 0);
+
+  return M;
+}
+window.MODEL = null;
+
+function renderBindings(){
+  const M = computeModel();
+  window.MODEL = M;
+  document.querySelectorAll('[data-bind]').forEach(el=>{
+    const expr = el.getAttribute('data-bind');
+    try{
+      // Allow MODEL.xxx, S.xxx, arithmetic
+      const val = (new Function('M','S','fmt','fmtM','fmtK','pct','return ('+expr+')'))(M,S,fmt,fmtM,fmtK,pct);
+      if(val !== undefined && val !== null){
+        el.textContent = val;
+      }
+    }catch(e){ /* silently skip */ }
+  });
+
+  // Sync inputs to S (live two-way binding not needed — inputs write on change)
+  document.querySelectorAll('[data-model-in]').forEach(inp=>{
+    // Only update if user hasn't modified — skip during active edit
+    if(document.activeElement === inp) return;
+    const path = inp.getAttribute('data-model-in');
+    const val = getPath(S, path);
+    if(val !== undefined && inp.value != val) inp.value = val;
+  });
+}
+
+function getPath(obj, path){
+  return path.split('.').reduce((o,k)=>{
+    if(o==null) return undefined;
+    // Support numeric array indices
+    if(/^\d+$/.test(k)) return o[parseInt(k,10)];
+    return o[k];
+  }, obj);
+}
+function setPath(obj, path, val){
+  const keys = path.split('.');
+  const last = keys.pop();
+  const target = keys.reduce((o,k)=>{
+    if(/^\d+$/.test(k)) return o[parseInt(k,10)];
+    return o[k];
+  }, obj);
+  if(target != null){
+    const lk = /^\d+$/.test(last) ? parseInt(last,10) : last;
+    target[lk] = val;
+  }
+}
+
+// Install global input listener: any input with data-model-in updates S and triggers recompute
+document.addEventListener('input', function(e){
+  const inp = e.target;
+  if(!inp || !inp.getAttribute) return;
+  const path = inp.getAttribute('data-model-in');
+  if(!path) return;
+  let raw = inp.value;
+  const clean = raw.replace(/[\$,%\s]/g,'');
+  let num = parseFloat(clean);
+  if(isNaN(num)) num = 0;
+  setPath(S, path, num);
+  renderBindings();
+  if(typeof renderAll === 'function') try{ renderAll(); }catch(err){}
+});
 
 // &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
 // FINANCIAL CALCULATIONS
@@ -2547,6 +2998,7 @@ function updateLeaseDisplays(){
 }
 
 function renderAll(){
+  renderBindings();
   updateSliderLabels();
   updateLeaseDisplays();
   renderStaff();
