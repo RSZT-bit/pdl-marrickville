@@ -1528,42 +1528,131 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     </table>
   </div>
 
-  <div class="sec-div"><span>Segment Staffing &mdash; every business component</span></div>
+  <div class="sec-div"><span>Segment Staffing &mdash; adjustable (every role, every rate)</span></div>
   <div class="tbl-wrap gap">
-    <div class="tbl-hdr"><p>Full facility headcount &mdash; mapped to each business segment</p><p style="font-size:12px;font-weight:500;color:var(--amber);">Total segment staff: ~<strong>$625K/yr</strong></p></div>
-    <table>
-      <thead><tr><th>Segment</th><th>Role</th><th class="tr">Headcount</th><th class="tr">Rate/Salary</th><th class="tr">Annual Cost</th></tr></thead>
+    <div class="tbl-hdr">
+      <p>Full facility headcount &mdash; edit any field, totals update live</p>
+      <p style="font-size:12px;font-weight:500;color:var(--amber);">Total annual: <strong id="seg-staff-total">$786,580</strong> &nbsp;|&nbsp; Less tenant rent: <strong id="seg-tenant" style="color:var(--green);">-$442,000</strong> &nbsp;|&nbsp; Net: <strong id="seg-staff-net" style="color:var(--amber);">$344,580</strong></p>
+    </div>
+    <table id="seg-staff-table">
+      <thead><tr><th style="width:14%;">Segment</th><th style="width:32%;">Role</th><th class="tr" style="width:12%;">Headcount (0&ndash;20)</th><th class="tr" style="width:13%;">Rate</th><th class="tr" style="width:11%;">Basis</th><th class="tr" style="width:13%;">Annual cost</th></tr></thead>
       <tbody>
-        <tr class="amber-row"><td colspan="5">CAFE &amp; BAR (150 m&sup2;)</td></tr>
-        <tr><td>Cafe</td><td>Cafe manager / head barista (FT)</td><td class="tr">1</td><td class="tr">$75,000/yr</td><td class="tr">$83,625</td></tr>
-        <tr><td>Cafe</td><td>Baristas + food prep (casual, peak shifts)</td><td class="tr">3 FTE equiv.</td><td class="tr">$32/hr</td><td class="tr">$178,000</td></tr>
-        <tr><td>Cafe</td><td>Evening bar staff (leagues 5 nights/wk)</td><td class="tr">0.6 FTE equiv.</td><td class="tr">$35/hr</td><td class="tr">$38,000</td></tr>
-        <tr class="amber-row"><td colspan="5">RECOVERY SUITE (180 m&sup2;)</td></tr>
-        <tr><td>Recovery</td><td>Recovery host (monitor, towels, cleaning)</td><td class="tr">1.5 FTE equiv.</td><td class="tr">$30/hr</td><td class="tr">$82,000</td></tr>
-        <tr><td>Recovery</td><td>Massage therapist (tenant &mdash; pays PDL $3.5K/mo rent)</td><td class="tr">tenant</td><td class="tr">$0 cost</td><td class="tr">($42K rent income)</td></tr>
-        <tr class="amber-row"><td colspan="5">GYM (120 m&sup2;)</td></tr>
-        <tr><td>Gym</td><td>PT / floor supervisor (peak hours: AM + PM)</td><td class="tr">0.8 FTE</td><td class="tr">$45/hr</td><td class="tr">$65,000</td></tr>
-        <tr class="amber-row"><td colspan="5">PRO SHOP (60 m&sup2;)</td></tr>
-        <tr><td>Pro Shop</td><td>Retail lead (peak + weekend shifts)</td><td class="tr">0.6 FTE</td><td class="tr">$32/hr</td><td class="tr">$35,000</td></tr>
-        <tr class="amber-row"><td colspan="5">RECEPTION / MEMBER CONCIERGE (30 m&sup2;)</td></tr>
-        <tr><td>Reception</td><td>Desk / wayfinding / check-in (rolls into court staff bands)</td><td class="tr">covered by court staff</td><td class="tr">&mdash;</td><td class="tr">$0 added</td></tr>
-        <tr><td>Concierge</td><td>Member concierge (FT, Owner tier liaison)</td><td class="tr">1</td><td class="tr">$85,000/yr</td><td class="tr">$94,775</td></tr>
-        <tr class="amber-row"><td colspan="5">COURTS &amp; PROGRAMMES</td></tr>
-        <tr><td>Courts</td><td>Private coaches (tenant / independent, rent court)</td><td class="tr">6&ndash;10 independent</td><td class="tr">$0 cost</td><td class="tr">($400K rent income)</td></tr>
-        <tr><td>Leagues</td><td>League convenor (manages 20+ seasons/yr across all leagues)</td><td class="tr">0.5 FTE</td><td class="tr">$55,000/yr</td><td class="tr">$30,680</td></tr>
-        <tr><td>Kids Play</td><td>Junior coaches (after-school + evening, contracted)</td><td class="tr">2 casual</td><td class="tr">$55/hr</td><td class="tr">$49,500</td></tr>
-        <tr><td>Pro League</td><td>Match day production (cameras, scoring, livestream)</td><td class="tr">0.2 FTE equiv.</td><td class="tr">casual</td><td class="tr">$18,000</td></tr>
-        <tr class="amber-row"><td colspan="5">CLEANING &amp; MAINTENANCE</td></tr>
-        <tr><td>Cleaning</td><td>Night cleaning crew (full facility, 5 nights/wk)</td><td class="tr">2 FTE equiv.</td><td class="tr">contracted</td><td class="tr">$84,000</td></tr>
-        <tr><td>Maintenance</td><td>Handyman / on-call court tech (PT)</td><td class="tr">0.3 FTE</td><td class="tr">$45/hr</td><td class="tr">$28,000</td></tr>
+        <tr class="amber-row"><td colspan="6">CAFE &amp; BAR (150 m&sup2;)</td></tr>
+        <tr data-ss='{"mult":1}'><td>Cafe</td><td>Cafe manager / head barista (FT)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="1"></td><td class="tr"><input type="text" class="ss-rate" value="75000"></td><td class="tr"><select class="ss-basis"><option value="salary" selected>/yr salary</option><option value="hourly">/hr casual</option></select></td><td class="tr ss-total">$83,625</td></tr>
+        <tr data-ss='{"mult":1}'><td>Cafe</td><td>Baristas + food prep (casual peak)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="3"></td><td class="tr"><input type="text" class="ss-rate" value="32"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$178,000</td></tr>
+        <tr data-ss='{"mult":1}'><td>Cafe</td><td>Evening bar (leagues 5 nights/wk)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0.6"></td><td class="tr"><input type="text" class="ss-rate" value="35"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$38,976</td></tr>
+        <tr class="amber-row"><td colspan="6">RECOVERY SUITE (180 m&sup2;)</td></tr>
+        <tr data-ss='{"mult":1}'><td>Recovery</td><td>Recovery host (towels, cleaning)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="1.5"></td><td class="tr"><input type="text" class="ss-rate" value="30"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$83,520</td></tr>
+        <tr data-ss='{"mult":1,"tenant":true}'><td>Recovery</td><td>Massage therapist (tenant: pays PDL $3.5K/mo rent)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0"></td><td class="tr"><input type="text" class="ss-rate" value="0"></td><td class="tr"><span style="font-size:10px;color:var(--green);">tenant</span></td><td class="tr ss-total" style="color:var(--green);">-$42,000</td></tr>
+        <tr class="amber-row"><td colspan="6">GYM (120 m&sup2;)</td></tr>
+        <tr data-ss='{"mult":1}'><td>Gym</td><td>PT / floor supervisor (peak hrs)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0.8"></td><td class="tr"><input type="text" class="ss-rate" value="45"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$66,816</td></tr>
+        <tr class="amber-row"><td colspan="6">PRO SHOP (60 m&sup2;)</td></tr>
+        <tr data-ss='{"mult":1}'><td>Pro Shop</td><td>Retail lead (peak + weekends)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0.6"></td><td class="tr"><input type="text" class="ss-rate" value="32"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$35,635</td></tr>
+        <tr class="amber-row"><td colspan="6">RECEPTION / CONCIERGE (30 m&sup2;)</td></tr>
+        <tr data-ss='{"mult":1}'><td>Concierge</td><td>Member concierge (FT, Owner liaison)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="1"></td><td class="tr"><input type="text" class="ss-rate" value="85000"></td><td class="tr"><select class="ss-basis"><option value="salary" selected>/yr salary</option><option value="hourly">/hr casual</option></select></td><td class="tr ss-total">$94,775</td></tr>
+        <tr class="amber-row"><td colspan="6">COURTS &amp; PROGRAMMES</td></tr>
+        <tr data-ss='{"mult":1,"tenant":true}'><td>Courts</td><td>Private coaches (tenant; rent courts)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0"></td><td class="tr"><input type="text" class="ss-rate" value="0"></td><td class="tr"><span style="font-size:10px;color:var(--green);">tenant</span></td><td class="tr ss-total" style="color:var(--green);">-$400,000</td></tr>
+        <tr data-ss='{"mult":1}'><td>Leagues</td><td>League convenor (20+ seasons/yr)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0.5"></td><td class="tr"><input type="text" class="ss-rate" value="55000"></td><td class="tr"><select class="ss-basis"><option value="salary" selected>/yr salary</option><option value="hourly">/hr casual</option></select></td><td class="tr ss-total">$30,663</td></tr>
+        <tr data-ss='{"mult":1}'><td>Kids Play</td><td>Junior coaches (after-school + PM)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="2"></td><td class="tr"><input type="text" class="ss-rate" value="55"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$49,500</td></tr>
+        <tr data-ss='{"mult":1}'><td>Pro League</td><td>Match day production (cameras, score)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0.2"></td><td class="tr"><input type="text" class="ss-rate" value="40"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$14,848</td></tr>
+        <tr class="amber-row"><td colspan="6">CLEANING &amp; MAINTENANCE</td></tr>
+        <tr data-ss='{"mult":1}'><td>Cleaning</td><td>Night cleaning crew (5 nights/wk)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="2"></td><td class="tr"><input type="text" class="ss-rate" value="32"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$118,784</td></tr>
+        <tr data-ss='{"mult":1}'><td>Maintenance</td><td>Handyman / court tech (PT, on-call)</td><td class="tr"><input type="number" class="ss-hc" min="0" max="20" step="0.1" value="0.3"></td><td class="tr"><input type="text" class="ss-rate" value="45"></td><td class="tr"><select class="ss-basis"><option value="salary">/yr salary</option><option value="hourly" selected>/hr casual</option></select></td><td class="tr ss-total">$25,056</td></tr>
       </tbody>
       <tfoot>
-        <tr class="total-row"><td colspan="4"><strong>Total segment staffing / yr (all on-costs incl. 11.5% super)</strong></td><td class="tr"><strong>$786,580</strong></td></tr>
-        <tr class="green-row"><td colspan="4">Less: tenant income (massage rent + private coach court rent)</td><td class="tr" style="color:var(--green);">($442,000)</td></tr>
-        <tr class="subtotal"><td colspan="4"><strong>Net segment staff cost</strong></td><td class="tr"><strong>$344,580</strong></td></tr>
+        <tr class="total-row"><td colspan="5"><strong>Total gross segment staffing / yr (incl. 11.5% super, 2.5% workers comp)</strong></td><td class="tr"><strong id="seg-staff-total-foot">$786,580</strong></td></tr>
+        <tr class="green-row"><td colspan="5">Less: tenant income (massage rent + private coach court rent)</td><td class="tr" style="color:var(--green);" id="seg-tenant-foot">($442,000)</td></tr>
+        <tr class="subtotal"><td colspan="5"><strong>Net segment staff cost</strong></td><td class="tr" style="font-weight:500;" id="seg-staff-net-foot">$344,580</td></tr>
       </tfoot>
     </table>
   </div>
+  <p style="font-size:10px;color:var(--dim);margin-top:4px;">Hourly cost = headcount &times; rate &times; 40 hrs/wk &times; 52 wks &times; 1.16 on-cost. Salary cost = salary &times; 1.115 on-cost. Tenant rows show rental income as negative cost. All fields 0&ndash;20 headcount adjustable.</p>
+
+  <script>
+    (function(){
+      function fmt(n){ const v = Math.abs(Math.round(n)); const s = v.toLocaleString(); return (n<0?'-$':'$') + s; }
+      function recalc(){
+        const table = document.getElementById('seg-staff-table'); if(!table) return;
+        let gross = 0, tenantRent = -442000;
+        table.querySelectorAll('tbody tr[data-ss]').forEach(tr=>{
+          const meta = JSON.parse(tr.getAttribute('data-ss')||'{}');
+          const hc = parseFloat(tr.querySelector('.ss-hc').value) || 0;
+          const rateRaw = tr.querySelector('.ss-rate').value.replace(/[^0-9.]/g,'');
+          const rate = parseFloat(rateRaw) || 0;
+          const basisEl = tr.querySelector('.ss-basis');
+          const basis = basisEl ? basisEl.value : 'hourly';
+          let cost = 0;
+          if(meta.tenant){
+            // tenant rows: cost stays static based on labelled tenant income; skip
+            tr.querySelector('.ss-total').textContent = tr.querySelector('.ss-total').textContent;
+            return;
+          }
+          if(basis === 'salary'){
+            cost = hc * rate * 1.115;
+          } else {
+            // hourly: 40hrs/wk × 52 wks × 1.16 on-cost
+            cost = hc * rate * 40 * 52 * 1.16;
+          }
+          tr.querySelector('.ss-total').textContent = fmt(cost);
+          gross += cost;
+        });
+        const net = gross + tenantRent; // tenantRent is negative
+        document.getElementById('seg-staff-total').textContent = fmt(gross);
+        document.getElementById('seg-staff-total-foot').textContent = fmt(gross);
+        document.getElementById('seg-tenant').textContent = fmt(tenantRent);
+        document.getElementById('seg-tenant-foot').textContent = '(' + fmt(Math.abs(tenantRent)) + ')';
+        document.getElementById('seg-staff-net').textContent = fmt(net);
+        document.getElementById('seg-staff-net-foot').textContent = fmt(net);
+      }
+      document.addEventListener('input', function(e){
+        if(e.target.classList && (e.target.classList.contains('ss-hc') || e.target.classList.contains('ss-rate'))){
+          // clamp 0-20 for headcount
+          if(e.target.classList.contains('ss-hc')){
+            let v = parseFloat(e.target.value);
+            if(v < 0) e.target.value = 0;
+            if(v > 20) e.target.value = 20;
+          }
+          recalc();
+        }
+      });
+      document.addEventListener('change', function(e){
+        if(e.target.classList && e.target.classList.contains('ss-basis')) recalc();
+      });
+      // Initial calc on load
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', recalc);
+      else setTimeout(recalc, 100);
+    })();
+  </script>
+
+  <style>
+    .ss-hc, .ss-rate {
+      width: 80px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 12px;
+      text-align: right;
+      outline: none;
+      background: #fff;
+    }
+    .ss-hc:focus, .ss-rate:focus { border-color: var(--pdl); }
+    .ss-basis {
+      padding: 4px 6px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 11px;
+      background: #fff;
+      outline: none;
+    }
+    .ss-total { font-weight: 500; font-size: 12px; }
+    /* Hide browser default number spinners for cleaner look */
+    .ss-hc::-webkit-inner-spin-button, .ss-hc::-webkit-outer-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    .ss-hc { -moz-appearance: textfield; }
+  </style>
 
   <div class="note pdl-note">
     <p><strong>Combined annual staff cost (Y2):</strong> Court staff (dynamic slider above, ~$620K mid) + segment staff ($531K) = ~<strong>$1.15M total staff</strong>. Add total fixed opex $434K + lease $1.68M = ~<strong>$3.26M total annual opex</strong> before court-related variable costs. Revenue $5.73M &minus; opex $3.26M &minus; variable costs $0.35M = <strong>~$2.1M EBITDA Year 2</strong>. P&L page reflects the old 14-court baseline &mdash; treat the Revenue-page summary above as the correct Year 2 top-line.</p>
