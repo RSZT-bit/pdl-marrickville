@@ -338,6 +338,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
       <button onclick="show('b1')" id="btn-b1">Overview</button>
       <button onclick="show('b2')" id="btn-b2">Court Costs</button>
       <button onclick="show('b3')" id="btn-b3">Fit-Out</button>
+      <button onclick="show('b11')" id="btn-b11">Floor Plan</button>
+      <button onclick="show('b12')" id="btn-b12">Membership</button>
       <button onclick="show('b4')" id="btn-b4">Operating Costs</button>
       <button onclick="show('b5')" id="btn-b5">Revenue</button>
       <button onclick="show('b6')" id="btn-b6">P&L</button>
@@ -965,56 +967,60 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 <div class="page" id="b1"><div class="inner">
   <div class="overview-hero">
     <p class="oh-title">PDL Marrickville &mdash; Business & Financial Plan</p>
-    <p class="oh-sub">14 indoor padel courts &middot; 3,000 m&sup2;+ warehouse &middot; Inner West Sydney &middot; 10+10 year lease &middot; 15% cash incentive &middot; QH Padel Classic courts (invoice ULP20260408 confirmed)</p>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
-      <div class="oh-stat"><p class="oh-val">14</p><p class="oh-lbl">Indoor padel courts</p></div>
-      <div class="oh-stat"><p class="oh-val">3,000 m&sup2;</p><p class="oh-lbl">Warehouse minimum</p></div>
-      <div class="oh-stat"><p class="oh-val" id="b1-capex">~$1.30M</p><p class="oh-lbl">Total setup capital</p></div>
-      <div class="oh-stat"><p class="oh-val" id="b1-incentive">$1,008,000</p><p class="oh-lbl">Cash incentive (12%)</p></div>
-      <div class="oh-stat"><p class="oh-val" id="b1-rev">~$5.4M</p><p class="oh-lbl">Year 1 net revenue</p></div>
+    <p class="oh-sub">20 indoor padel courts (18 standard + 2 pro) &middot; 6,000 m&sup2; warehouse &middot; Inner West Sydney &middot; 10+10 year lease &middot; Multi-segment facility: courts, cafe, pro shop, recovery, gym, academy &middot; QH Padel Classic courts (invoice ULP20260408 confirmed)</p>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;">
+      <div class="oh-stat"><p class="oh-val">20</p><p class="oh-lbl">Indoor padel courts</p></div>
+      <div class="oh-stat"><p class="oh-val">6,000 m&sup2;</p><p class="oh-lbl">Total floor area</p></div>
+      <div class="oh-stat"><p class="oh-val" id="b1-capex">~$2.6M</p><p class="oh-lbl">Total setup capital</p></div>
+      <div class="oh-stat"><p class="oh-val" id="b1-incentive">$2,016,000</p><p class="oh-lbl">Cash incentive (12%)</p></div>
+      <div class="oh-stat"><p class="oh-val" id="b1-rev">~$9.8M</p><p class="oh-lbl">Year 1 net revenue</p></div>
       <div class="oh-stat"><p class="oh-val" id="b1-payback">~5 mo</p><p class="oh-lbl">Payback on net investment</p></div>
     </div>
   </div>
 
   <div class="g2 gap">
     <div class="card green-c">
-      <p class="ct" style="color:var(--green);">Confirmed &mdash; Invoice ULP20260408</p>
+      <p class="ct" style="color:var(--green);">Confirmed &mdash; Invoice ULP20260408 (scaled to 20 courts)</p>
       <div style="margin-top:10px;">
-        <div class="inv-item"><div><p class="inv-name">14 &times; Classic Padel Courts</p><p class="inv-desc">QH Padel, Hebei China &middot; AUD $13,406/court</p></div><p class="inv-amt" style="color:var(--green);">AUD $187,683</p></div>
-        <div class="inv-item"><div><p class="inv-name">FOB Shipping (3&times;40HQ + 1&times;20GP)</p><p class="inv-desc">Tianjin Port &middot; valid until Apr 30, 2026</p></div><p class="inv-amt" style="color:var(--green);">AUD $5,152</p></div>
-        <div class="inv-item"><div><p class="inv-name">Invoice Total (FOB)</p><p class="inv-desc">Rate 1.4471 &middot; 8 April 2026</p></div><p class="inv-amt" style="color:var(--green);">AUD $191,854</p></div>
-        <div class="inv-item"><div><p class="inv-name">30% Deposit (before production)</p></div><p class="inv-amt" style="color:var(--green);">AUD $57,556</p></div>
-        <div class="inv-item"><div><p class="inv-name">70% Balance (before pickup)</p></div><p class="inv-amt" style="color:var(--green);">AUD $134,298</p></div>
-        <div class="inv-item"><div><p class="inv-name">Production lead time</p></div><p class="inv-amt">20&ndash;25 days from deposit</p></div>
+        <div class="inv-item"><div><p class="inv-name">20 &times; Classic Padel Courts</p><p class="inv-desc">18 standard + 2 pro &middot; QH Padel, Hebei China &middot; ~AUD $13,406/court</p></div><p class="inv-amt" style="color:var(--green);">AUD $268,120</p></div>
+        <div class="inv-item"><div><p class="inv-name">FOB Shipping (scaled ~5&times;40HQ + 1&times;20GP)</p><p class="inv-desc">Tianjin Port &middot; rate held from Apr 2026</p></div><p class="inv-amt" style="color:var(--green);">AUD $7,360</p></div>
+        <div class="inv-item"><div><p class="inv-name">Invoice Total (FOB, est.)</p><p class="inv-desc">Rate 1.4471 &middot; to be confirmed on reissue</p></div><p class="inv-amt" style="color:var(--green);">AUD $275,480</p></div>
+        <div class="inv-item"><div><p class="inv-name">30% Deposit (before production)</p></div><p class="inv-amt" style="color:var(--green);">AUD $82,644</p></div>
+        <div class="inv-item"><div><p class="inv-name">70% Balance (before pickup)</p></div><p class="inv-amt" style="color:var(--green);">AUD $192,836</p></div>
+        <div class="inv-item"><div><p class="inv-name">Production lead time</p></div><p class="inv-amt">25&ndash;30 days from deposit</p></div>
       </div>
     </div>
     <div class="card amber-c">
       <p class="ct" style="color:var(--amber);">Key Gaps &mdash; Costs to Confirm</p>
       <div style="margin-top:10px;">
-        <div class="inv-item"><div><p class="inv-name">Sea freight + AU landed costs</p></div><p class="inv-amt" style="color:var(--red);">~AUD $63,000</p></div>
-        <div class="inv-item"><div><p class="inv-name">Court installation labour</p></div><p class="inv-amt" style="color:var(--red);">~AUD $46,000</p></div>
-        <div class="inv-item"><div><p class="inv-name">Full warehouse fit-out</p><p class="inv-desc">Civil, electrical, plumbing, amenities</p></div><p class="inv-amt" style="color:var(--red);">~AUD $781K (mid)</p></div>
-        <div class="inv-item"><div><p class="inv-name">Lease (3,000 m&sup2; &times; $280/m&sup2;)</p></div><p class="inv-amt" style="color:var(--red);">$840K/yr</p></div>
-        <div class="inv-item"><div><p class="inv-name">12% cash incentive received</p><p class="inv-desc">At lease signing &mdash; offsets fit-out entirely</p></div><p class="inv-amt" style="color:var(--green);">+$1,260,000</p></div>
-        <div class="inv-item"><div><p class="inv-name">Security deposit (3 months)</p></div><p class="inv-amt" style="color:var(--red);">~$210,000</p></div>
+        <div class="inv-item"><div><p class="inv-name">Sea freight + AU landed costs</p></div><p class="inv-amt" style="color:var(--red);">~AUD $90,000</p></div>
+        <div class="inv-item"><div><p class="inv-name">Court installation labour (20 courts)</p></div><p class="inv-amt" style="color:var(--red);">~AUD $66,000</p></div>
+        <div class="inv-item"><div><p class="inv-name">Full warehouse fit-out (6,000 m&sup2;)</p><p class="inv-desc">Civil, electrical, plumbing, cafe, recovery, gym, amenities</p></div><p class="inv-amt" style="color:var(--red);">~AUD $1.56M (mid)</p></div>
+        <div class="inv-item"><div><p class="inv-name">Lease (6,000 m&sup2; &times; $280/m&sup2;)</p></div><p class="inv-amt" style="color:var(--red);">$1.68M/yr</p></div>
+        <div class="inv-item"><div><p class="inv-name">12% cash incentive received</p><p class="inv-desc">At lease signing &mdash; offsets full fit-out</p></div><p class="inv-amt" style="color:var(--green);">+$2,016,000</p></div>
+        <div class="inv-item"><div><p class="inv-name">Security deposit (3 months)</p></div><p class="inv-amt" style="color:var(--red);">~$420,000</p></div>
       </div>
     </div>
   </div>
 
   <div class="sec-div"><span>Venue Components</span></div>
   <div class="g4 gap">
-    <div class="card"><p class="ct">14 Courts</p><p class="cs">Classic indoor panoramic. 20.2m &times; 10.1m per court. Full glass, turf, LED lighting per invoice. Min 10m ceiling required.</p></div>
-    <div class="card"><p class="ct">Pro Shop</p><p class="cs">Rackets $120&ndash;450, shoes $120&ndash;280, balls, bags, overgrips. Curated 3&ndash;5 models per category. ~$22K opening stock.</p></div>
-    <div class="card"><p class="ct">PDL Merch Store</p><p class="cs">Hoodies $89, jackets $109, shorts $55, tees $45, caps $35. Yves blue + black. Launch capsule: 4 items &times; 100 units.</p></div>
-    <div class="card"><p class="ct">Health Canteen</p><p class="cs">Cold brew, protein shakes, sports drinks, acai bowls, bars, snacks. 60&ndash;70% gross margin. High impulse rate post-match.</p></div>
-    <div class="card"><p class="ct">Locker Rooms</p><p class="cs">Male + female. Showers, lockers, benches. Essential for corporate and league players. Est. $55K fit-out.</p></div>
-    <div class="card"><p class="ct">Court Cameras</p><p class="cs">All 14 courts. Veo or EyeOnPadel. Players share match footage &mdash; free marketing. Est. $63K installed + subscription.</p></div>
-    <div class="card"><p class="ct">Playtomic Champion</p><p class="cs">All bookings, memberships, leagues, coaching, CRM. $15/mo membership auto-billed via Stripe.</p></div>
-    <div class="card"><p class="ct">10+10 yr Lease</p><p class="cs">15% cash incentive on first term = $1.26M paid at signing. Full rent from Day 1. 3-month security deposit.</p></div>
+    <div class="card"><p class="ct">16 Standard Courts</p><p class="cs">20m &times; 10m play + 2m clearance glass-to-glass and glass-to-wall. 4&times;4 grid = 4,500 m&sup2;. Full glass, turf, LED lighting per invoice. Min 10m ceiling.</p></div>
+    <div class="card"><p class="ct">2 Pro Courts + Stadium</p><p class="cs">Side-by-side with 3m perimeter. 4-tier stadium seating behind for ~100 spectators. Pro league matches, tournaments, filmed content. Premium rental at $149/$115 peak/off-peak.</p></div>
+    <div class="card"><p class="ct">Cafe &amp; Bar</p><p class="cs">Coffee, cold brew, protein shakes, sandwiches, acai bowls, bars, beer &amp; wine licensed. ~40 covers. 60&ndash;70% gross margin. Evening league food flows here.</p></div>
+    <div class="card"><p class="ct">Pro Shop &mdash; 60 m&sup2;</p><p class="cs">Rackets, shoes, balls, bags, apparel, accessories. Includes <strong>Zimma x PDL capsule</strong> &mdash; exclusive bespoke crossover range unique to this club.</p></div>
+    <div class="card"><p class="ct">Recovery Suite</p><p class="cs">25-person sauna, 8 individual cold plunge pools, magnesium bath, red light therapy beds, open-plan 2-bed massage suite. Unlimited use for Pro + Owner members.</p></div>
+    <div class="card"><p class="ct">Gym</p><p class="cs">Running, rowing, ski machines, light weights, stretching zone. Free for Player tier and above. Crossover to conditioning for padel players.</p></div>
+    <div class="card"><p class="ct">Kids Hit Wall</p><p class="cs">Full-spec padel wall panel with glass, turf, netting. Kids ages 4&ndash;10 can hit for hours while parents play or use recovery. Drives family membership.</p></div>
+    <div class="card"><p class="ct">Members Lounge</p><p class="cs">Breakaway space with lounge seating, work pods, coffee station. Host desk for Owner-tier concierge. Quiet zone away from court action.</p></div>
+    <div class="card"><p class="ct">Showers &amp; Bathrooms</p><p class="cs">Men, women, accessible, staff. Premium finishes, dedicated shower blocks, towel service on Player tier and above.</p></div>
+    <div class="card"><p class="ct">Court Cameras</p><p class="cs">All 18 courts filmed. Veo or EyeOnPadel. Players share match footage &mdash; free marketing. Pro court matches streamed live.</p></div>
+    <div class="card"><p class="ct">Playtomic Champion</p><p class="cs">All bookings, memberships, leagues, coaching, CRM. Tiered membership auto-billed via Stripe. Premium backend, zero admin overhead.</p></div>
+    <div class="card"><p class="ct">10+10 yr Lease</p><p class="cs">6,000 m&sup2; @ $280/m&sup2; = $1.68M/yr. 12% cash incentive on first term = $2.016M paid at signing. Full rent from Day 1. 3-month security deposit.</p></div>
   </div>
 
   <div class="note pdl-note">
-    <p><strong>Cash incentive strategy:</strong> At $280/m&sup2; &times; 3,000m&sup2; &times; 10 years = $8.4M first-term value. 15% = <strong>$1,260,000 cash paid by landlord at commencement</strong>. Mid-case fit-out is $781K &mdash; the incentive covers the entire fit-out and leaves $479K working capital surplus. Net invested capital after incentive is approximately $594K. This is your biggest financial lever. Do not sign a lease without negotiating a cash incentive &mdash; 10&ndash;20% is standard for 10-year anchor tenants in Sydney's industrial market.</p>
+    <p><strong>Cash incentive strategy:</strong> At $280/m&sup2; &times; 6,000m&sup2; &times; 10 years = $16.8M first-term value. 12% = <strong>$2,016,000 cash paid by landlord at commencement</strong>. Mid-case fit-out for a multi-segment facility at this scale is $1.56M &mdash; the incentive covers the entire fit-out and leaves $456K working capital surplus. This is your biggest financial lever. Do not sign a lease without negotiating a cash incentive &mdash; 10&ndash;15% is standard for 10-year anchor tenants in Sydney's industrial market.</p>
   </div>
 
   <div class="g3">
@@ -1082,8 +1088,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 <div class="page" id="b3"><div class="inner">
   <div class="page-hero">
     <p class="ph-label">Business Plan &mdash; Fit-Out</p>
-    <p class="ph-title">Full warehouse conversion &mdash; 3,000 m&sup2; to PDL standard</p>
-    <p class="ph-sub">Every line item below is fully adjustable. Change hours or rate and the total updates instantly. The 12% cash incentive (~<span id="fo-incentive-display">$1,209,600</span>) received at lease signing is applied against total fit-out cost.</p>
+    <p class="ph-title">Full warehouse conversion &mdash; 6,000 m&sup2; multi-segment facility</p>
+    <p class="ph-sub">16 standard courts + 2 pro courts with stadium, cafe, pro shop, recovery suite, gym, members lounge, kids wall. Every line item below is fully adjustable. The 12% cash incentive (~<span id="fo-incentive-display">$2,016,000</span>) received at lease signing is applied against total fit-out cost.</p>
   </div>
 
   <!-- FIT-OUT INTERACTIVE TABLE -->
@@ -1119,7 +1125,276 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
       </tfoot>
     </table>
   </div>
-  <div class="note pdl-note"><p><strong>Cash incentive:</strong> At $280/m&sup2; &times; 3,000m&sup2; &times; 10 years = $8.4M first-term value. 12% = <strong id="fo-incentive-note">$1,008,000</strong> paid in cash by the landlord at commencement. Adjust the incentive % on the Assumptions page &mdash; it flows here automatically.</p></div>
+  <div class="note pdl-note"><p><strong>Cash incentive:</strong> At $280/m&sup2; &times; 6,000m&sup2; &times; 10 years = $16.8M first-term value. 12% = <strong id="fo-incentive-note">$2,016,000</strong> paid in cash by the landlord at commencement. Adjust the incentive % on the Assumptions page &mdash; it flows here automatically.</p></div>
+</div></div>
+
+<!-- ═══════ B11: FLOOR PLAN — 6,000 m² BREAKDOWN ═══════ -->
+<div class="page" id="b11"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan &mdash; Floor Plan</p>
+    <p class="ph-title">6,000 m&sup2; &mdash; every segment sized, every court measured</p>
+    <p class="ph-sub">16 standard padel courts (20m &times; 10m play + 2m glass-to-glass &amp; glass-to-wall clearance) + 2 pro courts side-by-side with 3m perimeter and 4-tier stadium seating. Cafe, pro shop, recovery suite, gym, members lounge, kids wall, showers. All m&sup2; figures below are buildable targets.</p>
+  </div>
+
+  <div class="sec-div"><span>Segment Breakdown</span></div>
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr">
+      <p>Floor Plan &mdash; Buildable m&sup2; per Segment</p>
+      <p style="font-size:12px;font-weight:500;color:var(--pdl);">Total: <span>6,000 m&sup2;</span></p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:22%;">Segment</th>
+          <th style="width:38%;">What's in it</th>
+          <th style="width:15%;" class="tr">Calculation</th>
+          <th style="width:10%;" class="tr">m&sup2;</th>
+          <th style="width:15%;" class="tr">% of floor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>16 Standard Courts</strong></td><td>4&times;4 grid of padel courts. 20m&times;10m play + 2m clearance glass-to-glass and glass-to-wall shared across rows.</td><td class="tr">50m &times; 90m hall</td><td class="tr"><strong>4,500</strong></td><td class="tr">75.0%</td></tr>
+        <tr><td><strong>2 Pro Courts + Stadium</strong></td><td>Side-by-side pro courts with 3m perimeter on all sides. 4-tier stadium seating behind both courts for ~100 spectators. Used for pro league, tournaments, filmed content.</td><td class="tr">29m &times; 26m + 78m&sup2; stadium</td><td class="tr"><strong>780</strong></td><td class="tr">13.0%</td></tr>
+        <tr><td><strong>Cafe &amp; Bar</strong></td><td>Kitchen 40 + service counter 15 + 40-cover seating 90 + cool room &amp; dry storage 25 + staff back 15 + circulation 15. Licensed beer &amp; wine.</td><td class="tr">200 m&sup2;</td><td class="tr"><strong>200</strong></td><td class="tr">3.3%</td></tr>
+        <tr><td><strong>Pro Shop</strong></td><td>Display floor 45 + fitting 8 + BOH stock 7. Includes Zimma &times; PDL capsule range.</td><td class="tr">60 m&sup2;</td><td class="tr"><strong>60</strong></td><td class="tr">1.0%</td></tr>
+        <tr><td><strong>Recovery Suite</strong></td><td>25-person sauna + anteroom 40 + 8 individual cold plunge pools 55 + magnesium bath 22 + red light therapy (2 beds) 18 + open-plan 2-bed massage 35 + circulation 10.</td><td class="tr">180 m&sup2;</td><td class="tr"><strong>180</strong></td><td class="tr">3.0%</td></tr>
+        <tr><td><strong>Gym</strong></td><td>Cardio zone (2&times;treadmill, 2&times;row, 2&times;ski) 50 + light weights + functional 50 + stretching floor 20.</td><td class="tr">120 m&sup2;</td><td class="tr"><strong>120</strong></td><td class="tr">2.0%</td></tr>
+        <tr><td><strong>Showers &amp; Bathrooms</strong></td><td>Men 45 + women 45 + accessible 10. Lockers, dry bench, shower stalls, WCs.</td><td class="tr">100 m&sup2;</td><td class="tr"><strong>100</strong></td><td class="tr">1.7%</td></tr>
+        <tr><td><strong>Members Lounge</strong></td><td>Lounge seating + work pods + coffee station. Breakaway zone for Pro/Owner members.</td><td class="tr">40 m&sup2;</td><td class="tr"><strong>40</strong></td><td class="tr">0.7%</td></tr>
+        <tr><td><strong>Reception &amp; Concierge</strong></td><td>Front desk, check-in, host station, Owner concierge desk.</td><td class="tr">30 m&sup2;</td><td class="tr"><strong>30</strong></td><td class="tr">0.5%</td></tr>
+        <tr><td><strong>Kids Hit Wall</strong></td><td>6m &times; 4m padel wall panel with glass backstop + turf + netting above. Run-off zone for ball return.</td><td class="tr">40 m&sup2;</td><td class="tr"><strong>40</strong></td><td class="tr">0.7%</td></tr>
+        <tr><td><strong>Storage / Plant / BOH</strong></td><td>Court equipment storage + cafe dry &amp; cleaning + electrical/mechanical plant + loading dock. Compressed footprint, tall shelving.</td><td class="tr">80 m&sup2;</td><td class="tr"><strong>80</strong></td><td class="tr">1.3%</td></tr>
+        <tr><td><strong>Circulation</strong></td><td>Corridors, stairs, fire egress. Code-compliant at this footprint.</td><td class="tr">80 m&sup2;</td><td class="tr"><strong>80</strong></td><td class="tr">1.3%</td></tr>
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="3"><strong>Total buildable floor area</strong></td>
+          <td class="tr"><strong>6,000</strong></td>
+          <td class="tr"><strong>100%</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="sec-div"><span>Court Geometry &mdash; verified</span></div>
+  <div class="g3 gap">
+    <div class="card"><p class="ct">Standard court spec</p>
+      <p class="cs" style="margin-top:8px;"><strong>Play area:</strong> 20m &times; 10m = 200 m&sup2;<br><strong>Clearance:</strong> 2m glass-to-glass and glass-to-wall<br><strong>Footprint per court (4&times;4 grid, shared walls):</strong> ~281 m&sup2;<br><strong>Ceiling:</strong> 10m minimum clear<br><strong>Lighting:</strong> 500 lux minimum per WPT spec</p>
+    </div>
+    <div class="card"><p class="ct">Pro court spec</p>
+      <p class="cs" style="margin-top:8px;"><strong>Play area:</strong> 20m &times; 10m = 200 m&sup2;<br><strong>Clearance:</strong> 3m perimeter on all sides<br><strong>Footprint each:</strong> 26m &times; 16m = 416 m&sup2; standalone<br><strong>Side-by-side combined:</strong> 29m &times; 26m = 754 m&sup2;<br><strong>Stadium:</strong> 4-tier, 26m wide &times; 3m deep = 78 m&sup2;, seats ~100</p>
+    </div>
+    <div class="card"><p class="ct">Ceiling &amp; services</p>
+      <p class="cs" style="margin-top:8px;">All courts: 10m clear ceiling to top of glass. HVAC, lighting trusses and ball-strike netting above. Recovery suite and gym may sit on <strong>mezzanine above cafe/reception</strong> if warehouse ceiling permits &mdash; frees ground floor for court inventory expansion in Year 3.</p>
+    </div>
+  </div>
+
+  <div class="note pdl-note">
+    <p><strong>Tight allocation note:</strong> At 6,000 m&sup2; with 16+2 courts and 4-tier stadium, non-court space is compressed. Cafe at 200 m&sup2; is comfortable (40 covers); recovery, gym, lounge and BOH are tight but operational. If the warehouse has ceiling height for a mezzanine (common in 6m+ clear warehouses), a 400&ndash;600 m&sup2; mezzanine above the non-court zone gives the recovery suite and gym extra breathing room, plus a first-floor view over the court hall. <strong>Recommended:</strong> specify mezzanine-capable warehouse in site search.</p>
+  </div>
+</div></div>
+
+<!-- ═══════ B12: MEMBERSHIP, DAY PASSES, LEAGUES ═══════ -->
+<div class="page" id="b12"><div class="inner">
+  <div class="page-hero">
+    <p class="ph-label">Business Plan &mdash; Membership, Day Passes &amp; Leagues</p>
+    <p class="ph-title">4 member tiers &middot; 3 day passes &middot; 4 leagues &middot; Owner capped at 200</p>
+    <p class="ph-sub">Premium, tiered. No discount-based launch mechanics. Members first &mdash; upsell ladder converts Social &rarr; Player &rarr; Pro &rarr; Owner as members deepen their use. All prices below are adjustable.</p>
+  </div>
+
+  <div class="sec-div"><span>Membership Tiers</span></div>
+  <div class="g4 gap" style="gap:12px;">
+
+    <div class="card" style="border-top:3px solid #94a3b8;">
+      <p class="ct" style="color:#64748b;">SOCIAL &mdash; Entry tier</p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;"><span id="m-social-price">$19</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Unlimited members. No cap.</p>
+      <p style="font-size:11px;font-weight:500;margin-bottom:6px;">Included</p>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;">
+        &#10003; Free locker use (on session)<br>
+        &#10003; 3-day booking window<br>
+        &#10003; Member-only booking slots (Sat/Sun AM)<br>
+        &#10003; Free entry Friday Social Night<br>
+        &#10003; 5% off cafe + pro shop<br>
+        &#10003; Club newsletter + event access
+      </div>
+      <p style="font-size:11px;font-weight:500;margin:12px 0 6px 0;color:var(--dim);">Not included</p>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;opacity:0.7;">
+        &mdash; Court discount<br>
+        &mdash; Gym access<br>
+        &mdash; Recovery suite<br>
+        &mdash; Massage
+      </div>
+    </div>
+
+    <div class="card" style="border-top:3px solid var(--pdl);">
+      <p class="ct" style="color:var(--pdl);">PLAYER &mdash; Core member</p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;"><span id="m-player-price">$49</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Target: 30&ndash;35% of membership base.</p>
+      <p style="font-size:11px;font-weight:500;margin-bottom:6px;">Included</p>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;">
+        &#10003; Everything in Social<br>
+        &#10003; <strong>Free gym access</strong> (unlimited)<br>
+        &#10003; 14-day booking window<br>
+        &#10003; <strong>10% off court hire</strong><br>
+        &#10003; 10% off cafe + pro shop<br>
+        &#10003; Free group stretching class (1/wk)<br>
+        &#10003; 1 free guest pass/month<br>
+        &#10003; Member rate on all leagues
+      </div>
+      <p style="font-size:11px;font-weight:500;margin:12px 0 6px 0;color:var(--dim);">Not included</p>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;opacity:0.7;">
+        &mdash; Recovery suite<br>
+        &mdash; Massage<br>
+        &mdash; Coaching
+      </div>
+    </div>
+
+    <div class="card" style="border-top:3px solid var(--green);">
+      <p class="ct" style="color:var(--green);">PRO &mdash; Serious player</p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;"><span id="m-pro-price">$129</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:var(--dim);margin-bottom:12px;">Target: 15&ndash;20% of membership base.</p>
+      <p style="font-size:11px;font-weight:500;margin-bottom:6px;">Included</p>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;">
+        &#10003; Everything in Player<br>
+        &#10003; <strong>Unlimited sauna</strong> (25-person)<br>
+        &#10003; <strong>Unlimited cold plunge</strong> (8 pools)<br>
+        &#10003; <strong>Unlimited magnesium bath</strong><br>
+        &#10003; <strong>Unlimited red light therapy</strong><br>
+        &#10003; 21-day booking window<br>
+        &#10003; 15% off court hire<br>
+        &#10003; 15% off cafe + pro shop<br>
+        &#10003; 3 guest passes/month<br>
+        &#10003; 1 included 1:1 coaching session/month<br>
+        &#10003; Access to Pro League
+      </div>
+    </div>
+
+    <div class="card" style="border-top:3px solid #b45309;background:#0f0a05;">
+      <p class="ct" style="color:#f59e0b;">OWNER &mdash; Capped at 200</p>
+      <p style="font-size:28px;font-weight:300;margin:8px 0 4px 0;color:#fde68a;"><span id="m-owner-price">$349</span><span style="font-size:12px;color:var(--dim);">/mo</span></p>
+      <p style="font-size:10px;color:#f59e0b;margin-bottom:12px;">Invitation only. Hard cap 200 members.</p>
+      <p style="font-size:11px;font-weight:500;margin-bottom:6px;color:#fde68a;">Included</p>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;">
+        &#10003; Everything in Pro<br>
+        &#10003; <strong>3 massages/week</strong> (12/mo)<br>
+        &#10003; <strong>2 coaching sessions/month</strong><br>
+        &#10003; 28-day booking window (first access)<br>
+        &#10003; 20% off court hire<br>
+        &#10003; 20% off cafe + pro shop<br>
+        &#10003; 4 guest passes/month<br>
+        &#10003; Dedicated concierge (text line)<br>
+        &#10003; Reserved year-round locker<br>
+        &#10003; Private quarterly member events<br>
+        &#10003; Early tournament access<br>
+        &#10003; Name on Founding Wall (first 200)
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note pdl-note" style="margin-top:14px;">
+    <p><strong>Owner tier massage math &mdash; to resolve:</strong> 3 massages/week at 4 weeks = 12/mo. At $60 in-house therapist cost per session = $720/mo cost before any other amenity use. At $349/mo fee, Owner tier runs at negative contribution unless handled via one of: <strong>(A)</strong> raise to $449 matching Equinox, <strong>(B)</strong> cap at 2/week keep $349, <strong>(C)</strong> massage therapist pays rent, Owners get direct member rate ($90 vs $150 public) &mdash; recommended as it makes the room pay rent AND serve premium members, <strong>(D)</strong> accept as status loss-leader at cap of 200. Change the massage policy on the Assumptions page once resolved.</p>
+  </div>
+
+  <div class="sec-div"><span>Day Passes &amp; Single-Use Pricing</span></div>
+  <div class="g3 gap">
+    <div class="card"><p class="ct">FULL DAY &mdash; <span id="dp-full">$89</span></p>
+      <p class="cs" style="margin-top:8px;">Everything, one day. 1 court booking (subject to availability) + full gym + full recovery suite + locker + towel + cafe/pro shop at public rates. Premium visitor rate. Benchmarked to Equinox Sydney ($75).</p>
+    </div>
+    <div class="card"><p class="ct">GYM ONLY &mdash; <span id="dp-gym">$35</span></p>
+      <p class="cs" style="margin-top:8px;">Cardio + weights + stretching + locker + towel. Benchmarked to F45 ($30) and Barry's ($34). Converts regular users to Player tier &mdash; 2 weeks of day passes = cost of 1 month membership with gym free.</p>
+    </div>
+    <div class="card"><p class="ct">RECOVERY ONLY &mdash; <span id="dp-recovery">$65</span></p>
+      <p class="cs" style="margin-top:8px;">2-hour access to sauna + cold plunge + magnesium + red light. Towel + locker included. Benchmarked to Sauna Culture ($45) and Alba ($75). 4-modality space few Sydney competitors match. Converts to Pro tier after 2 visits.</p>
+    </div>
+  </div>
+
+  <div class="sec-div"><span>Court Hire &mdash; Walk-In Rates</span></div>
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Court Hire (non-member)</p><p style="font-size:11px;color:var(--dim);">Per 1.5-hour booking &middot; Member discounts apply on top of all rates</p></div>
+    <table>
+      <thead><tr><th>Court</th><th class="tr">Peak (4pm&ndash;10pm + weekends)</th><th class="tr">Off-peak (9am&ndash;4pm weekdays)</th><th class="tr">Early (6am&ndash;9am)</th></tr></thead>
+      <tbody>
+        <tr><td>Standard court (&times;16)</td><td class="tr"><span id="ch-std-peak">$120</span></td><td class="tr"><span id="ch-std-off">$89</span></td><td class="tr">$78</td></tr>
+        <tr><td>Pro court (&times;2)</td><td class="tr"><span id="ch-pro-peak">$149</span></td><td class="tr"><span id="ch-pro-off">$115</span></td><td class="tr">$98</td></tr>
+      </tbody>
+      <tfoot><tr class="subtotal"><td colspan="4" style="font-size:11px;color:var(--dim);padding-top:10px;">Member discounts: Player 10% &middot; Pro 15% &middot; Owner 20% &middot; Social: no discount</td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="sec-div"><span>Leagues &amp; Programmes</span></div>
+  <div class="g2 gap">
+    <div class="card"><p class="ct">Morning League</p>
+      <p class="cs" style="margin-top:8px;"><strong>7am&ndash;9am Mon&ndash;Thu</strong>. 8-week series. Court + coaching + recovery day access on league day.<br><br><strong>Members:</strong> $180 &middot; <strong>Non-members:</strong> $220<br><strong>Target:</strong> pre-work executives, corporate players.<br><strong>4 seasons/yr &middot; 40 players/season</strong></p>
+    </div>
+    <div class="card"><p class="ct">Corporate League</p>
+      <p class="cs" style="margin-top:8px;"><strong>Teams of 6 from a single company</strong>. 8-week league + coaching + end-of-league dinner in cafe.<br><br><strong>Per team:</strong> $2,400 (company pays).<br><strong>Conversion:</strong> 30&ndash;40% of players sign Social/Player after league ends.<br><strong>Target:</strong> 12 teams/yr</p>
+    </div>
+    <div class="card"><p class="ct">Evening League</p>
+      <p class="cs" style="margin-top:8px;"><strong>Tue/Thu/Fri 7pm&ndash;10pm</strong>. Mixed skill, round-robin. Food &amp; drink included at cafe during league nights &mdash; drives cafe revenue.<br><br><strong>Members:</strong> $260 &middot; <strong>Non-members:</strong> $340<br><strong>6 seasons/yr &middot; 60 players/season</strong></p>
+    </div>
+    <div class="card"><p class="ct">Kids Play</p>
+      <p class="cs" style="margin-top:8px;"><strong>Sat/Sun 9am&ndash;11am</strong>. Court time + coaching + healthy snack.<br><br><strong>Per session:</strong> $65 per child (max 12/session).<br><strong>Parents must be members</strong> (Social minimum) &mdash; converts the family.<br>Kids Hit Wall available year-round for parents-while-you-play.<br><strong>~90 sessions/yr</strong></p>
+    </div>
+    <div class="card" style="grid-column:span 2;"><p class="ct">Pro League</p>
+      <p class="cs" style="margin-top:8px;"><strong>Weekly match play on the 2 pro courts &middot; Pro + Owner tier only</strong>. Matches recorded, filmed, streamed. Season culminates in a live tournament on pro courts with stadium seating for ~100.<br><br>This is the <strong>content engine</strong>: every match becomes Instagram, TikTok, YouTube content. Builds PDL brand, attracts sponsors, pulls Pro/Owner applications.<br><strong>~30 matches/yr + 1 season final tournament</strong></p>
+    </div>
+  </div>
+
+  <div class="sec-div"><span>Launch Mechanics &mdash; premium &amp; limited, no discounts</span></div>
+  <div class="g3 gap">
+    <div class="card"><p class="ct">1. Waitlist Before Day 1</p><p class="cs" style="margin-top:8px;">Applications open 90 days before launch. No pricing shown publicly &mdash; applicants see it after submitting interest. Creates scarcity. Target: 1,000+ applications before opening.</p></div>
+    <div class="card"><p class="ct">2. Founding Wall</p><p class="cs" style="margin-top:8px;">First 200 Owner-tier members get their name engraved on the Founding Wall, locker #1&ndash;200 reserved for life, and a lifetime rate lock (never raised). No discount &mdash; status and permanence.</p></div>
+    <div class="card"><p class="ct">3. Owner Tier Invitation-Only</p><p class="cs" style="margin-top:8px;">After initial 200, Owner tier becomes invitation-only. Application + interview. Ensures the room stays premium. Equinox, Soho House, The Wing all gate this way.</p></div>
+    <div class="card"><p class="ct">4. No Discounts Ever</p><p class="cs" style="margin-top:8px;">No Groupon. No launch sale. No "first month free." Pricing holds from Day 1 &mdash; this is the premium signal. Discount once, and you're a gym forever.</p></div>
+    <div class="card"><p class="ct">5. Pro League &rarr; Content</p><p class="cs" style="margin-top:8px;">Pro League matches filmed weekly. Pro + Owner members become the brand's public face. Free marketing. Built-in audience for ticketed tournament events on pro courts.</p></div>
+    <div class="card"><p class="ct">6. Annual Billing Option</p><p class="cs" style="margin-top:8px;">Pay 12 months upfront, get 1 month free (tier-dependent). Locks revenue, reduces churn admin. Especially important for Pro and Owner tier cash flow certainty.</p></div>
+  </div>
+
+  <div class="sec-div"><span>Revenue Model &mdash; Year 2 steady state (800 members)</span></div>
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Membership Revenue by Tier</p><p style="font-size:12px;font-weight:500;color:var(--green);">Annual: ~$523K</p></div>
+    <table>
+      <thead><tr><th>Tier</th><th class="tr">Target members</th><th class="tr">Monthly fee</th><th class="tr">Monthly total</th><th class="tr">Annual</th></tr></thead>
+      <tbody>
+        <tr><td>Social</td><td class="tr">400</td><td class="tr">$19</td><td class="tr">$7,600</td><td class="tr">$91,200</td></tr>
+        <tr><td>Player</td><td class="tr">250</td><td class="tr">$49</td><td class="tr">$12,250</td><td class="tr">$147,000</td></tr>
+        <tr><td>Pro</td><td class="tr">130</td><td class="tr">$129</td><td class="tr">$16,770</td><td class="tr">$201,240</td></tr>
+        <tr><td>Owner</td><td class="tr">20 (ramps to 200 Y3)</td><td class="tr">$349</td><td class="tr">$6,980</td><td class="tr">$83,760</td></tr>
+      </tbody>
+      <tfoot><tr class="total-row"><td colspan="3"><strong>Membership total (Y2)</strong></td><td class="tr"><strong>$43,600</strong></td><td class="tr"><strong>$523,200</strong></td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>League &amp; Programme Revenue</p><p style="font-size:12px;font-weight:500;color:var(--green);">Annual: ~$242K</p></div>
+    <table>
+      <thead><tr><th>Programme</th><th class="tr">Sessions/yr</th><th class="tr">Unit price</th><th class="tr">Annual</th></tr></thead>
+      <tbody>
+        <tr><td>Corporate League</td><td class="tr">12 teams</td><td class="tr">$2,400/team</td><td class="tr">$28,800</td></tr>
+        <tr><td>Morning League</td><td class="tr">4 seasons &times; 40 players</td><td class="tr">$180 avg</td><td class="tr">$28,800</td></tr>
+        <tr><td>Evening League</td><td class="tr">6 seasons &times; 60 players</td><td class="tr">$260 avg</td><td class="tr">$93,600</td></tr>
+        <tr><td>Kids Play</td><td class="tr">90 sessions &times; 12 kids</td><td class="tr">$65</td><td class="tr">$70,200</td></tr>
+        <tr><td>Pro League</td><td class="tr">30 matches</td><td class="tr">blended entry</td><td class="tr">$20,000</td></tr>
+      </tbody>
+      <tfoot><tr class="total-row"><td colspan="3"><strong>League total</strong></td><td class="tr"><strong>$241,400</strong></td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Day Pass &amp; Walk-in Revenue</p><p style="font-size:12px;font-weight:500;color:var(--green);">Annual: ~$301K</p></div>
+    <table>
+      <thead><tr><th>Pass</th><th class="tr">Avg/day</th><th class="tr">Blended price</th><th class="tr">Annual</th></tr></thead>
+      <tbody>
+        <tr><td>Full day / Gym day / Recovery day (blended)</td><td class="tr">15</td><td class="tr">$55 avg</td><td class="tr">$301,125</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note pdl-note">
+    <p><strong>Combined Year 2 auxiliary revenue:</strong> Membership $523K + Leagues $242K + Day Passes $301K = <strong>~$1.07M/yr</strong>. This is additive to court hire revenue (~$3.5M/yr on 18 courts), cafe (~$650K), pro shop (~$180K), massage (~$120K). Total club revenue Y2 ~$5.5M. By Year 3, as Owner tier fills to 200 and leagues scale, auxiliary revenue alone clears $1.4M.</p>
+  </div>
 </div></div>
 
 <div class="page" id="b4"><div class="inner">
