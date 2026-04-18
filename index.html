@@ -1670,17 +1670,104 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
 <div class="page" id="b6"><div class="inner">
   <div class="page-hero">
     <p class="ph-label">Business Plan &mdash; P&L Forecast</p>
-    <p class="ph-title">5-Year Profit & Loss &mdash; all assumptions connected</p>
-    <p class="ph-sub">Every figure is driven by the sliders across this document. Full lease from Year 1. EBITDA shown for all five years.</p>
+    <p class="ph-title">5-Year Profit & Loss &mdash; 18 courts, 6,000 m&sup2;, multi-segment</p>
+    <p class="ph-sub">Full revenue breakdown across courts, membership, cafe, pro shop, recovery, gym, leagues, day passes, coaching and ancillary. All growth assumptions stated below. EBITDA shown for all five years.</p>
   </div>
+
+  <!-- ───── MULTI-SEGMENT 5-YEAR P&L ───── -->
+  <div class="sec-div"><span>5-Year P&amp;L &mdash; Multi-Segment Model</span></div>
+  <div class="tbl-wrap gap">
+    <div class="tbl-hdr"><p>Full 5-Year P&amp;L (AUD) &middot; all segments</p><p style="font-size:11px;color:var(--dim);">Growth curves: members &times;1.0/1.6/2.0/2.2/2.3 &middot; court occupancy 50/65/75/80/82% &middot; cafe spend/day 70/100/120/135/145</p></div>
+    <table>
+      <thead>
+        <tr><th style="width:28%;">Line Item</th><th class="tr">Year 1</th><th class="tr">Year 2</th><th class="tr">Year 3</th><th class="tr">Year 4</th><th class="tr">Year 5</th></tr>
+      </thead>
+      <tbody>
+        <tr class="amber-row"><td colspan="6">REVENUE</td></tr>
+        <tr><td>Court hire (18 courts)</td><td class="tr">$2,690,000</td><td class="tr">$3,505,000</td><td class="tr">$4,050,000</td><td class="tr">$4,320,000</td><td class="tr">$4,440,000</td></tr>
+        <tr><td>Membership (4 tiers)</td><td class="tr">$285,000</td><td class="tr">$523,200</td><td class="tr">$780,000</td><td class="tr">$912,000</td><td class="tr">$960,000</td></tr>
+        <tr><td>Cafe &amp; bar</td><td class="tr">$453,600</td><td class="tr">$648,000</td><td class="tr">$778,000</td><td class="tr">$875,000</td><td class="tr">$940,000</td></tr>
+        <tr><td>Day passes (Full / Gym / Recovery)</td><td class="tr">$198,000</td><td class="tr">$301,100</td><td class="tr">$340,000</td><td class="tr">$355,000</td><td class="tr">$365,000</td></tr>
+        <tr><td>Pro shop (incl. Zimma capsule)</td><td class="tr">$108,000</td><td class="tr">$180,000</td><td class="tr">$230,000</td><td class="tr">$260,000</td><td class="tr">$280,000</td></tr>
+        <tr><td>Coaching</td><td class="tr">$90,000</td><td class="tr">$150,000</td><td class="tr">$195,000</td><td class="tr">$220,000</td><td class="tr">$235,000</td></tr>
+        <tr><td>Leagues &mdash; Evening</td><td class="tr">$56,160</td><td class="tr">$93,600</td><td class="tr">$117,000</td><td class="tr">$126,000</td><td class="tr">$130,000</td></tr>
+        <tr><td>Leagues &mdash; Morning</td><td class="tr">$18,240</td><td class="tr">$30,400</td><td class="tr">$38,000</td><td class="tr">$40,000</td><td class="tr">$42,000</td></tr>
+        <tr><td>Leagues &mdash; Corporate</td><td class="tr">$17,280</td><td class="tr">$28,800</td><td class="tr">$38,400</td><td class="tr">$43,200</td><td class="tr">$45,600</td></tr>
+        <tr><td>Kids Play</td><td class="tr">$42,120</td><td class="tr">$70,200</td><td class="tr">$85,000</td><td class="tr">$92,000</td><td class="tr">$98,000</td></tr>
+        <tr><td>Pro League + content / sponsorship</td><td class="tr">$10,000</td><td class="tr">$20,000</td><td class="tr">$45,000</td><td class="tr">$80,000</td><td class="tr">$120,000</td></tr>
+        <tr><td>Events / tournaments / venue hire</td><td class="tr">$20,000</td><td class="tr">$48,000</td><td class="tr">$75,000</td><td class="tr">$90,000</td><td class="tr">$100,000</td></tr>
+        <tr><td>Court cameras (Veo sharing)</td><td class="tr">$43,200</td><td class="tr">$72,000</td><td class="tr">$86,000</td><td class="tr">$92,000</td><td class="tr">$95,000</td></tr>
+        <tr><td>Massage room rent (tenant)</td><td class="tr">$42,000</td><td class="tr">$42,000</td><td class="tr">$48,000</td><td class="tr">$48,000</td><td class="tr">$54,000</td></tr>
+        <tr><td>Playtomic partner commission (inbound)</td><td class="tr">$10,800</td><td class="tr">$18,000</td><td class="tr">$22,000</td><td class="tr">$24,000</td><td class="tr">$25,000</td></tr>
+        <tr class="total-row"><td><strong>TOTAL GROSS REVENUE</strong></td><td class="tr"><strong>$4,084,400</strong></td><td class="tr"><strong>$5,730,300</strong></td><td class="tr"><strong>$6,927,400</strong></td><td class="tr"><strong>$7,577,200</strong></td><td class="tr"><strong>$7,929,600</strong></td></tr>
+
+        <tr class="amber-row"><td colspan="6">COST OF SALES (variable)</td></tr>
+        <tr><td>Cafe COGS (35% of cafe revenue)</td><td class="tr">($158,760)</td><td class="tr">($226,800)</td><td class="tr">($272,300)</td><td class="tr">($306,250)</td><td class="tr">($329,000)</td></tr>
+        <tr><td>Pro shop COGS (45% of retail revenue)</td><td class="tr">($48,600)</td><td class="tr">($81,000)</td><td class="tr">($103,500)</td><td class="tr">($117,000)</td><td class="tr">($126,000)</td></tr>
+        <tr><td>Coaching coach-share (55% to coaches)</td><td class="tr">($49,500)</td><td class="tr">($82,500)</td><td class="tr">($107,250)</td><td class="tr">($121,000)</td><td class="tr">($129,250)</td></tr>
+        <tr><td>Playtomic commission (5% on courts)</td><td class="tr">($134,500)</td><td class="tr">($175,250)</td><td class="tr">($202,500)</td><td class="tr">($216,000)</td><td class="tr">($222,000)</td></tr>
+        <tr><td>Payment processing (1.8% of all revenue)</td><td class="tr">($73,500)</td><td class="tr">($103,100)</td><td class="tr">($124,700)</td><td class="tr">($136,400)</td><td class="tr">($142,700)</td></tr>
+        <tr class="subtotal"><td><strong>Total cost of sales</strong></td><td class="tr"><strong>($464,860)</strong></td><td class="tr"><strong>($668,650)</strong></td><td class="tr"><strong>($810,250)</strong></td><td class="tr"><strong>($896,650)</strong></td><td class="tr"><strong>($948,950)</strong></td></tr>
+        <tr class="total-row"><td><strong>GROSS PROFIT</strong></td><td class="tr"><strong>$3,619,540</strong></td><td class="tr"><strong>$5,061,650</strong></td><td class="tr"><strong>$6,117,150</strong></td><td class="tr"><strong>$6,680,550</strong></td><td class="tr"><strong>$6,980,650</strong></td></tr>
+
+        <tr class="amber-row"><td colspan="6">OPERATING EXPENSES</td></tr>
+        <tr><td>Lease (6,000 m&sup2; &times; $280, 3% annual escalation)</td><td class="tr">($1,680,000)</td><td class="tr">($1,730,400)</td><td class="tr">($1,782,300)</td><td class="tr">($1,835,800)</td><td class="tr">($1,890,900)</td></tr>
+        <tr><td>Court staff (reception, bar, pro shop)</td><td class="tr">($540,000)</td><td class="tr">($620,000)</td><td class="tr">($680,000)</td><td class="tr">($720,000)</td><td class="tr">($740,000)</td></tr>
+        <tr><td>Segment staff (cafe mgr + baristas)</td><td class="tr">($225,000)</td><td class="tr">($261,625)</td><td class="tr">($285,000)</td><td class="tr">($305,000)</td><td class="tr">($320,000)</td></tr>
+        <tr><td>Segment staff (recovery host)</td><td class="tr">($68,000)</td><td class="tr">($82,000)</td><td class="tr">($88,000)</td><td class="tr">($92,000)</td><td class="tr">($95,000)</td></tr>
+        <tr><td>Segment staff (gym PT)</td><td class="tr">($52,000)</td><td class="tr">($65,000)</td><td class="tr">($72,000)</td><td class="tr">($76,000)</td><td class="tr">($80,000)</td></tr>
+        <tr><td>Segment staff (retail + concierge)</td><td class="tr">($98,000)</td><td class="tr">($122,775)</td><td class="tr">($135,000)</td><td class="tr">($142,000)</td><td class="tr">($148,000)</td></tr>
+        <tr><td>Managers / head coaches (2 &times; $90K)</td><td class="tr">($200,700)</td><td class="tr">($206,700)</td><td class="tr">($212,900)</td><td class="tr">($219,300)</td><td class="tr">($225,900)</td></tr>
+        <tr><td>Utilities (electricity, water, gas, waste)</td><td class="tr">($148,000)</td><td class="tr">($156,000)</td><td class="tr">($164,000)</td><td class="tr">($172,000)</td><td class="tr">($180,000)</td></tr>
+        <tr><td>Insurance (public, property, workers comp, cyber)</td><td class="tr">($43,500)</td><td class="tr">($45,700)</td><td class="tr">($48,000)</td><td class="tr">($50,400)</td><td class="tr">($52,900)</td></tr>
+        <tr><td>Tech &amp; subscriptions (Playtomic, cameras, POS, Xero)</td><td class="tr">($32,300)</td><td class="tr">($34,000)</td><td class="tr">($35,700)</td><td class="tr">($37,500)</td><td class="tr">($39,400)</td></tr>
+        <tr><td>Cleaning + maintenance (6,000 m&sup2;)</td><td class="tr">($84,000)</td><td class="tr">($88,200)</td><td class="tr">($92,600)</td><td class="tr">($97,200)</td><td class="tr">($102,000)</td></tr>
+        <tr><td>Marketing + content</td><td class="tr">($60,000)</td><td class="tr">($40,000)</td><td class="tr">($35,000)</td><td class="tr">($32,000)</td><td class="tr">($30,000)</td></tr>
+        <tr><td>Accounting + legal + HR</td><td class="tr">($26,000)</td><td class="tr">($27,500)</td><td class="tr">($29,000)</td><td class="tr">($30,500)</td><td class="tr">($32,000)</td></tr>
+        <tr><td>Miscellaneous / contingency</td><td class="tr">($22,000)</td><td class="tr">($25,000)</td><td class="tr">($28,000)</td><td class="tr">($30,000)</td><td class="tr">($32,000)</td></tr>
+        <tr class="subtotal"><td><strong>Total operating expenses</strong></td><td class="tr"><strong>($3,279,500)</strong></td><td class="tr"><strong>($3,504,900)</strong></td><td class="tr"><strong>($3,687,500)</strong></td><td class="tr"><strong>($3,839,700)</strong></td><td class="tr"><strong>($3,968,100)</strong></td></tr>
+        <tr class="total-row"><td><strong>EBITDA</strong></td><td class="tr"><strong>$340,040</strong></td><td class="tr"><strong>$1,556,750</strong></td><td class="tr"><strong>$2,429,650</strong></td><td class="tr"><strong>$2,840,850</strong></td><td class="tr"><strong>$3,012,550</strong></td></tr>
+        <tr><td>EBITDA margin</td><td class="tr">8.3%</td><td class="tr">27.2%</td><td class="tr">35.1%</td><td class="tr">37.5%</td><td class="tr">38.0%</td></tr>
+
+        <tr class="amber-row"><td colspan="6">BELOW-THE-LINE</td></tr>
+        <tr><td>Depreciation (courts + fit-out, 10-yr SL)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td><td class="tr">($256,000)</td></tr>
+        <tr><td>Interest (debt facility assumed $500K @ 8%)</td><td class="tr">($40,000)</td><td class="tr">($32,000)</td><td class="tr">($22,000)</td><td class="tr">($10,000)</td><td class="tr">$0</td></tr>
+        <tr class="total-row"><td><strong>PROFIT BEFORE TAX</strong></td><td class="tr"><strong>$44,040</strong></td><td class="tr"><strong>$1,268,750</strong></td><td class="tr"><strong>$2,151,650</strong></td><td class="tr"><strong>$2,574,850</strong></td><td class="tr"><strong>$2,756,550</strong></td></tr>
+        <tr><td>Income tax (25% company rate)</td><td class="tr">($11,010)</td><td class="tr">($317,190)</td><td class="tr">($537,910)</td><td class="tr">($643,710)</td><td class="tr">($689,140)</td></tr>
+        <tr class="total-row"><td><strong>NET PROFIT AFTER TAX</strong></td><td class="tr"><strong>$33,030</strong></td><td class="tr"><strong>$951,560</strong></td><td class="tr"><strong>$1,613,740</strong></td><td class="tr"><strong>$1,931,140</strong></td><td class="tr"><strong>$2,067,410</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="g4 gap">
+    <div class="card"><p class="ct">Y1 break-even</p><p class="cs" style="margin-top:8px;">Operating break-even Month 9. Y1 EBITDA $340K is thin but positive. Key risks: slower court occupancy ramp, construction delays pushing launch beyond Month 4.</p></div>
+    <div class="card"><p class="ct">Y2 EBITDA</p><p style="font-size:24px;font-weight:400;color:var(--green);margin:6px 0 4px 0;">$1.56M</p><p class="cs">Membership scales, cafe hits full run-rate, leagues fill. Margin steps from 8% to 27%.</p></div>
+    <div class="card"><p class="ct">Y3&ndash;Y5</p><p class="cs" style="margin-top:8px;">EBITDA $2.4M &rarr; $3.0M as Owner tier fills to 150+, Pro League builds sponsorship, pro court events scale. Margin plateaus around 38%.</p></div>
+    <div class="card"><p class="ct">Payback</p><p class="cs" style="margin-top:8px;">Net capital invested after $2.016M incentive = ~$540K. Full payback on net cash: <strong>Month 15&ndash;18</strong>. Gross payback (incl. incentive clawback): Year 3.</p></div>
+  </div>
+
+  <div class="note pdl-note">
+    <p><strong>Key assumptions driving this P&amp;L:</strong></p>
+    <p style="margin-top:8px;">&bull; <strong>Court occupancy</strong> Y1 50% &rarr; Y5 82% &middot; blended rate $88/1.5hr &middot; 18 courts &times; 12 hrs/day</p>
+    <p>&bull; <strong>Membership ramp</strong> Y1 500 members blended &rarr; Y5 1,200. Owner tier fills to 200 cap by end of Y3. Mix shifts towards Pro+ over time.</p>
+    <p>&bull; <strong>Cafe</strong> $18 avg ticket &times; 70/100/120/135/145 tickets/day across years. 65% gross margin.</p>
+    <p>&bull; <strong>Pro shop</strong> 45% COGS &middot; Zimma capsule provides margin uplift vs generic retail (~55% margin on Zimma line vs 45% on equipment).</p>
+    <p>&bull; <strong>Lease escalation</strong> 3% p.a. &middot; no second-term renegotiation built in.</p>
+    <p>&bull; <strong>Staff</strong> 11.5% super, 2.5% workers comp on-costs included.</p>
+    <p>&bull; <strong>No wholesale channel. No Playtomic list-share. No sponsorship assumed beyond pro league.</strong> These are upside levers, not base case.</p>
+    <p style="margin-top:10px;"><strong>Sensitivity &mdash; if Y1 occupancy is 40% instead of 50%:</strong> Revenue drops ~$540K &rarr; EBITDA turns slightly negative ($200K loss). This is why marketing spend is front-loaded and why the waitlist mechanic matters. Fill the courts from Day 1 &mdash; the rest follows.</p>
+  </div>
+
+  <!-- Legacy single-revenue-stream summary below (slider-driven, for reference) -->
+  <div class="sec-div" style="margin-top:40px;"><span>Legacy Court-Only Model &mdash; slider-driven (for sensitivity testing)</span></div>
   <div class="g5 gap" id="yrCards"></div>
   <div class="chart-wrap gap">
-    <p class="chart-title">Revenue vs EBITDA &mdash; 5 Year Trajectory</p>
+    <p class="chart-title">Revenue vs EBITDA &mdash; 5 Year Trajectory (court-only model)</p>
     <div class="bar-chart" id="plBarChart" style="height:180px;align-items:flex-end;gap:8px;padding-top:20px;"></div>
     <div class="month-labels" id="plBarLabels"></div>
   </div>
   <div class="tbl-wrap">
-    <div class="tbl-hdr"><p>Full 5-Year P&L (AUD)</p></div>
+    <div class="tbl-hdr"><p>Court-only 5-Year P&L (legacy &mdash; slider-driven)</p></div>
     <table><thead><tr><th>Line Item</th><th class="tr">Year 1</th><th class="tr">Year 2</th><th class="tr">Year 3</th><th class="tr">Year 4</th><th class="tr">Year 5</th></tr></thead>
     <tbody id="plTableBody"></tbody></table>
   </div>
