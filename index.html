@@ -313,6 +313,7 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <div class="nav-brand">
       <span class="pdl-logo">PDL</span>
       <span class="nav-brand-sub">Marrickville</span>
+      <span class="live-indicator">Live Model</span>
     </div>
     <button class="nav-tab tab-active" id="tab-market" onclick="switchTab('market')">
       MARKET INTELLIGENCE
@@ -320,6 +321,7 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <button class="nav-tab" id="tab-business" onclick="switchTab('business')">
       BUSINESS PLAN
     </button>
+    <button class="model-reset-btn" onclick="resetModel()" title="Reset all assumptions to default values">Reset</button>
   </div>
   <!-- ROW 2: Sub-navigation (changes per tab) -->
   <div class="nav-row2">
@@ -935,7 +937,7 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
         <div class="pt-plan rec"><p style="font-size:12px;font-weight:500;color:var(--text);">Champion Plan <span style="font-size:9px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:1px 6px;border-radius:2px;font-weight:600;margin-left:5px;">RECOMMENDED</span></p><p style="font-size:11px;color:var(--dim);margin-top:3px;">Bookings, CRM, leagues, flat memberships, coaching, campaigns, invoices. 4hr support. Full data access.</p></div>
         <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Monthly subscription</p><p style="font-size:13px;font-weight:500;color:var(--text);">~$300&ndash;500/mo</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">Negotiated directly &mdash; not published. As a 14-court anchor venue you have strong leverage.</p></div>
         <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Booking commission</p><p style="font-size:13px;font-weight:500;color:var(--text);">5&ndash;15% per booking</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">Deducted before funds reach your Stripe. On a $100/hr booking: $5&ndash;15 to Playtomic.</p></div>
-        <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Membership commission</p><p style="font-size:13px;font-weight:500;color:var(--text);">~13% of $15/mo</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">You net ~$13.05 per member per month. At 1,000 members = ~$13,050/month net.</p></div>
+        <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Membership commission</p><p style="font-size:13px;font-weight:500;color:var(--text);">tier-based commission</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">You net ~$13.05 per member per month. At 1,000 members = ~$13,050/month net.</p></div>
         <div class="pt-plan"><div style="display:flex;justify-content:space-between;"><p style="font-size:12px;font-weight:400;color:var(--text);">Stripe processing</p><p style="font-size:13px;font-weight:500;color:var(--text);">~1.7% + $0.30</p></div><p style="font-size:11px;color:var(--dim);margin-top:2px;">Standard AU Stripe rate, applied on top of Playtomic commission.</p></div>
       </div>
     </div>
@@ -1000,10 +1002,10 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
     <div class="card"><p class="ct">Cafe &amp; Bar</p><p class="cs">Coffee, cold brew, protein shakes, sandwiches, acai bowls, bars, beer &amp; wine licensed. ~40 covers. 60&ndash;70% gross margin. Evening league food flows here.</p></div>
     <div class="card"><p class="ct">Pro Shop &mdash; 60 m&sup2;</p><p class="cs">Rackets, shoes, balls, bags, apparel, accessories. Includes <strong>Zimma x PDL capsule</strong> &mdash; exclusive bespoke crossover range unique to this club.</p></div>
     <div class="card"><p class="ct">Recovery Suite</p><p class="cs">25-person sauna, 8 individual cold plunge pools, magnesium bath, red light therapy beds, open-plan 2-bed massage suite. Unlimited use for Pro + Owner members.</p></div>
-    <div class="card"><p class="ct">Gym</p><p class="cs">Running, rowing, ski machines, light weights, stretching zone. Free for Player tier and above. Crossover to conditioning for padel players.</p></div>
+    <div class="card"><p class="ct">Gym</p><p class="cs">Running, rowing, ski machines, light weights, stretching zone. Free for Core tier and above. Crossover to conditioning for padel players.</p></div>
     <div class="card"><p class="ct">Kids Hit Wall</p><p class="cs">Full-spec padel wall panel with glass, turf, netting. Kids ages 4&ndash;10 can hit for hours while parents play or use recovery. Drives family membership.</p></div>
     <div class="card"><p class="ct">Members Lounge</p><p class="cs">Breakaway space with lounge seating, work pods, coffee station. Host desk for Owner-tier concierge. Quiet zone away from court action.</p></div>
-    <div class="card"><p class="ct">Showers &amp; Bathrooms</p><p class="cs">Men, women, accessible, staff. Premium finishes, dedicated shower blocks, towel service on Player tier and above.</p></div>
+    <div class="card"><p class="ct">Showers &amp; Bathrooms</p><p class="cs">Men, women, accessible, staff. Premium finishes, dedicated shower blocks, towel service on Core tier and above.</p></div>
     <div class="card"><p class="ct">Court Cameras</p><p class="cs">All 18 courts filmed. Veo or EyeOnPadel. Players share match footage &mdash; free marketing. Pro court matches streamed live.</p></div>
     <div class="card"><p class="ct">Playtomic Champion</p><p class="cs">All bookings, memberships, leagues, coaching, CRM. Tiered membership auto-billed via Stripe. Premium backend, zero admin overhead.</p></div>
     <div class="card"><p class="ct">10+10 yr Lease</p><p class="cs">6,000 m&sup2; @ $280/m&sup2; = $1.68M/yr. 12% cash incentive on first term = $2.016M paid at signing. Full rent from Day 1. 3-month security deposit.</p></div>
@@ -1631,24 +1633,79 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
   </script>
 
   <style>
+    /* ═════ EDITABLE INPUT SYSTEM — signals interactivity without shouting ═════ */
     .mv-in {
       width: 90px;
-      padding: 5px 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
+      padding: 4px 8px;
+      border: 1px solid transparent;
+      border-bottom: 1px dashed rgba(26,79,154,0.35);
+      border-radius: 3px;
       font-family: inherit;
       font-size: 12px;
+      font-weight: 400;
       text-align: right;
       outline: none;
-      background: #fff;
+      background: rgba(26,79,154,0.04);
+      color: var(--text);
+      transition: background .15s ease, border-color .15s ease;
     }
-    .mv-in:focus { border-color: var(--pdl); }
-    .mv-in:disabled { background: #f5f4f0; cursor: not-allowed; }
+    .mv-in:hover {
+      background: rgba(26,79,154,0.09);
+      border-bottom-color: rgba(26,79,154,0.6);
+    }
+    .mv-in:focus {
+      background: #fff;
+      border: 1px solid var(--pdl);
+      box-shadow: 0 0 0 2px rgba(26,79,154,0.12);
+    }
+    .mv-in:disabled {
+      background: #f5f4f0;
+      cursor: not-allowed;
+      border-bottom-color: transparent;
+    }
     .mv-in::-webkit-inner-spin-button, .mv-in::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     .mv-in { -moz-appearance: textfield; }
     .mv-in-small { width: 60px; }
     .mv-in-med { width: 75px; }
     .mv-in-wide { width: 110px; }
+
+    /* Live model indicator + reset button */
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: rgba(26,111,60,0.10);
+      color: var(--green);
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .live-indicator::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .model-reset-btn {
+      padding: 6px 12px;
+      background: transparent;
+      color: var(--dim);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+    .model-reset-btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
     .ss-hc, .ss-rate {
       width: 80px;
       padding: 5px 8px;
@@ -1714,7 +1771,7 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
         <tr><td><strong>Day Passes (blended)</strong></td><td>Full $89 / Gym $35 / Recovery $65. 15 avg/day &times; $55 blended &times; 365 days.</td><td class="tr">$301,100</td><td class="tr">80%</td><td class="tr">$240,880</td></tr>
         <tr><td><strong>Coaching (1:1 + clinics)</strong></td><td>$100/hr blended. 30 hrs/wk &times; 50 wks. In-house club pros + guest coaches.</td><td class="tr">$150,000</td><td class="tr">45% (after coach cut)</td><td class="tr">$67,500</td></tr>
         <tr><td><strong>Massage Room Rent (tenant model)</strong></td><td>Therapist rents 2-bed suite from PDL. Owner members get direct rate from therapist at $90 (vs $150 public). PDL collects $3,500/mo rent &mdash; zero delivery cost.</td><td class="tr">$42,000</td><td class="tr">100%</td><td class="tr">$42,000</td></tr>
-        <tr><td><strong>Gym membership / drop-in</strong></td><td>Incl. in Player+ tier; drop-in at $35 captured in Day Passes above. Standalone gym-only tier avoided &mdash; Player tier absorbs.</td><td class="tr">&mdash; folded above</td><td class="tr">&mdash;</td><td class="tr">&mdash;</td></tr>
+        <tr><td><strong>Gym membership / drop-in</strong></td><td>Incl. in Core+ tier; drop-in at $35 captured in Day Passes above. Standalone gym-only tier avoided &mdash; Core tier absorbs.</td><td class="tr">&mdash; folded above</td><td class="tr">&mdash;</td><td class="tr">&mdash;</td></tr>
         <tr><td><strong>Recovery Suite</strong></td><td>Incl. in Pro+ tier; drop-in at $65 captured in Day Passes above. No standalone line.</td><td class="tr">&mdash; folded above</td><td class="tr">&mdash;</td><td class="tr">&mdash;</td></tr>
         <tr><td><strong>Events / Tournaments / Venue Hire</strong></td><td>6 ticketed pro court events/yr + 2 private venue hires (corp away-days, brand activations).</td><td class="tr">$48,000</td><td class="tr">70%</td><td class="tr">$33,600</td></tr>
         <tr><td><strong>Court Cameras / Veo Sharing</strong></td><td>Auto-share of match footage at $4/player/match. 40,000 matches &times; 4 players &times; 30% share-through.</td><td class="tr">$72,000</td><td class="tr">85%</td><td class="tr">$61,200</td></tr>
@@ -1947,9 +2004,9 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
         <tr><td>Fit-out (civil, elec, plumbing)</td><td>Month 1&ndash;4</td><td>Structural + mechanical fit-out</td><td class="tr">$350,000</td><td>From cash incentive</td></tr>
         <tr><td>Court balance (70%)</td><td>Month 1</td><td>Before container pickup</td><td class="tr">$134,298</td><td>Before shipping</td></tr>
         <tr><td>Sea freight + landed costs</td><td>Month 2&ndash;3</td><td>Shipping + customs + delivery</td><td class="tr">$55,500</td><td>Mid estimate</td></tr>
-        <tr><td>Court installation labour</td><td>Month 3&ndash;4</td><td>14 courts professional install</td><td class="tr">$46,000</td><td>Mid estimate</td></tr>
+        <tr><td>Court installation labour</td><td>Month 3&ndash;4</td><td>18 courts professional install</td><td class="tr">$46,000</td><td>Mid estimate</td></tr>
         <tr><td>Interior amenities fit-out</td><td>Month 2&ndash;4</td><td>Locker rooms, canteen, reception</td><td class="tr">$110,000</td><td>From cash incentive</td></tr>
-        <tr><td>Technology (cameras, POS, WiFi)</td><td>Month 3&ndash;4</td><td>All 14 courts + infrastructure</td><td class="tr">$95,000</td><td>From cash incentive</td></tr>
+        <tr><td>Technology (cameras, POS, WiFi)</td><td>Month 3&ndash;4</td><td>All 18 courts + infrastructure</td><td class="tr">$95,000</td><td>From cash incentive</td></tr>
         <tr><td>Opening inventory</td><td>Month 4</td><td>Pro shop + merch + canteen + hire fleet</td><td class="tr">$58,000</td><td>Mid estimate</td></tr>
         <tr><td>Working capital buffer</td><td>Month 0&ndash;6</td><td>3 months opex safety buffer</td><td class="tr">$120,000</td><td>From cash incentive surplus</td></tr>
         <tr><td>Professional fees + pre-launch marketing</td><td>Month 0&ndash;4</td><td>Legal, architect, marketing</td><td class="tr">$67,000</td><td>Mid estimate</td></tr>
@@ -2162,6 +2219,8 @@ tr.section-hdr td{background:var(--s3);font-size:10px;letter-spacing:.1em;text-t
         setMonth(dragging.i, pct * MAX_MO);
       }, {passive:false});
       document.addEventListener('touchend', ()=>{ dragging = null; });
+      // Expose render for external callers (e.g. reset)
+      window.mktRender = render;
       // Presets
       window.mktPreset = function(name){
         if(name === 'steady') S.marketingMonthly = Array(12).fill(15000);
@@ -2666,6 +2725,28 @@ function setPath(obj, path, val){
   }
 }
 
+// Snapshot initial S so user can reset
+window.__S_DEFAULTS = JSON.parse(JSON.stringify(S, (k,v)=>typeof v==='function'?undefined:v));
+function resetModel(){
+  if(!confirm('Reset all assumptions to default values? Any edits you\'ve made will be lost.')) return;
+  const d = window.__S_DEFAULTS;
+  // Deep merge defaults back into S (preserving the getter)
+  Object.keys(d).forEach(k => {
+    if(Array.isArray(d[k])) S[k] = d[k].slice();
+    else if(typeof d[k] === 'object' && d[k] !== null) S[k] = JSON.parse(JSON.stringify(d[k]));
+    else S[k] = d[k];
+  });
+  // Force all inputs to re-sync from S
+  document.querySelectorAll('[data-model-in]').forEach(inp => {
+    const val = getPath(S, inp.getAttribute('data-model-in'));
+    if(val !== undefined) inp.value = val;
+  });
+  renderBindings();
+  if(typeof renderAll === 'function') try{ renderAll(); }catch(e){}
+  // Re-render marketing chart bars from restored S.marketingMonthly
+  if(typeof window.mktRender === 'function') window.mktRender();
+}
+
 // Install global input listener: any input with data-model-in updates S and triggers recompute
 document.addEventListener('input', function(e){
   const inp = e.target;
@@ -2787,7 +2868,7 @@ function renderBreakEvenPage(){
     {label:'Court deposit (30%)', amt:57556, col:'var(--pdl)'},
     {label:'Court balance (70%)', amt:134298, col:'#3a5fcc'},
     {label:'Sea freight + customs + logistics', amt:55500, col:'var(--accent)'},
-    {label:'Installation labour (14 courts)', amt:46000, col:'#d4824a'},
+    {label:'Installation labour (18 courts)', amt:46000, col:'#d4824a'},
     {label:'Fit-out (civil, elec, plumbing)', amt:350000, col:'var(--amber)'},
     {label:'Interior amenities (lockers, canteen, reception)', amt:110000, col:'#b8940a'},
     {label:'Technology (cameras, POS, WiFi, CCTV)', amt:95000, col:'var(--green)'},
@@ -3481,7 +3562,7 @@ const FO_ITEMS = [
   ['Pro shop fit-out','Interior',28,785],
   ['Health canteen fit-out','Interior',42,833],
   ['Common area / seating','Interior',32,688],
-  ['Court cameras (14 courts)','Technology',14,4500],
+  ['Court cameras (18 courts)','Technology',14,4500],
   ['Networking / WiFi / AV','Technology',18,1000],
   ['Security / CCTV','Technology',16,875],
   ['Signage (external + internal)','Brand',28,1107],
@@ -3605,7 +3686,7 @@ const CC_ITEMS_BASE = [
   ['Australian customs duty (~5%)','On FOB steel structures',1,10500],
   ['Customs broker + AQIS + port fees','Broker + biosecurity inspection',1,5000],
   ['Container transport to Marrickville','Port Botany &rarr; site, 4 containers',1,5500],
-  ['Installation labour (professional)','14 courts with technical guide',14,3300],
+  ['Installation labour (professional)','18 courts with technical guide',14,3300],
 ];
 let ccData = CC_ITEMS_BASE.map(item=>([...item]));
 
